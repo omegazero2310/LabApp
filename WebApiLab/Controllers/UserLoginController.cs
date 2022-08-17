@@ -19,6 +19,17 @@ namespace WebApiLab.Controllers
             this._serviceProvider = serviceProvider;
             this._labDbContext = serviceProvider.GetService<LabDbContext>();
         }
+        /// <summary>
+        /// Gets the JWT token.
+        /// </summary>
+        /// <param name="userLogin">The user login.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 17/08/2022 created
+        /// </Modified>
+        /// <response code="200">Returns token</response>
+        /// <response code="400">If the user or password is wrong</response>
         [HttpPost]
         [ActionName("GetToken")]
         public IActionResult GetToken([FromBody] LoginRequest userLogin)
@@ -53,6 +64,17 @@ namespace WebApiLab.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Registers new Account.
+        /// </summary>
+        /// <param name="createForm">The create form.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 17/08/2022 created
+        /// </Modified>
+        /// <response code="200">Account Created</response>
+        /// <response code="400">The form is invalid, check the detail</response>
         [HttpPost]
         [ActionName("Register")]
         public IActionResult RegisterAccount([FromBody] CreateAccountRequest createForm)
