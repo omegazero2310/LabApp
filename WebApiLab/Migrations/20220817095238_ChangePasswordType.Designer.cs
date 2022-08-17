@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiLab.LabDatabaseContext;
 
@@ -11,9 +12,10 @@ using WebApiLab.LabDatabaseContext;
 namespace WebApiLab.Migrations
 {
     [DbContext(typeof(LabDbContext))]
-    partial class LabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220817095238_ChangePasswordType")]
+    partial class ChangePasswordType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

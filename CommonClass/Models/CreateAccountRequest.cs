@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace CommonClass.Models
 {
+
+    /// <summary>Request class to create new account</summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 17/08/2022 created
+    /// </Modified>
     public class CreateAccountRequest
     {
         [Required]
@@ -20,7 +26,6 @@ namespace CommonClass.Models
         public string LastName { get; set; }
         [Required]
         public GenderOption Gender { get; set; }
-        [Required]
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }

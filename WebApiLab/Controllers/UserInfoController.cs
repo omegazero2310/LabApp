@@ -1,4 +1,5 @@
 ﻿using CommonClass.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using WebApiLab.Services;
@@ -9,6 +10,7 @@ namespace WebApiLab.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     public class UserInfoController : ControllerBase
     {
         private IServiceProvider _serviceProvider;

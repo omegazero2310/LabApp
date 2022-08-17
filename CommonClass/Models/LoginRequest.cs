@@ -1,7 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApiLab.Models
+namespace CommonClass.Models
 {
+    /// <summary>Request class for login</summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 17/08/2022 created
+    /// </Modified>
     public class LoginRequest
     {
         [Required]

@@ -5,51 +5,28 @@ namespace WebApiLab.Exts
 {
     public sealed class PasswordHelper
     {
-        private static readonly int SaltSize = 16;
-        public static byte[] GenerateSaltedHashPassword(byte[] plainText, byte[]? salt = null)
+        private static readonly int _size = 16;
+        public static string CreateSalt()
         {
-            HashAlgorithm algorithm = SHA256.Create();
-            if (salt == null)
-                salt = GenerateSalt();
-            byte[] plainTextWithSaltBytes =
-              new byte[plainText.Length + salt.Length];
-            for (int i = 0; i < plainText.Length; i++)
-            {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
-            return algorithm.ComputeHash(plainTextWithSaltBytes);
-        }
-        public static byte[] GenerateSalt()
-        {
+            //Generate a cryptographic random number.
             RandomNumberGenerator rng = RandomNumberGenerator.Create();
-            byte[] buff = new byte[SaltSize];
+            byte[] buff = new byte[_size];
             rng.GetBytes(buff);
-            return buff;
+            return Convert.ToBase64String(buff);
         }
-        public static bool ComparePassowrd(string input, string hashedPassword, string salt)
+
+        public static string GenerateHash(string input, string salt)
         {
-            byte[] inputbytes = Encoding.ASCII.GetBytes(input);
-            byte[] hashedPasswordbytes = Encoding.ASCII.GetBytes(hashedPassword);
-            byte[] saltbytes = Encoding.ASCII.GetBytes(salt);
-            //create byte[] from input + salt
-            byte[] inputhasedbytes = GenerateSaltedHashPassword(inputbytes, saltbytes);
-            //Compare password
-            if (inputhasedbytes.Length != hashedPasswordbytes.Length)
-            {
-                return false;
-            }
-            for (int i = 0; i < inputhasedbytes.Length; i++)
-            {
-                if (inputhasedbytes[i] != hashedPasswordbytes[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            byte[] bytes = Encoding.UTF8.GetBytes(input + salt);
+            SHA256 sHA256ManagedString = SHA256.Create();
+            byte[] hash = sHA256ManagedString.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+
+        public static bool AreEqual(string plainTextInput, string hashedInput, string salt)
+        {
+            string newHashedPin = GenerateHash(plainTextInput, salt);
+            return newHashedPin.Equals(hashedInput);
         }
     }
 }

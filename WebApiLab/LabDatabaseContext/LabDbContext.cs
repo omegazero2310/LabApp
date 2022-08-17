@@ -49,7 +49,7 @@ namespace WebApiLab.LabDatabaseContext
 
                 entity.Property(e => e.CreatedDate)
                 .ValueGeneratedOnAdd()
-                .HasDefaultValue(DateTime.Now)
+                .HasDefaultValueSql("GETDATE()")
                 .IsRequired(true);
 
                 entity.Property(e => e.Status)
@@ -76,12 +76,12 @@ namespace WebApiLab.LabDatabaseContext
 
                 entity.Property(e => e.HashedPassword)
                     .HasMaxLength(64)
-                    .IsUnicode(false)
+                    .IsUnicode(true)
                     .IsRequired(true);
 
                 entity.Property(e => e.Salt)
                     .HasMaxLength(64)
-                    .IsUnicode(false)
+                    .IsUnicode(true)
                     .IsRequired(true);
 
                 entity.Property(e => e.IsResetPassword)
@@ -89,7 +89,7 @@ namespace WebApiLab.LabDatabaseContext
                     .IsRequired(true);
 
                 entity.Property(e => e.DateModified)
-                    .HasDefaultValue(DateTime.Now)
+                    .HasDefaultValueSql("GETDATE()")
                     .IsRequired(true);
             });
 
@@ -106,7 +106,7 @@ namespace WebApiLab.LabDatabaseContext
 
                 entity.Property(e => e.DateCreated)
                     .ValueGeneratedOnAdd()
-                    .HasDefaultValue(DateTime.Now)
+                    .HasDefaultValueSql("GETDATE()")
                     .IsRequired(true);
 
                 entity.Property(e => e.NotificationType)

@@ -1,4 +1,4 @@
-﻿namespace WebApiLab.Exts
+﻿namespace CommonClass.Models
 {
     public class UserTokens
     {
