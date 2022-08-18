@@ -123,6 +123,6 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Required]
-        public string PositionID { get; set; }
+        public PositionOption PositionID { get; set; }
     }
 }
