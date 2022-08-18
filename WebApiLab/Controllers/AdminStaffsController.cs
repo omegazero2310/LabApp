@@ -31,14 +31,30 @@ namespace WebApiLab.Controllers
         [ActionName("GetAll")]
         public async Task<IEnumerable<AdminStaff>> Get([FromQuery] int skip = 0, [FromQuery] int take = 0)
         {
-            return await this._adminStaffsService.Gets(skip, take);
+            try
+            {
+                return await this._adminStaffsService.Gets(skip, take);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Get data failed");
+                throw;
+            }
         }
 
         [HttpGet]
         [ActionName("Get")]
         public async Task<AdminStaff?> Get([FromQuery] int id)
         {
-            return await this._adminStaffsService.Get(id);
+            try
+            {
+                return await this._adminStaffsService.Get(id);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Get data failed");
+                throw;
+            }
         }
         [HttpGet]
         [ActionName("GetProfilePicture")]
@@ -81,73 +97,106 @@ namespace WebApiLab.Controllers
         [ActionName("UploadProfilePicture")]
         public async Task<IActionResult> UploadPicture([FromQuery] int id, IFormFile file)
         {
-            if (string.IsNullOrWhiteSpace(_webHostEnvironment.WebRootPath))
+            try
             {
-                _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            }
-            string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, _imageFolder);
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-            if (file.Length > 0)
-            {
-                var user = await this._adminStaffsService.Get(id);
-                if (user != null)
+                if (string.IsNullOrWhiteSpace(_webHostEnvironment.WebRootPath))
                 {
-                    if (string.IsNullOrEmpty(user.ProfileImage))
+                    _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                }
+                string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, _imageFolder);
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+                if (file.Length > 0)
+                {
+                    var user = await this._adminStaffsService.Get(id);
+                    if (user != null)
                     {
-                        string randomImageName = Path.GetRandomFileName() + ".png";
-                        string fileSavePath = Path.Combine(folderPath, randomImageName);
-                        using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                        if (string.IsNullOrEmpty(user.ProfileImage))
                         {
-                            await file.CopyToAsync(stream);
+                            string randomImageName = Path.GetRandomFileName() + ".png";
+                            string fileSavePath = Path.Combine(folderPath, randomImageName);
+                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            user.ProfileImage = randomImageName;
+                            await this._adminStaffsService.Update(user);
                         }
-                        user.ProfileImage = randomImageName;
-                        await this._adminStaffsService.Update(user);
+                        else
+                        {
+                            System.IO.File.Delete(Path.Combine(folderPath, user.ProfileImage));
+                            string randomImageName = Path.GetRandomFileName() + ".png";
+                            string fileSavePath = Path.Combine(folderPath, randomImageName);
+                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            user.ProfileImage = randomImageName;
+                            await this._adminStaffsService.Update(user);
+                        }
+                        return Ok();
                     }
                     else
-                    {
-                        System.IO.File.Delete(Path.Combine(folderPath, user.ProfileImage));
-                        string randomImageName = Path.GetRandomFileName() + ".png";
-                        string fileSavePath = Path.Combine(folderPath, randomImageName);
-                        using (var stream = new FileStream(fileSavePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-                        user.ProfileImage = randomImageName;
-                        await this._adminStaffsService.Update(user);
-                    }
-                    return Ok();
+                        return NotFound();
                 }
                 else
-                    return NotFound();
+                    return BadRequest();
             }
-            else
-                return BadRequest();
-
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Failed to upload Profile Picture");
+                return StatusCode(500);
+            }
         }
 
         [HttpPost]
         [ActionName("Create")]
         public async Task<IActionResult> Post([FromBody] AdminStaff value)
         {
-            var result = await this._adminStaffsService.Create(value);
-            return StatusCode((int)result.StatusCode, result);
+            try
+            {
+                var result = await this._adminStaffsService.Create(value);
+                return StatusCode((int)result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Failed to add new AdminStaff");
+                return StatusCode(500,"Server Error while create new");
+            }
+
         }
 
         [HttpPut]
         [ActionName("Update")]
         public async Task<IActionResult> Put([FromBody] AdminStaff value)
         {
-            var result = await this._adminStaffsService.Update(value);
-            return StatusCode((int)result.StatusCode, result);
+            try
+            {
+                var result = await this._adminStaffsService.Update(value);
+                return StatusCode((int)result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Failed to update AdminStaff");
+                return StatusCode(500, "Server Error while update");
+            }         
         }
 
         [HttpDelete]
         [ActionName("Delete")]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
-            var result = await this._adminStaffsService.Delete(id);
-            return StatusCode((int)result.StatusCode, result);
+            try
+            {
+                var result = await this._adminStaffsService.Delete(id);
+                return StatusCode((int)result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Failed to delete AdminStaff");
+                return StatusCode(500, "Server Error while delete");
+            }
+
         }
     }
 }
