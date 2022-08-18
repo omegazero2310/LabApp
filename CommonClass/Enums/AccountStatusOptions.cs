@@ -1,8 +1,8 @@
 ﻿namespace CommonClass.Enums
 {
-    public enum AccountStatusOption
+    public enum AccountStatusOptions
     {
-        Using = 0,
+        Normal = 0,
         Suppended = 1,
         Banned = 2,
     }

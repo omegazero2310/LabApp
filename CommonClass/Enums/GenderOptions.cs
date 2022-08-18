@@ -1,6 +1,6 @@
 ﻿namespace CommonClass.Enums
 {
-    public enum GenderOption
+    public enum GenderOptions
     {
         Male = 0,
         Female = 1,

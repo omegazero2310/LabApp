@@ -7,7 +7,7 @@
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public enum PositionOption
+    public enum PositionOptions
     {
         /// <summary>
         /// Nhân viên

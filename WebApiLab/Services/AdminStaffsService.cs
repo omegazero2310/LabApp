@@ -21,7 +21,7 @@ namespace WebApiLab.Services
         }
         public Task<bool> Create(AdminStaff data)
         {
-            if (this._labDbContext?.AdminStaffs.AddIfNotExists(data, db => db.UserID == data.UserID) != null)
+            if (this._labDbContext?.AdminStaffs.AddIfNotExists(data, db => db.ID == data.ID) != null)
             {
                 this._labDbContext?.SaveChanges();
                 return Task.FromResult(true);
@@ -33,7 +33,7 @@ namespace WebApiLab.Services
 
         public Task<bool> Delete(object key)
         {
-            if (this._labDbContext?.AdminStaffs.DeleteIfExists(new AdminStaff { UserID = key.ToString() }, db => db.UserID == key.ToString()) != null)
+            if (this._labDbContext?.AdminStaffs.DeleteIfExists(new AdminStaff { ID = Convert.ToInt32(key) }, db => db.ID == Convert.ToInt32(key)) != null)
             {
                 this._labDbContext?.SaveChanges();
                 return Task.FromResult(true);
@@ -44,7 +44,7 @@ namespace WebApiLab.Services
 
         public Task<AdminStaff?> Get(object key)
         {
-            return Task.FromResult<AdminStaff?>(this._labDbContext?.AdminStaffs.Where(user => user.UserID == key.ToString()).FirstOrDefault());
+            return Task.FromResult<AdminStaff?>(this._labDbContext?.AdminStaffs.Where(user => user.ID == Convert.ToInt32(key)).FirstOrDefault());
         }
 
         public Task<IEnumerable<AdminStaff>> Gets(int skip, int take)
@@ -69,7 +69,7 @@ namespace WebApiLab.Services
 
         public Task<bool> Update(AdminStaff data)
         {
-            if (this._labDbContext?.AdminStaffs.UpdateIfExists(data, db => db.UserID == data.UserID.ToString()) != null)
+            if (this._labDbContext?.AdminStaffs.UpdateIfExists(data, db => db.ID == data.ID) != null)
             {
                 this._labDbContext?.SaveChanges();
                 return Task.FromResult(true);

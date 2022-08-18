@@ -25,7 +25,7 @@ namespace CommonClass.Models.Request
         [Required]
         public string LastName { get; set; }
         [Required]
-        public GenderOption Gender { get; set; }
+        public GenderOptions Gender { get; set; }
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CommonClass.Enums;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -82,6 +83,10 @@ namespace CommonClass.Models
         /// </Modified>
         [Required]
         public DateTime DateModified { get; set; }
+
+        [Required]
+        [DefaultValue(AccountStatusOptions.Normal)]
+        public AccountStatusOptions AccountStatus { get; set; }
 
     }
 }

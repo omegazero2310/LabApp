@@ -22,11 +22,6 @@
             get;
             set;
         }
-        public Guid Id
-        {
-            get;
-            set;
-        }
         public string EmailId
         {
             get;

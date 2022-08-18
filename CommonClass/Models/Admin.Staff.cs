@@ -26,9 +26,9 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Key]
-        [Column(TypeName = "nvarchar(50)")]
-        [Required(AllowEmptyStrings = false)]
-        public string UserID { get; set; }
+        [Column(TypeName = "int")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
 
         /// <summary>
         /// Tên nhân viên
@@ -56,7 +56,7 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Required]
-        public GenderOption Gender { get; set; }
+        public GenderOptions Gender { get; set; }
 
         /// <summary>
         /// Email của nhân viên
@@ -123,6 +123,6 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Required]
-        public PositionOption PositionID { get; set; }
+        public PositionOptions PositionID { get; set; }
     }
 }
