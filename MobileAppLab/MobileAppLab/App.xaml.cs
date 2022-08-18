@@ -1,4 +1,5 @@
-﻿using MobileAppLab.ViewModels;
+﻿using CommonClass.Enums;
+using MobileAppLab.ViewModels;
 using MobileAppLab.Views;
 using Prism;
 using Prism.Ioc;
@@ -35,7 +36,11 @@ namespace MobileAppLab
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+            var assembly = typeof(App).Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                System.Diagnostics.Debug.WriteLine("found resource: " + res);
+            }
             await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
 

@@ -2,10 +2,69 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileAppLab.Views.MainPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--#region ảnh đăng nhập-->
+            <Frame Grid.Row="0"
+                   BorderColor="LightGray"
+                   HasShadow="True"
+                   HeightRequest="10000"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand">
+                <Frame.Background>
+                    <LinearGradientBrush StartPoint="0,0"
+                             EndPoint="1,1">
+                        <GradientStop Color="#9fb5de"
+                          Offset="0.1"/>
+                        <GradientStop Color="#d5f0fb"
+                          Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Frame.Background>
+                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.loginPagebg.png}" HorizontalOptions="Fill" VerticalOptions="Fill" ></Image>
+            </Frame>
+            <!--#endregion-->
+            
+            <!--#region Phần các control-->
+            <StackLayout Grid.Row="1">
+                <!--#region trường mật khẩu-->
+                <Grid Padding="5,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="Start"/>
+                    <Entry Grid.Column="1" Placeholder="Password"
+                        IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
+                    <ImageButton Grid.Column="2" VerticalOptions="Center"
+                       HeightRequest="20"
+                       HorizontalOptions="End"
+                       Source="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}">
+                        <ImageButton.Triggers>
+                            <EventTrigger Event="Clicked">
+                                <trg:ShowPasswordTriggerAction ShowIcon="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}"
+                                                              HideIcon="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility_off48.png}"
+                                                              x:Name="ShowPasswordActualTrigger"/>
+                            </EventTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                </Grid>
+                <!--#endregion-->
+            </StackLayout>
+            <!--#endregion-->
+            
+        </Grid>
+
+
     </StackLayout>
 
 </ContentPage>
