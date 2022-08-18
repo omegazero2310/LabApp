@@ -12,7 +12,7 @@ namespace CommonClass.Models
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    [Table("Admin.Staff")]
+    [Table("Admin.Staffs")]
     public class AdminStaff
     {
         /// <summary>

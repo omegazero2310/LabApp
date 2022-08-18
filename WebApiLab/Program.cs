@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
-using WebApiLab.LabDatabaseContext;
 
 namespace WebApiLab
 {

@@ -10,7 +10,7 @@ namespace CommonClass.Models
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    [Table("Admin.User")]
+    [Table("Admin.Users")]
     public class AdminUser
     {
         /// <summary>
