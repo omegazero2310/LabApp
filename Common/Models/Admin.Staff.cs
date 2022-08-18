@@ -123,5 +123,17 @@ namespace CommonClass.Models
         /// </Modified>
         [Required]
         public PositionOptions PositionID { get; set; }
+        /// <summary>
+        /// ID hình ảnh của nhân viên trên API
+        /// </summary>
+        /// <value>
+        /// ảnh đại diện của nhân viên
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 18/08/2022 created
+        /// </Modified>
+        [Column(TypeName = "nvarchar(50)")]
+        public string ProfileImage { get; set; }
     }
 }
