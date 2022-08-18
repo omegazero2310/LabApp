@@ -1,4 +1,7 @@
-﻿using CommonClass.Models;
+﻿using CommonClass.ErrorCodes;
+using CommonClass.Models;
+using CommonClass.Validations;
+using System.Net;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
 
@@ -14,32 +17,49 @@ namespace WebApiLab.Services
     {
         private LabDbContext _labDbContext;
         private IServiceProvider _serviceProvider;
+        private AdminStaffValidator _validationRules;
         public AdminStaffsService(IServiceProvider serviceProvider)
         {
             this._serviceProvider = serviceProvider;
             this._labDbContext = serviceProvider.GetService<LabDbContext>();
+            _validationRules = new AdminStaffValidator();
         }
-        public Task<bool> Create(AdminStaff data)
+        public Task<HttpResponseMessage> Create(AdminStaff data)
         {
+            bool isDuplicateEmail = this._labDbContext.AdminStaffs.Any(staff => staff.Email == data.Email);
+            bool isDuplicatePhoneNumber = this._labDbContext.AdminStaffs.Any(staff => staff.PhoneNumber == data.PhoneNumber);
+            if (isDuplicateEmail)
+            {
+                var emailRespone = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                emailRespone.ReasonPhrase = AdminStaffErrorCode.DUPLICATE_EMAIL;
+                return Task.FromResult(emailRespone);
+            }
+            if (isDuplicatePhoneNumber)
+            {
+                var phoneNumberRespone = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                phoneNumberRespone.ReasonPhrase = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
+                return Task.FromResult(phoneNumberRespone);
+            }
             if (this._labDbContext?.AdminStaffs.AddIfNotExists(data, db => db.ID == data.ID) != null)
             {
                 this._labDbContext?.SaveChanges();
-                return Task.FromResult(true);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.Created));
             }
             else
-                return Task.FromResult(false);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotModified));
+
 
         }
 
-        public Task<bool> Delete(object key)
+        public Task<HttpResponseMessage> Delete(object key)
         {
             if (this._labDbContext?.AdminStaffs.DeleteIfExists(new AdminStaff { ID = Convert.ToInt32(key) }, db => db.ID == Convert.ToInt32(key)) != null)
             {
                 this._labDbContext?.SaveChanges();
-                return Task.FromResult(true);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK));
             }
             else
-                return Task.FromResult(false);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotModified));
         }
 
         public Task<AdminStaff?> Get(object key)
@@ -70,15 +90,16 @@ namespace WebApiLab.Services
                     );
         }
 
-        public Task<bool> Update(AdminStaff data)
+        public Task<HttpResponseMessage> Update(AdminStaff data)
         {
+
             if (this._labDbContext?.AdminStaffs.UpdateIfExists(data, db => db.ID == data.ID) != null)
             {
                 this._labDbContext?.SaveChanges();
-                return Task.FromResult(true);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK));
             }
             else
-                return Task.FromResult(false);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotModified));
         }
     }
 }

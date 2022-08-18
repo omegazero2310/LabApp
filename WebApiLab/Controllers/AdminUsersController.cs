@@ -14,8 +14,8 @@ namespace WebApiLab.Controllers
     public class AdminUsersController : ControllerBase
     {
         private readonly IServiceProvider _configuration;
-        private AdminUsersService _adminUsersService;
-        private AdminStaffsService _adminStaffsService;
+        private IBackendService<AdminUser> _adminUsersService;
+        private IBackendService<AdminStaff> _adminStaffsService;
         private JwtSettings _jwtSettings;
         private ILogger<AdminUsersController> _logger;
         public AdminUsersController(JwtSettings jwtSettings, IServiceProvider configuration, ILogger<AdminUsersController> logger)

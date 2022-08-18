@@ -1,4 +1,5 @@
 ﻿using CommonClass.Models;
+using System.Net;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
 
@@ -14,32 +15,35 @@ namespace WebApiLab.Services
     {
         private LabDbContext _labDbContext;
         private IServiceProvider _serviceProvider;
+        
         public AdminUsersService(IServiceProvider serviceProvider)
         {
             this._serviceProvider = serviceProvider;
             this._labDbContext = serviceProvider.GetService<LabDbContext>();
+            
         }
-        public Task<bool> Create(AdminUser data)
+        public Task<HttpResponseMessage> Create(AdminUser data)
         {
+            
             if (this._labDbContext?.AdminUsers.AddIfNotExists(data, db => db.UserID == data.UserID) != null)
             {
                 this._labDbContext?.SaveChanges();
-                return Task.FromResult(true);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.Created));
             }
             else
-                return Task.FromResult(false);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotModified));
             
         }
 
-        public Task<bool> Delete(object key)
+        public Task<HttpResponseMessage> Delete(object key)
         {
             if (this._labDbContext?.AdminUsers.DeleteIfExists(new AdminUser { UserID = key.ToString()}, db => db.UserID == key.ToString()) != null)
             {
                 this._labDbContext?.SaveChanges();
-                return Task.FromResult(true);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK));
             }
             else
-                return Task.FromResult(false);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotModified));
         }
 
         public Task<AdminUser?> Get(object key)
@@ -52,15 +56,15 @@ namespace WebApiLab.Services
             throw new NotImplementedException("Not support");
         }
 
-        public Task<bool> Update(AdminUser data)
+        public Task<HttpResponseMessage> Update(AdminUser data)
         {
             if (this._labDbContext?.AdminUsers.UpdateIfExists(data, db => db.UserID == data.UserID.ToString()) != null)
             {
                 this._labDbContext?.SaveChanges();
-                return Task.FromResult(true);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK));
             }
             else
-                return Task.FromResult(false);
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotModified));
         }
     }
 }

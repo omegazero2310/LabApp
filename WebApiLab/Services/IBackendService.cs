@@ -5,11 +5,11 @@ namespace WebApiLab.Services
 {
     public interface IBackendService<T> where T : class
     {
-        Task<bool> Create(T data);
+        Task<HttpResponseMessage> Create(T data);
         Task<T?> Get(object key);
         Task<IEnumerable<T>> Gets(int skip = 0, int take = 0);
-        Task<bool> Update(T data);
-        Task<bool> Delete(object key);
+        Task<HttpResponseMessage> Update(T data);
+        Task<HttpResponseMessage> Delete(object key);
 
     }
 }
