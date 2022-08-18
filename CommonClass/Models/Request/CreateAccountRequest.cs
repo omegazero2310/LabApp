@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonClass.Models
+namespace CommonClass.Models.Request
 {
 
     /// <summary>Request class to create new account</summary>

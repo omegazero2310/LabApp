@@ -1,4 +1,4 @@
-﻿using CommonClass.Models;
+﻿using CommonClass.Models.Request;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

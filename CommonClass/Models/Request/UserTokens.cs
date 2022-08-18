@@ -1,4 +1,4 @@
-﻿namespace CommonClass.Models
+﻿namespace CommonClass.Models.Request
 {
     public class UserTokens
     {
