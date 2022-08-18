@@ -1,4 +1,5 @@
 ﻿using CommonClass.ErrorCodes;
+using CommonClass.Models;
 using CommonClass.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 using WebApiLab.Exts;
@@ -84,6 +85,37 @@ namespace WebApiLab.Controllers
                         return Unauthorized(UserLoginErrorCode.WRONG_USER_NAME_PASSWORD);
                 }
 
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, null);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [ActionName("CreateAccount")]
+        public async Task<IActionResult> CreateNewAccount([FromBody] LoginRequest createAccRequet)
+        {
+            try
+            {
+                var account = await this._adminUsersService.Get(createAccRequet.UserName);
+                if (account == null)
+                {
+                    var salt = PasswordHelper.CreateSalt();
+                    var hashedPassword = PasswordHelper.GenerateHash(createAccRequet.Password, salt);
+                    AdminUser newUser = new AdminUser();
+                    newUser.UserID = createAccRequet.UserName;
+                    newUser.HashedPassword = hashedPassword;
+                    newUser.Salt = salt;
+                    newUser.AccountStatus = CommonClass.Enums.AccountStatusOptions.Normal;
+                    newUser.IsResetPassword = false;
+                    newUser.DateModified = DateTime.Now;
+                    await this._adminUsersService.Create(newUser);
+                    return Ok();
+                }
+                else
+                    return Unauthorized(UserLoginErrorCode.EXIST);
             }
             catch (Exception ex)
             {

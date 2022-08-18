@@ -44,7 +44,10 @@ namespace WebApiLab.Services
 
         public Task<AdminStaff?> Get(object key)
         {
-            return Task.FromResult<AdminStaff?>(this._labDbContext?.AdminStaffs.Where(user => user.ID == Convert.ToInt32(key)).FirstOrDefault());
+            if (int.TryParse(key.ToString(), out int value))
+                return Task.FromResult<AdminStaff?>(this._labDbContext?.AdminStaffs.Where(user => user.ID == value).FirstOrDefault());
+            else
+                return Task.FromResult<AdminStaff?>(null);
         }
 
         public Task<IEnumerable<AdminStaff>> Gets(int skip, int take)

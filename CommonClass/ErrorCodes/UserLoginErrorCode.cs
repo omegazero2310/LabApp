@@ -2,6 +2,7 @@
 {
     public static class UserLoginErrorCode
     {
+        public const string EXIST = "MSG_USER_EXIST";
         public const string NOT_EXIST = "MSG_USER_LOGIN_NOT_EXIST";
         public const string SUPPENDED = "MSG_USER_LOGIN_SUPPENDED";
         public const string BANNED = "MSG_USER_LOGIN_BANNED";
