@@ -7,7 +7,6 @@ namespace CommonClass.Validations
     {
         public AdminStaffValidator()
         {
-            RuleFor(user => user.ID).NotEmpty();
             RuleFor(user => user.UserName).NotEmpty().MaximumLength(50);
             RuleFor(user => user.PhoneNumber).NotEmpty();
             RuleFor(user => user.Address).NotEmpty();

@@ -16,13 +16,27 @@ namespace WebApiLab.Controllers
         private AdminUsersService _adminUsersService;
         private AdminStaffsService _adminStaffsService;
         private JwtSettings _jwtSettings;
-        public AdminUsersController(JwtSettings jwtSettings, IServiceProvider configuration)
+        private ILogger<AdminUsersController> _logger;
+        public AdminUsersController(JwtSettings jwtSettings, IServiceProvider configuration, ILogger<AdminUsersController> logger)
         {
             this._configuration = configuration;
             this._jwtSettings = jwtSettings;
+            this._logger = logger;
             this._adminUsersService = new AdminUsersService(configuration);
             this._adminStaffsService = new AdminStaffsService(configuration);
         }
+        /// <summary>
+        /// Đăng nhập vào hệ thống
+        /// </summary>
+        /// <param name="userLogins">json object chứa thông tin đăng nhập.</param>
+        /// <returns>JWT token để đăng nhập</returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 18/08/2022 created
+        /// </Modified>
+        /// <response code="200">Đăng nhập thành công, trả về token</response>
+        /// <response code="401">1. sai tên đăng nhập hoặc mật khẩu ; 2. tài khoản bị vô hiệu hóa</response>
+        /// <response code="404">Tài khoản không tồn tại</response>
         [HttpPost]
         [ActionName("Login")]
         public async Task<IActionResult> GetToken([FromBody] LoginRequest userLogins)
@@ -73,8 +87,8 @@ namespace WebApiLab.Controllers
             }
             catch (Exception ex)
             {
-
-                throw;
+                this._logger.LogError(ex, null);
+                return StatusCode(500);
             }
         }
     }
