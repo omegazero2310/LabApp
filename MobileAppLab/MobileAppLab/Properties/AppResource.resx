@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Language_En_US" xml:space="preserve">
+    <value>English - US</value>
+  </data>
+  <data name="Language_Vi_VN" xml:space="preserve">
+    <value>Tiếng Việt</value>
+  </data>
   <data name="Main_Page_LabelSelectLanguage" xml:space="preserve">
     <value>Select Language</value>
   </data>

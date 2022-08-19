@@ -61,6 +61,24 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English - US.
+        /// </summary>
+        public static string Language_En_US {
+            get {
+                return ResourceManager.GetString("Language_En_US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiếng Việt.
+        /// </summary>
+        public static string Language_Vi_VN {
+            get {
+                return ResourceManager.GetString("Language_Vi_VN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string Main_Page_LabelSelectLanguage {

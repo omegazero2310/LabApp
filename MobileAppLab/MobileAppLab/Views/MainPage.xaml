@@ -11,7 +11,7 @@
     <StackLayout>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!--#region ảnh đăng nhập-->
@@ -23,16 +23,7 @@
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="FillAndExpand"
                    CornerRadius="10" Margin="0,-10,0,0" >
-                <Frame.Background>
-                    <LinearGradientBrush StartPoint="0,0"
-                             EndPoint="1,1">
-                        <GradientStop Color="#465399"
-                          Offset="0.1"/>
-                        <GradientStop Color="#69c2ec"
-                          Offset="1.0"/>
-                    </LinearGradientBrush>
-                </Frame.Background>
-                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.loginPagebg.png}" HorizontalOptions="Fill" VerticalOptions="Fill" ></Image>
+                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.loginpicture.png}" HorizontalOptions="Fill" VerticalOptions="Fill" ScaleX="1.27" ScaleY="1.2"></Image>
             </Frame>
             <Frame Grid.Row="0" 
                    CornerRadius="5" 
