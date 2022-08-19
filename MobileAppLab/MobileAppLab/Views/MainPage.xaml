@@ -74,7 +74,7 @@
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="StartAndExpand"/>
-                        <Entry Grid.Column="1" Placeholder="UserName"/>
+                        <Entry Grid.Column="1" Placeholder="UserName" Text="{Binding UserName}" ReturnType="Next"/>
 
                     </Grid>
                     <!--#endregion-->
@@ -87,12 +87,12 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.lock48.png}" HorizontalOptions="StartAndExpand"/>
-                        <Entry Grid.Column="1" Placeholder="Password"
-                        IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
+                        <Entry Grid.Column="1" Placeholder="Password" Text="{Binding Password}" ReturnType="Done"
+                                IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
                         <ImageButton Grid.Column="1" VerticalOptions="Center"
-                       HeightRequest="20"
-                       HorizontalOptions="End"
-                       Source="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}">
+                                HeightRequest="20"
+                                HorizontalOptions="End"
+                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}">
                             <ImageButton.Triggers>
                                 <EventTrigger Event="Clicked">
                                     <trg:ShowPasswordTriggerAction ShowIcon="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}"
@@ -112,7 +112,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start">
-                            <CheckBox HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <CheckBox HorizontalOptions="Center" VerticalOptions="Center" IsChecked="{Binding IsSaveLoginInfo}"/>
                             <Label Text="Remember Me" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </StackLayout>
 
@@ -123,8 +123,7 @@
                                         <Span Text="Forgot Password ?"
                                           TextDecorations="Underline">
                                             <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding TapCommand}"
-                                          CommandParameter="https://docs.microsoft.com/xamarin/" />
+                                                <TapGestureRecognizer Command="{Binding CommandForgotPassword}"/>
                                             </Span.GestureRecognizers>
                                         </Span>
                                     </FormattedString>
@@ -136,7 +135,13 @@
                     <!--#endregion-->
 
                     <Grid Grid.Row="3">
-                        <Button Text="Login" CornerRadius="15" TextColor="White" WidthRequest="250" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Button Text="Login" 
+                                CornerRadius="15" 
+                                TextColor="White" 
+                                WidthRequest="250" 
+                                HorizontalOptions="Center" 
+                                VerticalOptions="Center"
+                                Command="{Binding CommandLogin}">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="1,0">
                                     <GradientStop Color="#0080cf" Offset="0.1" />

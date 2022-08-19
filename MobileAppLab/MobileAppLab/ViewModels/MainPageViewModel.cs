@@ -62,21 +62,42 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand _commandForgotPassword;
         public DelegateCommand CommandForgotPassword =>
             _commandForgotPassword ?? (_commandForgotPassword = new DelegateCommand(ExecuteCommandForgotPassword));
-        private DelegateCommand<string> _commandPickerLanguageChange;
 
 
-        
+
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             Title = "Main Page Login";
             this.AppVersion = "Version " + this.GetType().Assembly.GetName().Version.ToString();
-            if (Application.Current.Properties.ContainsKey("REMEMBER_LOGIN"))
+            if (Preferences.ContainsKey("REMEMBER_LOGIN"))
             {
-                var isRemember = Application.Current.Properties["REMEMBER_LOGIN"] as bool?;
-                
-                this.IsSaveLoginInfo = isRemember ?? false;
+                this.IsSaveLoginInfo = Preferences.Get("REMEMBER_LOGIN", false);
+                if (this.IsSaveLoginInfo)
+                {
+                    this.UserName = SecureStorage.GetAsync("USER_NAME").Result;
+                    this.Password = SecureStorage.GetAsync("USER_PASSWORD").Result;
+                }                      
+            }      
+            else
+                Preferences.Set("REMEMBER_LOGIN", false);
+
+            if (!Preferences.ContainsKey("LANGUAGE"))
+            {
+                Preferences.Set("LANGUAGE", "EN");
+                this.SelectedLanguage = _listLanguages.Where(val => val.Value == "EN").FirstOrDefault().Key ?? "English";
             }
+            else
+            {
+                string language = Preferences.Get("LANGUAGE", "EN");
+                this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
+            }
+
+
+        }
+        ~MainPageViewModel()
+        {
+
         }
         private void GetSavedUserLogin()
         {
@@ -85,6 +106,27 @@ namespace MobileAppLab.ViewModels
 
         private async void ExecuteCommandLogin()
         {
+            bool isLoginSuccess = true;
+            var language = _listLanguages[this.SelectedLanguage];
+            if (Preferences.ContainsKey("LANGUAGE"))
+                Preferences.Set("LANGUAGE", language);
+            else
+                Preferences.Set("LANGUAGE", "EN");
+
+            if (isLoginSuccess && !string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
+            {
+                if (IsSaveLoginInfo)
+                {
+                    await SecureStorage.SetAsync("USER_NAME", this.UserName);
+                    await SecureStorage.SetAsync("USER_PASSWORD", this.Password);
+
+                    if (Preferences.ContainsKey("REMEMBER_LOGIN"))
+                        Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
+                    else
+                        Preferences.Set("REMEMBER_LOGIN", false);
+                }
+                
+            }
 
         }
         private async void ExecuteCommandForgotPassword()
@@ -94,9 +136,11 @@ namespace MobileAppLab.ViewModels
         private async void OnPickerLangChange()
         {
             var language = _listLanguages[this.SelectedLanguage];
+            if (Preferences.ContainsKey("LANGUAGE"))
+                Preferences.Set("LANGUAGE", language);
             //tìm ảnh bắt đầu bằng mã quốc gia kết thúc bằng từ flag
             string prefix = this.GetType().Assembly.GetName().Name + ".AssetImages.";
-            string resName = prefix + language.ToLower()+"_flag.png";
+            string resName = prefix + language.ToLower() + "_flag.png";
             this.ImageLanguage = ImageSource.FromResource(resName);
         }
     }
