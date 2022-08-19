@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using System.Resources;
+using MobileAppLab.Properties;
+using MobileAppLab.Utilities;
 
 namespace MobileAppLab.ViewModels
 {
@@ -51,8 +54,8 @@ namespace MobileAppLab.ViewModels
 
         private static Dictionary<string, string> _listLanguages = new Dictionary<string, string>()
                 {
-                    {"English","US" },
-                    {"Tiếng Việt","VN"}
+                    {"English","en-US" },
+                    {"Tiếng Việt","vi-VN"}
                 };
         public List<string> ListLanguages { get; } = _listLanguages.Keys.ToList();
 
@@ -69,7 +72,7 @@ namespace MobileAppLab.ViewModels
             : base(navigationService)
         {
             Title = "Main Page Login";
-            this.AppVersion = "Version " + this.GetType().Assembly.GetName().Version.ToString();
+            this.AppVersion = this.GetType().Assembly.GetName().Version.ToString();
             if (Preferences.ContainsKey("REMEMBER_LOGIN"))
             {
                 this.IsSaveLoginInfo = Preferences.Get("REMEMBER_LOGIN", false);
@@ -77,19 +80,19 @@ namespace MobileAppLab.ViewModels
                 {
                     this.UserName = SecureStorage.GetAsync("USER_NAME").Result;
                     this.Password = SecureStorage.GetAsync("USER_PASSWORD").Result;
-                }                      
-            }      
+                }
+            }
             else
                 Preferences.Set("REMEMBER_LOGIN", false);
 
             if (!Preferences.ContainsKey("LANGUAGE"))
             {
-                Preferences.Set("LANGUAGE", "EN");
-                this.SelectedLanguage = _listLanguages.Where(val => val.Value == "EN").FirstOrDefault().Key ?? "English";
+                Preferences.Set("LANGUAGE", "en-US");
+                this.SelectedLanguage = _listLanguages.Where(val => val.Value == "en-US").FirstOrDefault().Key ?? "English";
             }
             else
             {
-                string language = Preferences.Get("LANGUAGE", "EN");
+                string language = Preferences.Get("LANGUAGE", "en-US");
                 this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
             }
 
@@ -111,7 +114,7 @@ namespace MobileAppLab.ViewModels
             if (Preferences.ContainsKey("LANGUAGE"))
                 Preferences.Set("LANGUAGE", language);
             else
-                Preferences.Set("LANGUAGE", "EN");
+                Preferences.Set("LANGUAGE", "en-US");
 
             if (isLoginSuccess && !string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
             {
@@ -125,7 +128,7 @@ namespace MobileAppLab.ViewModels
                     else
                         Preferences.Set("REMEMBER_LOGIN", false);
                 }
-                
+
             }
 
         }
@@ -136,6 +139,7 @@ namespace MobileAppLab.ViewModels
         private async void OnPickerLangChange()
         {
             var language = _listLanguages[this.SelectedLanguage];
+            LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo(language));
             if (Preferences.ContainsKey("LANGUAGE"))
                 Preferences.Set("LANGUAGE", language);
             //tìm ảnh bắt đầu bằng mã quốc gia kết thúc bằng từ flag

@@ -5,14 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AssetImages\en-US_flag.png" />
     <None Remove="AssetImages\lock48.png" />
     <None Remove="AssetImages\loginPage.png" />
     <None Remove="AssetImages\loginPagebg.png" />
     <None Remove="AssetImages\person48.png" />
-    <None Remove="AssetImages\us_flag.png" />
+    <None Remove="AssetImages\vi-VN_flag.png" />
     <None Remove="AssetImages\visibility48.png" />
     <None Remove="AssetImages\visibility_off48.png" />
-    <None Remove="AssetImages\vn_flag.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,10 +20,10 @@
     <EmbeddedResource Include="AssetImages\loginPage.png" />
     <EmbeddedResource Include="AssetImages\loginPagebg.png" />
     <EmbeddedResource Include="AssetImages\person48.png" />
-    <EmbeddedResource Include="AssetImages\us_flag.png" />
+    <EmbeddedResource Include="AssetImages\en-us_flag.png" />
     <EmbeddedResource Include="AssetImages\visibility48.png" />
     <EmbeddedResource Include="AssetImages\visibility_off48.png" />
-    <EmbeddedResource Include="AssetImages\vn_flag.png" />
+    <EmbeddedResource Include="AssetImages\vi-vn_flag.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +40,21 @@
 
   <ItemGroup>
     <Folder Include="ApiServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\AppResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\AppResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

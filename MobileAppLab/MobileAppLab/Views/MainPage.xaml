@@ -5,7 +5,8 @@
              Title="{Binding Title}"
              NavigationPage.HasNavigationBar="False"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions">
+             xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions"
+             xmlns:helper="clr-namespace:MobileAppLab.Utilities">
 
     <StackLayout>
         <Grid>
@@ -43,7 +44,7 @@
                    Margin="0,0,5,0">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
                     <Image Source="{Binding ImageLanguage}" HeightRequest="30" WidthRequest="30"/>
-                    <Picker Title="Select Language" 
+                    <Picker Title="{helper:Translate Main_Page_LabelSelectLanguage}" 
                         HorizontalOptions="CenterAndExpand" 
                         VerticalOptions="CenterAndExpand"
                         WidthRequest="95"
@@ -74,7 +75,7 @@
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="StartAndExpand"/>
-                        <Entry Grid.Column="1" Placeholder="UserName" Text="{Binding UserName}" ReturnType="Next"/>
+                        <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderUserName}" Text="{Binding UserName}" ReturnType="Next"/>
 
                     </Grid>
                     <!--#endregion-->
@@ -87,7 +88,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.lock48.png}" HorizontalOptions="StartAndExpand"/>
-                        <Entry Grid.Column="1" Placeholder="Password" Text="{Binding Password}" ReturnType="Done"
+                        <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderPassword}" Text="{Binding Password}" ReturnType="Done"
                                 IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
                         <ImageButton Grid.Column="1" VerticalOptions="Center"
                                 HeightRequest="20"
@@ -113,14 +114,14 @@
 
                         <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start">
                             <CheckBox HorizontalOptions="Center" VerticalOptions="Center" IsChecked="{Binding IsSaveLoginInfo}"/>
-                            <Label Text="Remember Me" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{helper:Translate Main_Page_TextRememberPassword}" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </StackLayout>
 
                         <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
                             <Label HorizontalOptions="End" VerticalOptions="Center">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Forgot Password ?"
+                                        <Span Text="{helper:Translate Main_Page_TextForgotPassword}"
                                           TextDecorations="Underline">
                                             <Span.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding CommandForgotPassword}"/>
@@ -135,7 +136,7 @@
                     <!--#endregion-->
 
                     <Grid Grid.Row="3">
-                        <Button Text="Login" 
+                        <Button Text="{helper:Translate Main_Page_TextLogin}" 
                                 CornerRadius="15" 
                                 TextColor="White" 
                                 WidthRequest="250" 
@@ -151,7 +152,11 @@
                         </Button>
                     </Grid>
 
-                    <Label Grid.Row="4" Text="{Binding AppVersion}" HorizontalOptions="Center" VerticalOptions="Center" Padding="0" Margin="0,20,0,0" />
+                    <StackLayout Grid.Row="4" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="{helper:Translate Main_Page_TextVersion}" HorizontalOptions="Center" VerticalOptions="Center" Padding="0" Margin="0,20,0,0"/>
+                        <Label Text="{Binding AppVersion}" HorizontalOptions="Center" VerticalOptions="Center" Padding="0" Margin="0,20,0,0" />
+                    </StackLayout>
+                    
                 </Grid>
 
 
