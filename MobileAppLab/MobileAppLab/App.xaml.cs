@@ -53,6 +53,10 @@ namespace MobileAppLab
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<MainTabbedPage, MainTabbedViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
+            containerRegistry.RegisterForNavigation<StaffListingPage, StaffListingViewModel>();
+            containerRegistry.RegisterForNavigation<UserNotificationPage, UserNotificationViewModel>();
+            containerRegistry.RegisterForNavigation<UserAccountPage, UserAccountViewModel>();
         }
     }
 }
