@@ -10,11 +10,16 @@ using Xamarin.Forms;
 using System.Resources;
 using MobileAppLab.Properties;
 using MobileAppLab.Utilities;
+using MobileAppLab.ApiServices;
+using System.Net.Http;
+using Prism.Services;
 
 namespace MobileAppLab.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        private AdminUserServices _adminUserServices;
+        private IPageDialogService _pageDialogService;
         private string _appVersion;
         public string AppVersion
         {
@@ -68,11 +73,21 @@ namespace MobileAppLab.ViewModels
 
 
 
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(INavigationService navigationService, IPageDialogService pageDialog, HttpClient httpClient)
             : base(navigationService)
         {
+            this._pageDialogService = pageDialog;
             Title = "Main Page Login";
             this.AppVersion = this.GetType().Assembly.GetName().Version.ToString();
+            this._adminUserServices = new AdminUserServices(httpClient);
+            this.GetSavedUserLogin();
+        }
+        ~MainPageViewModel()
+        {
+
+        }
+        private void GetSavedUserLogin()
+        {
             if (Preferences.ContainsKey("REMEMBER_LOGIN"))
             {
                 this.IsSaveLoginInfo = Preferences.Get("REMEMBER_LOGIN", false);
@@ -95,41 +110,43 @@ namespace MobileAppLab.ViewModels
                 string language = Preferences.Get("LANGUAGE", "en-US");
                 this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
             }
-
-
-        }
-        ~MainPageViewModel()
-        {
-
-        }
-        private void GetSavedUserLogin()
-        {
-
         }
 
         private async void ExecuteCommandLogin()
         {
-            bool isLoginSuccess = true;
+            var result = await this._adminUserServices.Login(this.UserName, this.Password);
+
             var language = _listLanguages[this.SelectedLanguage];
             if (Preferences.ContainsKey("LANGUAGE"))
                 Preferences.Set("LANGUAGE", language);
             else
                 Preferences.Set("LANGUAGE", "en-US");
-
-            if (isLoginSuccess && !string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
+            if (result.Item1)//nếu login thành công
             {
-                if (IsSaveLoginInfo)
+                //Lưu lại thông tin đăng nhập nếu tích vào checkbox
+                if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
                 {
-                    await SecureStorage.SetAsync("USER_NAME", this.UserName);
-                    await SecureStorage.SetAsync("USER_PASSWORD", this.Password);
+                    if (IsSaveLoginInfo)
+                    {
+                        await SecureStorage.SetAsync("USER_NAME", this.UserName);
+                        await SecureStorage.SetAsync("USER_PASSWORD", this.Password);
 
-                    if (Preferences.ContainsKey("REMEMBER_LOGIN"))
-                        Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
-                    else
-                        Preferences.Set("REMEMBER_LOGIN", false);
+                        if (Preferences.ContainsKey("REMEMBER_LOGIN"))
+                            Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
+                        else
+                            Preferences.Set("REMEMBER_LOGIN", false);
+                    }
+
                 }
-
+                //chuyển sang trang chủ
+                await this.NavigationService.NavigateAsync("MainTabbedPage");
             }
+            else
+            {
+                //thông báo lỗi đăng nhập
+                await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + result.Item2, "Ok");
+            }    
+            
 
         }
         private async void ExecuteCommandForgotPassword()

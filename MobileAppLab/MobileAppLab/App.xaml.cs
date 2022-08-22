@@ -3,6 +3,7 @@ using MobileAppLab.ViewModels;
 using MobileAppLab.Views;
 using Prism;
 using Prism.Ioc;
+using System.Net.Http;
 using Xamarin.Essentials;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
@@ -27,7 +28,7 @@ namespace MobileAppLab
         /// Name Date Comments
         /// annv3 18/08/2022 created
         /// </Modified>
-        public const string API_URL = "http://10.1.11.100/api/";
+        public const string API_URL = "http://10.1.11.100:8686/api/";
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
@@ -47,6 +48,7 @@ namespace MobileAppLab
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
+            containerRegistry.RegisterSingleton<HttpClient>(() => new HttpClient());
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();

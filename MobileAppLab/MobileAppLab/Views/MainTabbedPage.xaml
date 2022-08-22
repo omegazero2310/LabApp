@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppLab.Views.MainTabbedPage"
+            xmlns:helper="clr-namespace:MobileAppLab.Utilities"
+            xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <!--Pages can be added as references or inline-->
+    <ContentPage Title="{helper:Translate Main_Tabbed_Page_Home}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_home.png}"/>
+    <ContentPage Title="{helper:Translate Main_Tabbed_Page_Listing}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_listing.png}"/>
+    <ContentPage Title="{helper:Translate Main_Tabbed_Page_Bell}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_notification.png}"/>
+    <ContentPage Title="{helper:Translate Main_Tabbed_Page_Account}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_account.png}"/>
+</TabbedPage>
