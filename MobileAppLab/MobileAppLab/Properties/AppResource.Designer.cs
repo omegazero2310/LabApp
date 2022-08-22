@@ -140,5 +140,41 @@ namespace MobileAppLab.Properties {
                 return ResourceManager.GetString("Main_Page_TextVersion", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Main_Tabbed_Page_Account {
+            get {
+                return ResourceManager.GetString("Main_Tabbed_Page_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string Main_Tabbed_Page_Bell {
+            get {
+                return ResourceManager.GetString("Main_Tabbed_Page_Bell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string Main_Tabbed_Page_Home {
+            get {
+                return ResourceManager.GetString("Main_Tabbed_Page_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staff Listing.
+        /// </summary>
+        public static string Main_Tabbed_Page_Listing {
+            get {
+                return ResourceManager.GetString("Main_Tabbed_Page_Listing", resourceCulture);
+            }
+        }
     }
 }

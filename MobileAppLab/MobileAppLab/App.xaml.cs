@@ -52,6 +52,7 @@ namespace MobileAppLab
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<MainTabbedPage, MainTabbedViewModel>();
         }
     }
 }

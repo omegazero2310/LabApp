@@ -114,40 +114,51 @@ namespace MobileAppLab.ViewModels
 
         private async void ExecuteCommandLogin()
         {
-            var result = await this._adminUserServices.Login(this.UserName, this.Password);
-
-            var language = _listLanguages[this.SelectedLanguage];
-            if (Preferences.ContainsKey("LANGUAGE"))
-                Preferences.Set("LANGUAGE", language);
-            else
-                Preferences.Set("LANGUAGE", "en-US");
-            if (result.Item1)//nếu login thành công
+            try
             {
-                //Lưu lại thông tin đăng nhập nếu tích vào checkbox
-                if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
+                this.IsBusy = true;
+                var result = await this._adminUserServices.Login(this.UserName, this.Password);
+
+                var language = _listLanguages[this.SelectedLanguage];
+                if (Preferences.ContainsKey("LANGUAGE"))
+                    Preferences.Set("LANGUAGE", language);
+                else
+                    Preferences.Set("LANGUAGE", "en-US");
+                if (result.Item1)//nếu login thành công
                 {
-                    if (IsSaveLoginInfo)
+                    //Lưu lại thông tin đăng nhập nếu tích vào checkbox
+                    if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
                     {
-                        await SecureStorage.SetAsync("USER_NAME", this.UserName);
-                        await SecureStorage.SetAsync("USER_PASSWORD", this.Password);
+                        if (IsSaveLoginInfo)
+                        {
+                            await SecureStorage.SetAsync("USER_NAME", this.UserName);
+                            await SecureStorage.SetAsync("USER_PASSWORD", this.Password);
 
-                        if (Preferences.ContainsKey("REMEMBER_LOGIN"))
-                            Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
-                        else
-                            Preferences.Set("REMEMBER_LOGIN", false);
+                            if (Preferences.ContainsKey("REMEMBER_LOGIN"))
+                                Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
+                            else
+                                Preferences.Set("REMEMBER_LOGIN", false);
+                        }
+
                     }
-
+                    //chuyển sang trang chủ
+                    await this.NavigationService.NavigateAsync("MainTabbedPage");
                 }
-                //chuyển sang trang chủ
-                await this.NavigationService.NavigateAsync("MainTabbedPage");
+                else
+                {
+                    //thông báo lỗi đăng nhập
+                    await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + result.Item2, "Ok");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                //thông báo lỗi đăng nhập
-                await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + result.Item2, "Ok");
-            }    
+                await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + ex.Message, "Ok");
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
             
-
         }
         private async void ExecuteCommandForgotPassword()
         {

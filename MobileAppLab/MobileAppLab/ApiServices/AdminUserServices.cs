@@ -21,7 +21,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {  
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl);
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + "/Login");
                 LoginRequest userLogin = new LoginRequest();
                 userLogin.UserName = userName;
                 userLogin.Password = password;
