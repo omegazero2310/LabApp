@@ -62,20 +62,21 @@
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="1.4*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Label Grid.Row="0" 
                                        Grid.Column="0" 
                                        Text="{Binding UserName}" 
-                                       HorizontalOptions="StartAndExpand" 
+                                       HorizontalOptions="Start" 
                                        VerticalOptions="Center"
-                                       FontSize="Medium"
+                                       FontSize="Small"
+                                       FontAttributes="Bold"
                                        TextColor="White"/>
                                 <Label Grid.Row="1" 
                                        Grid.Column="0" 
                                        Text="{Binding PhoneNumber}"
-                                       HorizontalOptions="StartAndExpand"
+                                       HorizontalOptions="Start"
                                        VerticalOptions="Center"
                                        FontSize="Small"
                                        TextColor="White"/>
@@ -106,7 +107,54 @@
                        CornerRadius="10" Margin="0,-25,0,0"
                        >
                     <StackLayout>
-                        
+                        <TableView Intent="Settings" Margin="0">
+                            <TableRoot>
+                                <TableSection>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_account.png}" Scale="2" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="40"/>
+                                            <Label Grid.Column="1" Text="Thông tin học viên" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_black.png}" Scale="2" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_key.png}" Scale="2" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="40"/>
+                                            <Label Grid.Column="1" Text="Đổi mật khẩu" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_black.png}" Scale="2" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_star.png}" Scale="2" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="40"/>
+                                            <Label Grid.Column="1" Text="Đánh giá" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_black.png}" Scale="2" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_gear.png}" Scale="2" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="40"/>
+                                            <Label Grid.Column="1" Text="Cài đặt" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_black.png}" Scale="2" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_info.png}" Scale="2" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="40"/>
+                                            <Label Grid.Column="1" Text="Phiên bản" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_black.png}" Scale="2" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_logout.png}" Scale="2" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="40"/>
+                                            <Label Grid.Column="1" Text="Đăng xuất" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_black.png}" Scale="2" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                </TableSection>
+                            </TableRoot>
+                        </TableView>
                     </StackLayout>
                 </Frame>
             </Grid>
