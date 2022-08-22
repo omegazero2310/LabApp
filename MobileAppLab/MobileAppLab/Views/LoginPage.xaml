@@ -65,7 +65,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="StartAndExpand"/>
+                        <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="StartAndExpand" Scale="2"/>
                         <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderUserName}" Text="{Binding UserName}" ReturnType="Next"/>
 
                     </Grid>
@@ -78,13 +78,13 @@
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.lock48.png}" HorizontalOptions="StartAndExpand"/>
+                        <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.lock48.png}" HorizontalOptions="StartAndExpand" Scale="2"/>
                         <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderPassword}" Text="{Binding Password}" ReturnType="Done"
                                 IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
                         <ImageButton Grid.Column="1" VerticalOptions="Center"
                                 HeightRequest="20"
                                 HorizontalOptions="End"
-                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}">
+                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}" Scale="1.5">
                             <ImageButton.Triggers>
                                 <EventTrigger Event="Clicked">
                                     <trg:ShowPasswordTriggerAction ShowIcon="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}"
