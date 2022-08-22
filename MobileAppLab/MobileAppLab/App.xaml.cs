@@ -42,7 +42,7 @@ namespace MobileAppLab
             {
                 System.Diagnostics.Debug.WriteLine("found resource: " + res);
             }
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -51,7 +51,7 @@ namespace MobileAppLab
             containerRegistry.RegisterSingleton<HttpClient>(() => new HttpClient());
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<MainTabbedPage, MainTabbedViewModel>();
         }
     }
