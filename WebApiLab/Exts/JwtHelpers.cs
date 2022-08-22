@@ -10,7 +10,7 @@ namespace WebApiLab.Exts
         public static IEnumerable<Claim> GetClaims(this UserTokens userAccounts, Guid Id)
         {
             IEnumerable<Claim> claims = new Claim[] {
-                new Claim("Id", userAccounts.GuidId.ToString()),
+                new Claim("Id", userAccounts.Id.ToString()),
                     new Claim(ClaimTypes.Name, userAccounts.UserName),
                     new Claim(ClaimTypes.Email, userAccounts.EmailId),
                     new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
@@ -44,6 +44,7 @@ namespace WebApiLab.Exts
                 UserToken.Token = new JwtSecurityTokenHandler().WriteToken(JWToken);
                 UserToken.UserName = model.UserName;
                 UserToken.GuidId = Id;
+                UserToken.Id = model.Id;
                 return UserToken;
             }
             catch (Exception)

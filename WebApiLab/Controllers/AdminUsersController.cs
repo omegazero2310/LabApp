@@ -67,7 +67,8 @@ namespace WebApiLab.Controllers
                                     EmailId = userInfo.Email,
                                     GuidId = Guid.NewGuid(),
                                     UserName = userLogins.UserName,
-                                }, _jwtSettings);
+                                    Id = userInfo.ID
+                                }, _jwtSettings) ;
                             }  
                             else
                             {
