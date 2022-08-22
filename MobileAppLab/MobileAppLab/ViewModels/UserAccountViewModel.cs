@@ -1,6 +1,7 @@
 ﻿using CommonClass.Models.Request;
 using MobileAppLab.ApiServices;
 using Newtonsoft.Json;
+using Prism;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -14,29 +15,66 @@ using Xamarin.Forms;
 
 namespace MobileAppLab.ViewModels
 {
-    public class UserAccountViewModel : ViewModelBase
+    public class UserAccountViewModel : ViewModelBase, IActiveAware
     {
         private AdminStaffService _adminStaffService;
-        private ImageSource _profilePicture;
+        private ImageSource _profilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
         public ImageSource ProfilePicture
         {
             get { return _profilePicture; }
             set { SetProperty(ref _profilePicture, value); }
         }
+        private string _userName;
+        public string UserName
+        {
+            get { return _userName; }
+            set { SetProperty(ref _userName, value); }
+        }
+        private string _phoneNumber;
+        public string PhoneNumber
+        {
+            get { return _phoneNumber; }
+            set { SetProperty(ref _phoneNumber, value); }
+        }
+        private bool _isActive;
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
+        }
+
+
+
         private DelegateCommand _commandChangeProfilePicture;
+
+        public event EventHandler IsActiveChanged;
+
         public DelegateCommand CommandName =>
             _commandChangeProfilePicture ?? (_commandChangeProfilePicture = new DelegateCommand(ExecuteChangeProfilePicture));
 
-        
+
         public UserAccountViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffService(httpClient);
         }
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        private async void RaiseIsActiveChanged()
         {
-            base.OnNavigatedTo(parameters);
-        }
+            if (this.IsActive)
+            {
+                string jsonToken = SecureStorage.GetAsync("JWT").Result;
+                var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
+                //load dữ liệu
+                var userInfo = await this._adminStaffService.GetByID(token.Id);
+                this.UserName = userInfo?.UserName ?? "PlaceHolder Name";
+                this.PhoneNumber = userInfo?.PhoneNumber ?? "PlaceHolder PhoneNumber";
+                var userProfilePicture = await this._adminStaffService.GetProfilePicture(token.Id);
+                if (userProfilePicture.IsSuccessStatusCode)
+                {
+                    this.ProfilePicture = StreamImageSource.FromStream(() => userProfilePicture.Content.ReadAsStreamAsync().Result);
+                }
+            }
 
+        }
         private async void ExecuteChangeProfilePicture()
         {
             try
@@ -79,7 +117,9 @@ namespace MobileAppLab.ViewModels
             //lấy id user đăng nhập 
             string jsonToken = await SecureStorage.GetAsync("JWT");
             var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
+            //tải ảnh lên api
             var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
+            //chỉ ảnh tới đường dẫn mới
         }
     }
 }

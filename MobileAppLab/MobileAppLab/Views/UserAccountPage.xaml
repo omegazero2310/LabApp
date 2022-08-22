@@ -44,7 +44,7 @@
                                    Padding="5" 
                                    IsClippedToBounds="True" 
                                    BorderColor="White">
-                                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_default_profile_pic.png}" >
+                                <Image Source="{Binding ProfilePicture}" >
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer
                                             NumberOfTapsRequired="1"
@@ -67,14 +67,14 @@
 
                                 <Label Grid.Row="0" 
                                        Grid.Column="0" 
-                                       Text="Name Here" 
+                                       Text="{Binding UserName}" 
                                        HorizontalOptions="StartAndExpand" 
                                        VerticalOptions="Center"
                                        FontSize="Medium"
                                        TextColor="White"/>
                                 <Label Grid.Row="1" 
                                        Grid.Column="0" 
-                                       Text="0123456789112"
+                                       Text="{Binding PhoneNumber}"
                                        HorizontalOptions="StartAndExpand"
                                        VerticalOptions="Center"
                                        FontSize="Small"

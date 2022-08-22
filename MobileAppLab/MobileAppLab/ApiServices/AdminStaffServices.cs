@@ -26,7 +26,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, $"/GetProfilePicture?id={id}");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/GetProfilePicture?id={id}");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
@@ -36,14 +36,14 @@ namespace MobileAppLab.ApiServices
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
             }
         }
         public async Task<HttpResponseMessage> UploadProfilePicture(int id, string filePath)
         {
             try
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, $"/UploadProfilePicture?id={id}");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl+$"/UploadProfilePicture?id={id}");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
 
@@ -72,7 +72,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "/Create");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + "/Create");
                 message.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
@@ -99,7 +99,20 @@ namespace MobileAppLab.ApiServices
 
         public async Task<AdminStaff> GetByID(object key)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/Get?id={key}");
+                //Get Token from SecureStorage
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                var respone = await HttpClient.SendAsync(message);
+                respone.EnsureSuccessStatusCode();
+                return JsonConvert.DeserializeObject<AdminStaff>(await respone.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null ;
+            }
         }
 
         public async Task<HttpResponseMessage> Update(AdminStaff entity)
