@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileAppLab.Views.UserAccountPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:helper="clr-namespace:MobileAppLab.Utilities"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
@@ -24,10 +26,79 @@
                             <GradientStop Color="#000d6a" Offset="1.0" />
                         </LinearGradientBrush>
                     </Frame.Background>
-                    <StackLayout Orientation="Horizontal">
-                        <Frame x:Name="circleFrame" HasShadow="False" Padding="0" Margin="0"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Gray" IsClippedToBounds="True">
-                            <Image x:Name="circleImg" Source="beverages.png" ></Image>
-                        </Frame>
+                    <StackLayout Orientation="Horizontal"  VerticalOptions="CenterAndExpand">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                            </Grid.RowDefinitions>
+
+                            <Frame Grid.Column="0" Grid.RowSpan="1"
+                                   CornerRadius="100" 
+                                   HeightRequest="100" 
+                                   WidthRequest="100" 
+                                   HorizontalOptions="Center" 
+                                   Padding="5" 
+                                   IsClippedToBounds="True" 
+                                   BorderColor="White">
+                                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_default_profile_pic.png}" >
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            NumberOfTapsRequired="1"
+                                            Command="{Binding CommandName}"
+                                            />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Frame>
+
+                            <Grid Grid.Column="1" Padding="0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="1.4*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" 
+                                       Grid.Column="0" 
+                                       Text="Name Here" 
+                                       HorizontalOptions="StartAndExpand" 
+                                       VerticalOptions="Center"
+                                       FontSize="Medium"
+                                       TextColor="White"/>
+                                <Label Grid.Row="1" 
+                                       Grid.Column="0" 
+                                       Text="0123456789112"
+                                       HorizontalOptions="StartAndExpand"
+                                       VerticalOptions="Center"
+                                       FontSize="Small"
+                                       TextColor="White"/>
+
+                                <Image Grid.Row="0" 
+                                       Grid.Column="1" 
+                                       Grid.RowSpan="2"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Center"
+                                       Scale="2.5"
+                                       Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_white.png}" >
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            NumberOfTapsRequired="1"
+                                            />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                            </Grid>
+                            
+                        </Grid>
+                        
+                        
                     </StackLayout>
                 </Frame>
 

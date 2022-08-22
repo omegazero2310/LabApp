@@ -142,7 +142,7 @@ namespace MobileAppLab.ViewModels
 
                     }
                     //chuyển sang trang chủ
-                    await this.NavigationService.NavigateAsync("MainTabbedPage");
+                    await this.NavigationService.NavigateAsync("MainTabbedPage", ("USER_ID", this.UserName));
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace MobileAppLab.ViewModels
                     await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + result.Item2, "Ok");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + ex.Message, "Ok");
             }
@@ -158,7 +158,7 @@ namespace MobileAppLab.ViewModels
             {
                 this.IsBusy = false;
             }
-            
+
         }
         private async void ExecuteCommandForgotPassword()
         {

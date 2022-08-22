@@ -95,22 +95,32 @@ namespace WebApiLab.Controllers
 
         [HttpPost]
         [ActionName("CreateAccount")]
-        public async Task<IActionResult> CreateNewAccount([FromBody] LoginRequest createAccRequet)
+        public async Task<IActionResult> CreateNewAccount([FromBody] CreateAccountRequest createAccRequet)
         {
             try
             {
                 var account = await this._adminUsersService.Get(createAccRequet.UserName);
                 if (account == null)
                 {
+
+                    AdminStaff newStaff = new AdminStaff();
+                    newStaff.UserName = createAccRequet.UserName;
+                    newStaff.Address = createAccRequet.Address;
+                    newStaff.Email = createAccRequet.Email;
+                    newStaff.PositionID = CommonClass.Enums.PositionOptions.NV;
+                    newStaff.PhoneNumber = createAccRequet.PhoneNumber;
+                    newStaff.Gender = createAccRequet.Gender;
                     var salt = PasswordHelper.CreateSalt();
                     var hashedPassword = PasswordHelper.GenerateHash(createAccRequet.Password, salt);
-                    AdminUser newUser = new AdminUser();
-                    newUser.UserID = createAccRequet.UserName;
+                    AdminUser newUser = new AdminUser { Staff = newStaff };
+                    newUser.UserID = createAccRequet.UserID;
                     newUser.HashedPassword = hashedPassword;
                     newUser.Salt = salt;
                     newUser.AccountStatus = CommonClass.Enums.AccountStatusOptions.Normal;
                     newUser.IsResetPassword = false;
                     newUser.DateModified = DateTime.Now;
+                    await this._adminStaffsService.Create(newStaff);
+                    newUser.ID = newStaff.ID;
                     await this._adminUsersService.Create(newUser);
                     return Ok();
                 }
