@@ -9,6 +9,7 @@
     <None Remove="AssetImages\icon_account.png" />
     <None Remove="AssetImages\icon_arrow_left_black.png" />
     <None Remove="AssetImages\icon_arrow_left_white.png" />
+    <None Remove="AssetImages\icon_default_profile_pic.png" />
     <None Remove="AssetImages\icon_gear.png" />
     <None Remove="AssetImages\icon_home.png" />
     <None Remove="AssetImages\icon_info.png" />
@@ -31,6 +32,7 @@
     <EmbeddedResource Include="AssetImages\icon_account.png" />
     <EmbeddedResource Include="AssetImages\icon_arrow_left_black.png" />
     <EmbeddedResource Include="AssetImages\icon_arrow_left_white.png" />
+    <EmbeddedResource Include="AssetImages\icon_default_profile_pic.png" />
     <EmbeddedResource Include="AssetImages\icon_gear.png" />
     <EmbeddedResource Include="AssetImages\icon_home.png" />
     <EmbeddedResource Include="AssetImages\icon_info.png" />

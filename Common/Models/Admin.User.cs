@@ -88,6 +88,8 @@ namespace CommonClass.Models
         [Required]
         [DefaultValue(AccountStatusOptions.Normal)]
         public AccountStatusOptions AccountStatus { get; set; }
-
+        public int? ID { get; set; }
+        [ForeignKey("ID")]
+        public virtual AdminStaff Staff { get; set; }
     }
 }
