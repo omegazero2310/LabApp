@@ -59,7 +59,8 @@ namespace WebApiLab.Controllers
                             return Unauthorized(UserLoginErrorCode.BANNED);
                         else
                         {
-                            var userInfo = await this._adminStaffsService.Get(userLogins.UserName);
+                            var adminUser = await this._adminUsersService.Get(userLogins.UserName);
+                            var userInfo = await this._adminStaffsService.Get(adminUser?.ID ?? -1);
                             if (userInfo != null)
                             {
                                 token = JwtHelpers.GenTokenkey(new UserTokens()
