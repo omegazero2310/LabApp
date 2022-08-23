@@ -7,6 +7,8 @@
             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
             xmlns:views="clr-namespace:MobileAppLab.Views"
             android:TabbedPage.ToolbarPlacement="Bottom"
+            android:TabbedPage.BarItemColor="Black"
+            android:TabbedPage.BarSelectedItemColor="Blue"
             NavigationPage.HasNavigationBar="False">
     <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
@@ -15,5 +17,5 @@
         <views:UserNotificationPage Title="{helper:Translate Main_Tabbed_Page_Bell}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_notification.png}"/>
         <views:UserAccountPage Title="{helper:Translate Main_Tabbed_Page_Account}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_account.png}"/>
     </TabbedPage.Children>
-    
+
 </TabbedPage>

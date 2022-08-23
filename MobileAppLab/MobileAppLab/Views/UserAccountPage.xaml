@@ -4,7 +4,8 @@
              x:Class="MobileAppLab.Views.UserAccountPage"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:helper="clr-namespace:MobileAppLab.Utilities"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
     <ContentPage.Content>
         <StackLayout>
             <Grid>
