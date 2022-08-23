@@ -128,6 +128,7 @@ namespace MobileAppLab.ViewModels
             {
                 this.IsBusy = true;
                 var result = await this._adminUserServices.Login(this.UserName, this.Password);
+                //var result = (true, "");
 
                 var language = _listLanguages[this.SelectedLanguage];
                 if (Preferences.ContainsKey("LANGUAGE"))
@@ -152,7 +153,7 @@ namespace MobileAppLab.ViewModels
 
                     }
                     //chuyển sang trang chủ
-                    await this.NavigationService.NavigateAsync("MainTabbedPage", null, false, true);
+                    await this.NavigationService.NavigateAsync("MainTabbedPage");
                 }
                 else
                 {

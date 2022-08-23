@@ -16,9 +16,5 @@ namespace MobileAppLab.ViewModels
         {
             Title = "Main Page";
         }
-        public override async void OnNavigatedToAsync(INavigationParameters parameters)
-        {
-            base.OnNavigatedToAsync(parameters);
-        }
     }
 }
