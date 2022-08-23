@@ -6,7 +6,8 @@
              NavigationPage.HasNavigationBar="False"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions"
-             xmlns:helper="clr-namespace:MobileAppLab.Utilities">
+             xmlns:helper="clr-namespace:MobileAppLab.Utilities"
+             x:Name="LoginView">
 
     <StackLayout>
         <Grid>

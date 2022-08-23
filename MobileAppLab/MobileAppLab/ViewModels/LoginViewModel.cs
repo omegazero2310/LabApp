@@ -152,7 +152,7 @@ namespace MobileAppLab.ViewModels
 
                     }
                     //chuyển sang trang chủ
-                    await this.NavigationService.NavigateAsync("MainTabbedPage", ("USER_ID", this.UserName));
+                    await this.NavigationService.NavigateAsync("MainTabbedPage");
                 }
                 else
                 {

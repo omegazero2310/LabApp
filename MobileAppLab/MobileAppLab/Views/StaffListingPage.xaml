@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileAppLab.Views.StaffListingPage">
+             x:Class="MobileAppLab.Views.StaffListingPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:helper="clr-namespace:MobileAppLab.Utilities">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="{xct:ImageResource }" Text="Item 1" Priority="0" />
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Xamarin.png" Text="Item 2" Priority="1" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Staff Listing PlaceHolder"

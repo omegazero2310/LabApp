@@ -19,7 +19,6 @@ namespace MobileAppLab.ViewModels
         public override async void OnNavigatedToAsync(INavigationParameters parameters)
         {
             base.OnNavigatedToAsync(parameters);
-            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
     }
 }
