@@ -98,7 +98,16 @@ namespace MobileAppLab.ApiServices
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
                 respone.EnsureSuccessStatusCode();
-                return JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(await respone.Content.ReadAsStringAsync());
+                var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(await respone.Content.ReadAsStringAsync());
+                foreach (var staff in listStaff)
+                {
+                    var res = await this.GetProfilePicture(staff.ID);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        staff.ProfilePicture = await res.Content.ReadAsByteArrayAsync();
+                    }
+                }
+                return listStaff;
             }
             catch (Exception ex)
             {

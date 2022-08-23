@@ -135,5 +135,8 @@ namespace CommonClass.Models
         /// </Modified>
         [Column(TypeName = "nvarchar(50)")]
         public string ProfileImage { get; set; }
+
+        [NotMapped]
+        public byte[] ProfilePicture { get; set; }
     }
 }

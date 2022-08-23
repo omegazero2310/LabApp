@@ -102,18 +102,22 @@
                                                 </SwipeView.RightItems>
                                                 <StackLayout Margin="5" HorizontalOptions="Start" VerticalOptions="Start">
                                                     <StackLayout Orientation="Horizontal" HeightRequest="60">
-                                                        <Frame Grid.Column="0"
-                                                               CornerRadius="100" 
-                                                               HeightRequest="50" 
-                                                               WidthRequest="50" 
-                                                               HorizontalOptions="Center" 
-                                                               Padding="5" 
-                                                               IsClippedToBounds="True" 
-                                                               BorderColor="Blue">
-                                                            <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_default_profile_pic.png}" >
-
+                                                        <Frame Padding="0" BorderColor="Blue" WidthRequest="60" HeightRequest="60" CornerRadius="100">
+                                                            <Image Source="{Binding ProfilePicture , Converter={xct:ByteArrayToImageSourceConverter}}" 
+                                                                   WidthRequest="50"   
+                                                                   HeightRequest="50"
+                                                                   HorizontalOptions="Center"
+                                                                   VerticalOptions="Center">
+                                                                <Image.Clip>
+                                                                    <EllipseGeometry
+                                                                        Center="25,25"
+                                                                        RadiusX="25"
+                                                                        RadiusY="25"/>
+                                                                </Image.Clip>
                                                             </Image>
                                                         </Frame>
+                                                            
+                                                        
                                                         <Grid Grid.Column="1">
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition/>
