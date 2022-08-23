@@ -4,6 +4,8 @@
              x:Class="MobileAppLab.Views.StaffListingPage"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:helper="clr-namespace:MobileAppLab.Utilities"
+             xmlns:custom="clr-namespace:MobileAppLab.CustomControl"
+             xmlns:local="clr-namespace:MobileAppLab.ViewModels" 
              NavigationPage.HasBackButton="True"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="True">
@@ -48,6 +50,108 @@
                 <Frame Grid.Row="1"
                        CornerRadius="10" Margin="0,-15,0,0"
                        >
+                    <StackLayout>
+                        <Frame CornerRadius="50" BorderColor="Blue" Scale="0.9">
+                            <Grid>
+                                <custom:NoBorderEntry Grid.Row="0" Placeholder="Tìm kiếm" HeightRequest="20"/>
+                                <ImageButton  VerticalOptions="Center"
+                                HeightRequest="20"
+                                HorizontalOptions="End"
+                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_search_blue.png}" Scale="5"/>
+                            </Grid>
+
+                        </Frame>
+                        <RefreshView  Command="{Binding CommandLoadData}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                            <CollectionView x:Name="ItemsListView"
+                                            ItemsSource="{Binding Staffs}"
+                                            SelectionMode="None" >
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="1">
+                                            <SwipeView >
+                                                <SwipeView.RightItems >
+                                                    <SwipeItemView >
+                                                        
+                                                        <Grid>
+                                                            <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="1">
+                                                                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_edit48.png }"
+                                                                   xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=blue, Dark=White}"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <Label Text="Edit" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <StackLayout.GestureRecognizers>
+                                                                    <TapGestureRecognizer
+                                                                        NumberOfTapsRequired="1"
+                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeEdit}"
+                                                                        CommandParameter="{Binding .}"
+                                                                        />
+                                                                </StackLayout.GestureRecognizers>
+                                                            </StackLayout>
+                                                            <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="0">
+                                                                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_delete48.png }"
+                                                                   xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=red, Dark=red}"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <Label Text="Delete" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <StackLayout.GestureRecognizers>
+                                                                    <TapGestureRecognizer
+                                                                        NumberOfTapsRequired="1"
+                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeDelete}"
+                                                                        CommandParameter="{Binding .}"
+                                                                        />
+                                                                </StackLayout.GestureRecognizers>
+                                                            </StackLayout>
+                                                        </Grid>
+                                                    </SwipeItemView>
+                                                </SwipeView.RightItems>
+                                                <StackLayout Margin="5" HorizontalOptions="Start" VerticalOptions="Start">
+                                                    <StackLayout Orientation="Horizontal" HeightRequest="60">
+                                                        <Frame Grid.Column="0"
+                                                               CornerRadius="100" 
+                                                               HeightRequest="50" 
+                                                               WidthRequest="50" 
+                                                               HorizontalOptions="Center" 
+                                                               Padding="5" 
+                                                               IsClippedToBounds="True" 
+                                                               BorderColor="Blue">
+                                                            <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_default_profile_pic.png}" >
+
+                                                            </Image>
+                                                        </Frame>
+                                                        <Grid Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="3*"/>
+                                                                <ColumnDefinition Width="0.81*"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding UserName}" FontSize="Small" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding PositionID}" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                                                            <Label Grid.Row="2" Grid.Column="0" Text="{Binding PhoneNumber}" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+
+                                                            <Label Grid.Row="2" Grid.Column="1" Text="DateHere" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand"/>
+                                                        </Grid>
+
+
+                                                    </StackLayout>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                        NumberOfTapsRequired="1"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=ViewUserCommand}"
+                                                        CommandParameter="{Binding .}">
+                                                        </TapGestureRecognizer>
+                                                    </StackLayout.GestureRecognizers>
+                                                </StackLayout>
+
+                                            </SwipeView>
+                                        </Grid>
+
+
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </RefreshView>
+                    </StackLayout>
                 </Frame>
             </Grid>
         </StackLayout>

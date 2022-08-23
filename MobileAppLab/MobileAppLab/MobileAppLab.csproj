@@ -11,6 +11,8 @@
     <None Remove="AssetImages\icon_arrow_left_black.png" />
     <None Remove="AssetImages\icon_arrow_left_white.png" />
     <None Remove="AssetImages\icon_default_profile_pic.png" />
+    <None Remove="AssetImages\icon_delete48.png" />
+    <None Remove="AssetImages\icon_edit48.png" />
     <None Remove="AssetImages\icon_gear.png" />
     <None Remove="AssetImages\icon_home.png" />
     <None Remove="AssetImages\icon_info.png" />
@@ -19,6 +21,7 @@
     <None Remove="AssetImages\icon_logout.png" />
     <None Remove="AssetImages\icon_more_vert48.png" />
     <None Remove="AssetImages\icon_notification.png" />
+    <None Remove="AssetImages\icon_search_blue.png" />
     <None Remove="AssetImages\icon_star.png" />
     <None Remove="AssetImages\lock48.png" />
     <None Remove="AssetImages\loginPage.png" />
@@ -37,6 +40,8 @@
     <EmbeddedResource Include="AssetImages\icon_arrow_left_black.png" />
     <EmbeddedResource Include="AssetImages\icon_arrow_left_white.png" />
     <EmbeddedResource Include="AssetImages\icon_default_profile_pic.png" />
+    <EmbeddedResource Include="AssetImages\icon_delete48.png" />
+    <EmbeddedResource Include="AssetImages\icon_edit48.png" />
     <EmbeddedResource Include="AssetImages\icon_gear.png" />
     <EmbeddedResource Include="AssetImages\icon_home.png" />
     <EmbeddedResource Include="AssetImages\icon_info.png" />
@@ -45,6 +50,7 @@
     <EmbeddedResource Include="AssetImages\icon_logout.png" />
     <EmbeddedResource Include="AssetImages\icon_more_vert48.png" />
     <EmbeddedResource Include="AssetImages\icon_notification.png" />
+    <EmbeddedResource Include="AssetImages\icon_search_blue.png" />
     <EmbeddedResource Include="AssetImages\icon_star.png" />
     <EmbeddedResource Include="AssetImages\lock48.png" />
     <EmbeddedResource Include="AssetImages\loginPage.png" />

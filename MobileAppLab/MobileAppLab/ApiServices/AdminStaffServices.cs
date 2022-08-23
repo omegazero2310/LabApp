@@ -40,7 +40,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl+$"/UploadProfilePicture?id={id}");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + $"/UploadProfilePicture?id={id}");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
 
@@ -91,7 +91,21 @@ namespace MobileAppLab.ApiServices
 
         public async Task<IEnumerable<AdminStaff>> GetAll(int skip = 0, int take = 0)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/GetAll");
+                //Get Token from SecureStorage
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                var respone = await HttpClient.SendAsync(message);
+                respone.EnsureSuccessStatusCode();
+                return JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(await respone.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return new List<AdminStaff>();
+
+            }
         }
 
         public async Task<AdminStaff> GetByID(object key)
@@ -108,7 +122,7 @@ namespace MobileAppLab.ApiServices
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return null ;
+                return null;
             }
         }
 

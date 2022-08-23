@@ -9,7 +9,9 @@
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarItemColor="Black"
             android:TabbedPage.BarSelectedItemColor="Blue"
-            NavigationPage.HasNavigationBar="False">
+            android:TabbedPage.IsSwipePagingEnabled="False"
+            NavigationPage.HasNavigationBar="False"
+            NavigationPage.HasBackButton="False">
     <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
         <views:HomePage Title="{helper:Translate Main_Tabbed_Page_Home}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_home.png}"/>

@@ -24,7 +24,7 @@
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="FillAndExpand"
                    CornerRadius="10" Margin="0,0,0,0" >
-                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.loginpicture.png}" HorizontalOptions="Fill" VerticalOptions="Fill" ScaleX="1.2" ScaleY="1.2" Rotation="90" Margin="10,0,0,0"></Image>
+                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.loginpicture.png}" HorizontalOptions="Fill" VerticalOptions="Fill" ScaleX="1.2" ScaleY="1.2"></Image>
             </Frame>
             <Frame Grid.Row="0" 
                    CornerRadius="5" 
