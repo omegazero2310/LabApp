@@ -86,7 +86,20 @@ namespace MobileAppLab.ApiServices
 
         public async Task<HttpResponseMessage> Delete(object key)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + $"/Delete?id={key}");
+                //Get Token from SecureStorage
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                var respone = await HttpClient.SendAsync(message);
+                respone.EnsureSuccessStatusCode();
+                return respone;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            }
         }
 
         public async Task<IEnumerable<AdminStaff>> GetAll(int skip = 0, int take = 0)
@@ -137,7 +150,21 @@ namespace MobileAppLab.ApiServices
 
         public async Task<HttpResponseMessage> Update(AdminStaff entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + "/Update");
+                message.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+                //Get Token from SecureStorage
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                var respone = await HttpClient.SendAsync(message);
+                respone.EnsureSuccessStatusCode();
+                return respone;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
