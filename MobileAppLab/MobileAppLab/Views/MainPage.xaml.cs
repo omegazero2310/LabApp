@@ -1,4 +1,4 @@
-﻿namespace LabMobileApp.Views
+﻿namespace MobileAppLab.Views
 {
     public partial class MainPage
     {

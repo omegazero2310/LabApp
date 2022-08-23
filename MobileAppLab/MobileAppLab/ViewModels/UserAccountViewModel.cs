@@ -1,9 +1,12 @@
 ﻿using CommonClass.Models.Request;
 using MobileAppLab.ApiServices;
+using MobileAppLab.Properties;
+using MobileAppLab.Views;
 using Newtonsoft.Json;
 using Prism;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +21,7 @@ namespace MobileAppLab.ViewModels
     public class UserAccountViewModel : ViewModelBase, IActiveAware
     {
         private AdminStaffService _adminStaffService;
+        private IPageDialogService _pageDialogService;
         private ImageSource _profilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
         public ImageSource ProfilePicture
         {
@@ -51,13 +55,24 @@ namespace MobileAppLab.ViewModels
 
         public DelegateCommand CommandName =>
             _commandChangeProfilePicture ?? (_commandChangeProfilePicture = new DelegateCommand(ExecuteChangeProfilePicture));
+        private DelegateCommand _commandLogout;
+        public DelegateCommand CommandLogout =>
+            _commandLogout ?? (_commandLogout = new DelegateCommand(ExecuteCommandLogout));
 
 
-        public UserAccountViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
+
+
+        public UserAccountViewModel(INavigationService navigationService, HttpClient httpClient, IPageDialogService pageDialog) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffService(httpClient);
+            this._pageDialogService = pageDialog;
         }
-        private async void RaiseIsActiveChanged()
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+            RaiseIsActiveChanged();
+        }
+        public async void RaiseIsActiveChanged()
         {
             if (this.IsActive)
             {
@@ -120,6 +135,27 @@ namespace MobileAppLab.ViewModels
             //tải ảnh lên api
             var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
             //chỉ ảnh tới đường dẫn mới
+        }
+
+        private async void ExecuteCommandLogout()
+        {
+            if (await this._pageDialogService.DisplayAlertAsync(AppResource.Account_Confirm_Logout_Title, AppResource.Account_Confirm_Logout_Msg, "Ok", "Cancel"))
+            {
+                try
+                {
+
+                    AdminUserServices.Logout();
+                    await this.NavigationService.NavigateAsync("app:///NavigationPage/LoginPage", null, false, false);
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+            }
         }
     }
 }

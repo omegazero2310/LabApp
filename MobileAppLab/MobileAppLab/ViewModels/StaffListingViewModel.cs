@@ -10,9 +10,9 @@ namespace MobileAppLab.ViewModels
         public StaffListingViewModel(INavigationService navigationService) : base(navigationService)
         {
         }
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedToAsync(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
+            base.OnNavigatedToAsync(parameters);
         }
     }
 }

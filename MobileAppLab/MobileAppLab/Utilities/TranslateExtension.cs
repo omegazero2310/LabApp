@@ -17,13 +17,22 @@ namespace MobileAppLab.Utilities
 
         public BindingBase ProvideValue(IServiceProvider serviceProvider)
         {
-            var binding = new Binding
+            try
             {
-                Mode = BindingMode.OneWay,
-                Path = $"[{Text}]",
-                Source = LocalizationResourceManager.Instance,
-            };
-            return binding;
+                var binding = new Binding
+                {
+                    Mode = BindingMode.OneWay,
+                    Path = $"[{Text}]",
+                    Source = LocalizationResourceManager.Instance,
+                };
+                return binding;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
     }
 }

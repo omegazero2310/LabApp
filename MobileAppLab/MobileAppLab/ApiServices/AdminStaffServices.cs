@@ -1,7 +1,6 @@
 ﻿using CommonClass.Models;
 using CommonClass.Models.Request;
 using Newtonsoft.Json;
-using Org.Apache.Http.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,8 +10,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
-using static Android.Content.ClipData;
-using static Android.Resource;
 
 namespace MobileAppLab.ApiServices
 {

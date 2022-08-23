@@ -16,7 +16,7 @@ using Prism.Services;
 
 namespace MobileAppLab.ViewModels
 {
-    public class LoginPageViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBase
     {
         private AdminUserServices _adminUserServices;
         private IPageDialogService _pageDialogService;
@@ -73,18 +73,28 @@ namespace MobileAppLab.ViewModels
 
 
 
-        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialog, HttpClient httpClient)
+        public LoginViewModel(INavigationService navigationService, IPageDialogService pageDialog, HttpClient httpClient)
             : base(navigationService)
         {
             this._pageDialogService = pageDialog;
             Title = "Main Page Login";
             this.AppVersion = this.GetType().Assembly.GetName().Version.ToString();
             this._adminUserServices = new AdminUserServices(httpClient);
-            this.GetSavedUserLogin();
+           
         }
-        ~LoginPageViewModel()
+        ~LoginViewModel()
         {
 
+        }
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+            this.GetSavedUserLogin();
+        }
+
+        public override void OnNavigatedToAsync(INavigationParameters parameters)
+        {
+            base.OnNavigatedToAsync(parameters);
         }
         private void GetSavedUserLogin()
         {

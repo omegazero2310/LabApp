@@ -39,6 +39,10 @@ namespace MobileAppLab.ApiServices
             }
 
         }
+        public async static void Logout()
+        {
+            SecureStorage.Remove("JWT");
+        }
 
         public Task<HttpResponseMessage> CreateNew(AdminUser entity)
         {

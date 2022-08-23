@@ -14,7 +14,10 @@ namespace MobileAppLab.Views
     {
         public LoginPage()
         {
-            InitializeComponent();
+            try {
+                InitializeComponent();
+            }
+            catch(Exception ex) { }
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="AssetImages\en-US_flag.png" />
+    <None Remove="AssetImages\en-us_flag.png" />
     <None Remove="AssetImages\icon_account.png" />
     <None Remove="AssetImages\icon_arrow_left_black.png" />
     <None Remove="AssetImages\icon_arrow_left_white.png" />
@@ -23,12 +23,13 @@
     <None Remove="AssetImages\loginPagebg.png" />
     <None Remove="AssetImages\loginpicture.png" />
     <None Remove="AssetImages\person48.png" />
-    <None Remove="AssetImages\vi-VN_flag.png" />
+    <None Remove="AssetImages\vi-vn_flag.png" />
     <None Remove="AssetImages\visibility48.png" />
     <None Remove="AssetImages\visibility_off48.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="AssetImages\en-us_flag.png" />
     <EmbeddedResource Include="AssetImages\icon_account.png" />
     <EmbeddedResource Include="AssetImages\icon_arrow_left_black.png" />
     <EmbeddedResource Include="AssetImages\icon_arrow_left_white.png" />
@@ -46,29 +47,21 @@
     <EmbeddedResource Include="AssetImages\loginPagebg.png" />
     <EmbeddedResource Include="AssetImages\loginpicture.png" />
     <EmbeddedResource Include="AssetImages\person48.png" />
-    <EmbeddedResource Include="AssetImages\en-us_flag.png" />
+    <EmbeddedResource Include="AssetImages\vi-vn_flag.png" />
     <EmbeddedResource Include="AssetImages\visibility48.png" />
     <EmbeddedResource Include="AssetImages\visibility_off48.png" />
-    <EmbeddedResource Include="AssetImages\vi-vn_flag.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.7.0" />
-    <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\CommonClass.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Mono.Android">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v10.0\Mono.Android.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -83,21 +76,6 @@
     <EmbeddedResource Update="Properties\AppResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoginPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\StaffListingPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\UserAccountPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\UserNotificationPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

@@ -61,6 +61,105 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App Version.
+        /// </summary>
+        public static string Account_App_Version {
+            get {
+                return ResourceManager.GetString("Account_App_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string Account_Change_Password {
+            get {
+                return ResourceManager.GetString("Account_Change_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to log out ?.
+        /// </summary>
+        public static string Account_Confirm_Logout_Msg {
+            get {
+                return ResourceManager.GetString("Account_Confirm_Logout_Msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm log out.
+        /// </summary>
+        public static string Account_Confirm_Logout_Title {
+            get {
+                return ResourceManager.GetString("Account_Confirm_Logout_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Account_Logout {
+            get {
+                return ResourceManager.GetString("Account_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rate App.
+        /// </summary>
+        public static string Account_Rate_App {
+            get {
+                return ResourceManager.GetString("Account_Rate_App", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Setting.
+        /// </summary>
+        public static string Account_Setting {
+            get {
+                return ResourceManager.GetString("Account_Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staff Info.
+        /// </summary>
+        public static string Account_Staff_Info {
+            get {
+                return ResourceManager.GetString("Account_Staff_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Confirm_Cancel {
+            get {
+                return ResourceManager.GetString("Confirm_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Confirm_Logout {
+            get {
+                return ResourceManager.GetString("Confirm_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string Confirm_Ok {
+            get {
+                return ResourceManager.GetString("Confirm_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English - US.
         /// </summary>
         public static string Language_En_US {

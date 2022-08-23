@@ -38,7 +38,7 @@ namespace MobileAppLab.ViewModels
 
         }
 
-        public virtual void OnNavigatedTo(INavigationParameters parameters)
+        public virtual void OnNavigatedToAsync(INavigationParameters parameters)
         {
 
         }
@@ -46,6 +46,10 @@ namespace MobileAppLab.ViewModels
         public virtual void Destroy()
         {
 
+        }
+
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
+        {
         }
     }
 }

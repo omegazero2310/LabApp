@@ -10,34 +10,10 @@
             NavigationPage.HasNavigationBar="False">
     <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
-        <NavigationPage Title="{helper:Translate Main_Tabbed_Page_Home}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_home.png}">
-            <x:Arguments>
-                <views:HomePage>
-                    
-                </views:HomePage>
-            </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Title="{helper:Translate Main_Tabbed_Page_Listing}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_listing.png}">
-            <x:Arguments>
-                <views:StaffListingPage>
-
-                </views:StaffListingPage>
-            </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Title="{helper:Translate Main_Tabbed_Page_Bell}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_notification.png}">
-            <x:Arguments>
-                <views:UserNotificationPage>
-
-                </views:UserNotificationPage>
-            </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Title="{helper:Translate Main_Tabbed_Page_Account}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_account.png}">
-            <x:Arguments>
-                <views:UserAccountPage>
-
-                </views:UserAccountPage>
-            </x:Arguments>
-        </NavigationPage>
+        <views:HomePage Title="{helper:Translate Main_Tabbed_Page_Home}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_home.png}"/>
+        <views:StaffListingPage Title="{helper:Translate Main_Tabbed_Page_Listing}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_listing.png}"/>
+        <views:UserNotificationPage Title="{helper:Translate Main_Tabbed_Page_Bell}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_notification.png}"/>
+        <views:UserAccountPage Title="{helper:Translate Main_Tabbed_Page_Account}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_account.png}"/>
     </TabbedPage.Children>
     
 </TabbedPage>

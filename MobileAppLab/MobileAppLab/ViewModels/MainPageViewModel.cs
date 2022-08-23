@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace LabMobileApp.ViewModels
+namespace MobileAppLab.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
@@ -14,6 +15,11 @@ namespace LabMobileApp.ViewModels
             : base(navigationService)
         {
             Title = "Main Page";
+        }
+        public override async void OnNavigatedToAsync(INavigationParameters parameters)
+        {
+            base.OnNavigatedToAsync(parameters);
+            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
     }
 }
