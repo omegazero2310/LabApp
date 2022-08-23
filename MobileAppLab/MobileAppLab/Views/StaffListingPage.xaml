@@ -56,13 +56,13 @@
                        >
                     <StackLayout>
                         <!--#region Thanh tìm kiếm-->
-                        <Frame CornerRadius="50" BorderColor="Blue" Scale="0.9">
-                            <Grid>
-                                <custom:NoBorderEntry Grid.Row="0" Placeholder="Tìm kiếm" HeightRequest="20"/>
-                                <ImageButton  VerticalOptions="Center"
-                                HeightRequest="20"
+                        <Frame CornerRadius="50" BorderColor="Blue" Padding="0">
+                            <Grid Padding="0">
+                                <custom:NoBorderEntry Grid.Row="0" Placeholder="Tìm kiếm" HeightRequest="50"/>
+                                <ImageButton  VerticalOptions="Center" Padding="0"
+                                BackgroundColor="Transparent"
                                 HorizontalOptions="End"
-                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_search_blue.png}" Scale="5"/>
+                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_search_blue.png}" Aspect="AspectFit" HeightRequest="50" WidthRequest="50"/>
                             </Grid>
                         </Frame>
                         <!--#endregion-->

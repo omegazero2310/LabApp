@@ -16,8 +16,18 @@ namespace MobileAppLab.Droid
             base.OnCreate(savedInstanceState);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            Window.SetFlags(WindowManagerFlags.LayoutNoLimits, WindowManagerFlags.LayoutNoLimits);
             LoadApplication(new App(new AndroidInitializer()));
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
+            {
+                // for covering the full screen in android..
+                Window.SetFlags(WindowManagerFlags.LayoutNoLimits, WindowManagerFlags.LayoutNoLimits);
+
+                // clear FLAG_TRANSLUCENT_STATUS flag:
+                Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
+
+                Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
