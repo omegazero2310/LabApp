@@ -13,6 +13,7 @@ using MobileAppLab.Utilities;
 using MobileAppLab.ApiServices;
 using System.Net.Http;
 using Prism.Services;
+using System.Diagnostics;
 
 namespace MobileAppLab.ViewModels
 {
@@ -80,7 +81,6 @@ namespace MobileAppLab.ViewModels
             Title = "Main Page Login";
             this.AppVersion = this.GetType().Assembly.GetName().Version.ToString();
             this._adminUserServices = new AdminUserServices(httpClient);
-           
         }
         ~LoginViewModel()
         {
@@ -152,7 +152,7 @@ namespace MobileAppLab.ViewModels
 
                     }
                     //chuyển sang trang chủ
-                    await this.NavigationService.NavigateAsync("MainTabbedPage");
+                    await this.NavigationService.NavigateAsync("MainTabbedPage", null, false, true);
                 }
                 else
                 {

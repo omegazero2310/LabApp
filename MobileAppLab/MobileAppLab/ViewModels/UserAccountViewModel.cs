@@ -9,6 +9,7 @@ using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -145,7 +146,7 @@ namespace MobileAppLab.ViewModels
                 {
 
                     AdminUserServices.Logout();
-                    await this.NavigationService.NavigateAsync("app:///NavigationPage/LoginPage", null, false, false);
+                    await this.NavigationService.NavigateAsync("LoginPage");
 
 
                 }

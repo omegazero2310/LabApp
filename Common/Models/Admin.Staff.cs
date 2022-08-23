@@ -1,4 +1,5 @@
 ﻿using CommonClass.Enums;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -136,7 +137,10 @@ namespace CommonClass.Models
         [Column(TypeName = "nvarchar(50)")]
         public string ProfileImage { get; set; }
 
+
         [NotMapped]
         public byte[] ProfilePicture { get; set; }
+        [NotMapped]
+        public DateTime CurrentTime { get; set; } = DateTime.Now;
     }
 }

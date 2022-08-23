@@ -1,5 +1,6 @@
 ﻿using CommonClass.Models;
 using MobileAppLab.ApiServices;
+using Prism;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
@@ -9,10 +10,13 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace MobileAppLab.ViewModels
 {
-    public class StaffListingViewModel : ViewModelBase
+    public class StaffListingViewModel : ViewModelBase, IActiveAware
     {
         private AdminStaffService _adminStaffService;
         private IPageDialogService _dialogService;
@@ -24,6 +28,13 @@ namespace MobileAppLab.ViewModels
             get { return _selectedStaff; }
             set { SetProperty(ref _selectedStaff, value); }
         }
+        public event EventHandler IsActiveChanged;
+        private bool _isActive;
+        public bool IsActive    
+        {
+            get { return _isActive; }
+            set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
+        }
 
         private DelegateCommand _commandLoadData;
         public DelegateCommand CommandLoadData =>
@@ -33,11 +44,9 @@ namespace MobileAppLab.ViewModels
             _commandSwipeEdit ?? (_commandSwipeEdit = new DelegateCommand<AdminStaff>(ExecuteCommandSwipeEdit));
 
         private DelegateCommand<AdminStaff> _commandSwipeDelete;
+
         public DelegateCommand<AdminStaff> CommandSwipeDelete =>
             _commandSwipeDelete ?? (_commandSwipeDelete = new DelegateCommand<AdminStaff>(ExecuteCommandSwipeDelete));
-
-
-
 
         public StaffListingViewModel(INavigationService navigationService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
         {
@@ -49,7 +58,7 @@ namespace MobileAppLab.ViewModels
         {
             try
             {
-                this.IsBusy = true;
+                this.IsRefreshing = true;
                 this.Staffs.Clear();
                 var list = await this._adminStaffService.GetAll();
                 foreach (var user in list)
@@ -64,10 +73,13 @@ namespace MobileAppLab.ViewModels
             }
             finally
             {
-                this.IsBusy =false;
+                this.IsRefreshing = false;
             }
         }
-        private async void ExecuteCommandLoadData()
+        private void RaiseIsActiveChanged()
+        {
+        }
+        private void ExecuteCommandLoadData()
         {
            this.LoadStaffs();
         }
