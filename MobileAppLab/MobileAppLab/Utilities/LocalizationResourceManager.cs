@@ -1,6 +1,7 @@
 ﻿using MobileAppLab.Properties;
 using System.ComponentModel;
 using System.Globalization;
+using System.Resources;
 using System.Threading;
 
 namespace MobileAppLab.Utilities
@@ -13,7 +14,7 @@ namespace MobileAppLab.Utilities
         {
             get
             {
-                return AppResource.ResourceManager.GetString(text, AppResource.Culture);
+                return AppResource.ResourceManager.GetString(text, AppResource.Culture) ?? text;
             }
         }
 

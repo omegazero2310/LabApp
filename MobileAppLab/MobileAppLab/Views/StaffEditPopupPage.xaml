@@ -45,16 +45,19 @@
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Text="{helper:Translate Label_StaffName}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="0" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_StaffName}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" Placeholder="{helper:Translate PlaceHolder_StaffName}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[UserName]}" TextColor="#FF0000" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-                        <Label Grid.Row="1" Grid.Column="0" Text="{helper:Translate Label_Address}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="1" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_Address}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                        <Label Grid.Row="2" Grid.Column="0" Text="{helper:Translate Label_Address}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_Address}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Address]}" TextColor="#FF0000" FontAttributes="Bold"/>
 
-                        <Label Grid.Row="2" Grid.Column="0" Text="{helper:Translate Label_PhoneNumber}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_PhoneNumber}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
-
-                        <Label Grid.Row="3" Grid.Column="0" Text="Chức vụ"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Picker Grid.Row="3" 
+                        <Label Grid.Row="4" Grid.Column="0" Text="{helper:Translate Label_PhoneNumber}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                        <Entry Grid.Row="4" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_PhoneNumber}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                        <Label Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[PhoneNumber]}" TextColor="#FF0000" FontAttributes="Bold"/>
+                        
+                        <Label Grid.Row="5" Grid.Column="0" Text="{helper:Translate Label_Position}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                        <Picker Grid.Row="5" 
                                     Grid.Column="1" 
                                     Title="{helper:Translate Picker_Select_Position}" 
                                     HorizontalOptions="Fill" 
@@ -62,12 +65,14 @@
                                     ItemsSource="{Binding ListStaffPositions}"
                                     SelectedItem="{Binding PositionName}"
                                     />
+                        <Label Grid.Row="6" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[POSITION_ID]}" TextColor="#FF0000" FontAttributes="Bold"/>
 
-                        <Label Grid.Row="4" Grid.Column="0" Text="{helper:Translate Label_Email}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="4" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_Email}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
-
-                        <Label Grid.Row="5" Grid.Column="0" Text="Giới tính"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Picker Grid.Row="5" 
+                        <Label Grid.Row="7" Grid.Column="0" Text="{helper:Translate Label_Email}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                        <Entry Grid.Row="7" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_Email}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                        <Label Grid.Row="8" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Email]}" TextColor="#FF0000" FontAttributes="Bold"/>
+                        
+                        <Label Grid.Row="9" Grid.Column="0" Text="{helper:Translate Label_Gender}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                        <Picker Grid.Row="9" 
                                     Grid.Column="1" 
                                     Title="{helper:Translate Picker_Select_Gender}" 
                                     HorizontalOptions="Fill" 
@@ -75,6 +80,7 @@
                                     ItemsSource="{Binding ListStaffGenders}"
                                     SelectedItem="{Binding Gender}"
                                     />
+                        <Label Grid.Row="10" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[GENDER]}" TextColor="#FF0000" FontAttributes="Bold"/>
                     </Grid>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Padding="0,0,0,10">

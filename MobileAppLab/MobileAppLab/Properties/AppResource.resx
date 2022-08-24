@@ -240,6 +240,33 @@
   <data name="Main_Tabbed_Page_Listing" xml:space="preserve">
     <value>Staff Listing</value>
   </data>
+  <data name="MSG_ADDRESS_CANNOT_EMPTY" xml:space="preserve">
+    <value>Address cannot be emtpy</value>
+  </data>
+  <data name="MSG_EMAIL_NOT_EMPTY" xml:space="preserve">
+    <value>Email cannot be empty</value>
+  </data>
+  <data name="MSG_EMAIL_NOT_VALID" xml:space="preserve">
+    <value>Email not valid</value>
+  </data>
+  <data name="MSG_GENDER_NOT_VALID" xml:space="preserve">
+    <value>Select valid gender</value>
+  </data>
+  <data name="MSG_PHONE_NUMBER_NOT_EMPTY" xml:space="preserve">
+    <value>Phone number must not be emtpy</value>
+  </data>
+  <data name="MSG_PHONE_NUMBER_NUMBER_ONLY" xml:space="preserve">
+    <value>Phone number contain word, contain number only</value>
+  </data>
+  <data name="MSG_POSITION_NOT_VALID" xml:space="preserve">
+    <value>Select valid Position</value>
+  </data>
+  <data name="MSG_USER_NAME_NOT_EMPTY" xml:space="preserve">
+    <value>User name cannot be emtpy</value>
+  </data>
+  <data name="MSG_USER_NAME_OVER_CHARACTER" xml:space="preserve">
+    <value>User name character is over 50</value>
+  </data>
   <data name="Picker_Select_Gender" xml:space="preserve">
     <value>Select Gender</value>
   </data>

@@ -430,6 +430,87 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address cannot be emtpy.
+        /// </summary>
+        public static string MSG_ADDRESS_CANNOT_EMPTY {
+            get {
+                return ResourceManager.GetString("MSG_ADDRESS_CANNOT_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email cannot be empty.
+        /// </summary>
+        public static string MSG_EMAIL_NOT_EMPTY {
+            get {
+                return ResourceManager.GetString("MSG_EMAIL_NOT_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email not valid.
+        /// </summary>
+        public static string MSG_EMAIL_NOT_VALID {
+            get {
+                return ResourceManager.GetString("MSG_EMAIL_NOT_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select valid gender.
+        /// </summary>
+        public static string MSG_GENDER_NOT_VALID {
+            get {
+                return ResourceManager.GetString("MSG_GENDER_NOT_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number must not be emtpy.
+        /// </summary>
+        public static string MSG_PHONE_NUMBER_NOT_EMPTY {
+            get {
+                return ResourceManager.GetString("MSG_PHONE_NUMBER_NOT_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number contain word, contain number only.
+        /// </summary>
+        public static string MSG_PHONE_NUMBER_NUMBER_ONLY {
+            get {
+                return ResourceManager.GetString("MSG_PHONE_NUMBER_NUMBER_ONLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select valid Position.
+        /// </summary>
+        public static string MSG_POSITION_NOT_VALID {
+            get {
+                return ResourceManager.GetString("MSG_POSITION_NOT_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name cannot be emtpy.
+        /// </summary>
+        public static string MSG_USER_NAME_NOT_EMPTY {
+            get {
+                return ResourceManager.GetString("MSG_USER_NAME_NOT_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name character is over 50.
+        /// </summary>
+        public static string MSG_USER_NAME_OVER_CHARACTER {
+            get {
+                return ResourceManager.GetString("MSG_USER_NAME_OVER_CHARACTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Gender.
         /// </summary>
         public static string Picker_Select_Gender {

@@ -1,7 +1,9 @@
 ﻿using CommonClass.Enums;
 using CommonClass.Models;
+using CommonClass.Validations;
 using MobileAppLab.ApiServices;
 using MobileAppLab.Properties;
+using MobileAppLab.Utilities;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -21,6 +23,8 @@ namespace MobileAppLab.ViewModels
         private AdminStaffService _adminStaffService;
         private IPageDialogService _pageDialog;
         public event Action<IDialogParameters> RequestClose;
+
+        public Dictionary<string, string> ErrorMessages { get; set; }
 
         private static Dictionary<string, GenderOptions> _staffGenders = new Dictionary<string, GenderOptions>()
                 {
@@ -83,10 +87,10 @@ namespace MobileAppLab.ViewModels
         public DelegateCommand CommandSave =>
             _commandSave ?? (_commandSave = new DelegateCommand(ExecuteCommandSave));
         private DelegateCommand _commandCancel;
-        public DelegateCommand CommandCancel   =>
+        public DelegateCommand CommandCancel =>
             _commandCancel ?? (_commandCancel = new DelegateCommand(ExecuteCommandCancel));
 
-        
+
 
 
         public StaffEditViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
@@ -102,15 +106,46 @@ namespace MobileAppLab.ViewModels
                 if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Add)
                 {
                     this.Title = AppResource.Label_Staff_Add;
-                }    
-            }    
+                }
+            }
         }
         private async void ExecuteCommandSave()
         {
             try
             {
+                this.ErrorMessages = new Dictionary<string, string>();
+                if (!Enum.TryParse(this.PositionName, out PositionOptions position))
+                {
+                    this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance["MSG_POSITION_NOT_VALID"]);
+                }
+                if (!Enum.TryParse(this.Gender, out GenderOptions gender))
+                {
+                    this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance["MSG_GENDER_NOT_VALID"]);
+                }
                 AdminStaff adminStaff = new AdminStaff();
+                adminStaff.UserName = this.UserName;
+                adminStaff.Address = this.Address;
+                adminStaff.PhoneNumber = this.PhoneNumber;
+                adminStaff.PositionID = position;
+                adminStaff.Gender = gender;
+                adminStaff.Email = this.EmailAddress;
+                AdminStaffValidator validationRules = new AdminStaffValidator();
+                var resultValidate = validationRules.Validate(adminStaff);
+                if (!resultValidate.IsValid)
+                {
+                    foreach (var e in resultValidate.Errors)
+                    {
+                        ErrorMessages[e.PropertyName] = LocalizationResourceManager.Instance[e.ErrorMessage];
+                    }
+                    RaisePropertyChanged(nameof(ErrorMessages));
+                    return;
 
+                }
+                else
+                {
+                    await this._adminStaffService.CreateNew(adminStaff);
+                    await this.NavigationService.GoBackAsync();
+                }    
             }
             catch (Exception ex)
             {
@@ -119,7 +154,7 @@ namespace MobileAppLab.ViewModels
             }
             finally
             {
-                await this.NavigationService.GoBackAsync();
+                
             }
         }
         private async void ExecuteCommandCancel()
