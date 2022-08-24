@@ -160,6 +160,105 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string Gender_Female {
+            get {
+                return ResourceManager.GetString("Gender_Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string Gender_Male {
+            get {
+                return ResourceManager.GetString("Gender_Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string Gender_Other {
+            get {
+                return ResourceManager.GetString("Gender_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Label_Cancel {
+            get {
+                return ResourceManager.GetString("Label_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Label_Delete {
+            get {
+                return ResourceManager.GetString("Label_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Label_Edit {
+            get {
+                return ResourceManager.GetString("Label_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Label_Save {
+            get {
+                return ResourceManager.GetString("Label_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new staff.
+        /// </summary>
+        public static string Label_Staff_Add {
+            get {
+                return ResourceManager.GetString("Label_Staff_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete staff.
+        /// </summary>
+        public static string Label_Staff_Delete {
+            get {
+                return ResourceManager.GetString("Label_Staff_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staff List.
+        /// </summary>
+        public static string Label_Staff_List {
+            get {
+                return ResourceManager.GetString("Label_Staff_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update staff info.
+        /// </summary>
+        public static string Label_Staff_Update {
+            get {
+                return ResourceManager.GetString("Label_Staff_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English - US.
         /// </summary>
         public static string Language_En_US {
@@ -273,6 +372,51 @@ namespace MobileAppLab.Properties {
         public static string Main_Tabbed_Page_Listing {
             get {
                 return ResourceManager.GetString("Main_Tabbed_Page_Listing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Gender.
+        /// </summary>
+        public static string Picker_Select_Gender {
+            get {
+                return ResourceManager.GetString("Picker_Select_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Position.
+        /// </summary>
+        public static string Picker_Select_Position {
+            get {
+                return ResourceManager.GetString("Picker_Select_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leader.
+        /// </summary>
+        public static string Position_CV {
+            get {
+                return ResourceManager.GetString("Position_CV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manager.
+        /// </summary>
+        public static string Position_GD {
+            get {
+                return ResourceManager.GetString("Position_GD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staff.
+        /// </summary>
+        public static string Position_NV {
+            get {
+                return ResourceManager.GetString("Position_NV", resourceCulture);
             }
         }
     }

@@ -15,7 +15,11 @@
     <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
         <views:HomePage Title="{helper:Translate Main_Tabbed_Page_Home}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_home.png}"/>
-        <views:StaffListingPage Title="{helper:Translate Main_Tabbed_Page_Listing}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_listing.png}"/>
+        <views:StaffListingPage Title="{helper:Translate Main_Tabbed_Page_Listing}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_listing.png}">
+            <views:StaffListingPage.Behaviors>
+                <xct:EventToCommandBehavior  EventName="Appearing" Command="{Binding CommandTabbedPage}"/>
+            </views:StaffListingPage.Behaviors>
+        </views:StaffListingPage>
         <views:UserNotificationPage Title="{helper:Translate Main_Tabbed_Page_Bell}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_notification.png}"/>
         <views:UserAccountPage Title="{helper:Translate Main_Tabbed_Page_Account}" IconImageSource="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_account.png}"/>
     </TabbedPage.Children>

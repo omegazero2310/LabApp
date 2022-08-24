@@ -150,6 +150,39 @@
   <data name="Confirm_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="Gender_Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="Gender_Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="Gender_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Label_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Label_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Label_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Label_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Label_Staff_Add" xml:space="preserve">
+    <value>Add new staff</value>
+  </data>
+  <data name="Label_Staff_Delete" xml:space="preserve">
+    <value>Delete staff</value>
+  </data>
+  <data name="Label_Staff_List" xml:space="preserve">
+    <value>Staff List</value>
+  </data>
+  <data name="Label_Staff_Update" xml:space="preserve">
+    <value>Update staff info</value>
+  </data>
   <data name="Language_En_US" xml:space="preserve">
     <value>English - US</value>
   </data>
@@ -188,5 +221,20 @@
   </data>
   <data name="Main_Tabbed_Page_Listing" xml:space="preserve">
     <value>Staff Listing</value>
+  </data>
+  <data name="Picker_Select_Gender" xml:space="preserve">
+    <value>Select Gender</value>
+  </data>
+  <data name="Picker_Select_Position" xml:space="preserve">
+    <value>Select Position</value>
+  </data>
+  <data name="Position_CV" xml:space="preserve">
+    <value>Leader</value>
+  </data>
+  <data name="Position_GD" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="Position_NV" xml:space="preserve">
+    <value>Staff</value>
   </data>
 </root>

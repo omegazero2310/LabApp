@@ -150,6 +150,39 @@
   <data name="Confirm_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="Gender_Female" xml:space="preserve">
+    <value>Nữ</value>
+  </data>
+  <data name="Gender_Male" xml:space="preserve">
+    <value>Nam</value>
+  </data>
+  <data name="Gender_Other" xml:space="preserve">
+    <value>Khác</value>
+  </data>
+  <data name="Label_Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="Label_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Label_Edit" xml:space="preserve">
+    <value>Sửa</value>
+  </data>
+  <data name="Label_Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Label_Staff_Add" xml:space="preserve">
+    <value>Thêm nhân viên</value>
+  </data>
+  <data name="Label_Staff_Delete" xml:space="preserve">
+    <value>Xóa nhân viên</value>
+  </data>
+  <data name="Label_Staff_List" xml:space="preserve">
+    <value>Danh sách nhân viên</value>
+  </data>
+  <data name="Label_Staff_Update" xml:space="preserve">
+    <value>Cập nhật nhân viên</value>
+  </data>
   <data name="Language_En_US" xml:space="preserve">
     <value>English - US</value>
   </data>
@@ -188,5 +221,20 @@
   </data>
   <data name="Main_Tabbed_Page_Listing" xml:space="preserve">
     <value>Danh sách học viên</value>
+  </data>
+  <data name="Picker_Select_Gender" xml:space="preserve">
+    <value>Chọn giới tính</value>
+  </data>
+  <data name="Picker_Select_Position" xml:space="preserve">
+    <value>Chọn vị trí</value>
+  </data>
+  <data name="Position_CV" xml:space="preserve">
+    <value>Chuyên viên</value>
+  </data>
+  <data name="Position_GD" xml:space="preserve">
+    <value>Giám đốc</value>
+  </data>
+  <data name="Position_NV" xml:space="preserve">
+    <value>Nhân viên</value>
   </data>
 </root>
