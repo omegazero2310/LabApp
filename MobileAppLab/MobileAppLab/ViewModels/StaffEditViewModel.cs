@@ -29,17 +29,17 @@ namespace MobileAppLab.ViewModels
 
         private static Dictionary<string, GenderOptions> _staffGenders = new Dictionary<string, GenderOptions>()
                 {
-                    {AppResource.Gender_Male,GenderOptions.Male },
-                    {AppResource.Gender_Female,GenderOptions.Female },
-                    {AppResource.Gender_Other,GenderOptions.Other },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Male)],GenderOptions.Male },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Female)],GenderOptions.Female },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Other)],GenderOptions.Other },
                 };
         public List<string> ListStaffGenders { get; } = _staffGenders.Keys.ToList();
 
         private static Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>()
                 {
-                    {AppResource.Position_NV,PositionOptions.NV },
-                    {AppResource.Position_TP,PositionOptions.TP },
-                    {AppResource.Position_GD,PositionOptions.GD },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_NV)],PositionOptions.NV },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_GD)],PositionOptions.GD },
                 };
         public List<string> ListStaffPositions { get; } = _staffPositions.Keys.ToList();
         private bool _isEdit;
@@ -149,13 +149,13 @@ namespace MobileAppLab.ViewModels
 
                 if (string.IsNullOrEmpty(this.PositionName))
                 {
-                    this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance["MSG_POSITION_NOT_VALID"]);
+                    this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance[nameof(AppResource.MSG_POSITION_NOT_VALID)]);
                     RaisePropertyChanged(nameof(ErrorMessages));
                     return;
                 }
                 if (string.IsNullOrEmpty(this.Gender))
                 {
-                    this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance["MSG_GENDER_NOT_VALID"]);
+                    this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance[nameof(AppResource.MSG_GENDER_NOT_VALID)]);
                     RaisePropertyChanged(nameof(ErrorMessages));
                     return;
                 }

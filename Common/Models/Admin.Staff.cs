@@ -142,5 +142,7 @@ namespace CommonClass.Models
         public byte[] ProfilePicture { get; set; }
         [NotMapped]
         public DateTime CurrentTime { get; set; } = DateTime.Now;
+        [NotMapped]
+        public string PositionName { get; set; }
     }
 }

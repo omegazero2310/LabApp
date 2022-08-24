@@ -1,10 +1,14 @@
-﻿using CommonClass.Models;
+﻿using CommonClass.Enums;
+using CommonClass.Models;
 using CommonClass.Models.Request;
+using MobileAppLab.Properties;
+using MobileAppLab.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -15,6 +19,12 @@ namespace MobileAppLab.ApiServices
 {
     public class AdminStaffService : BaseApiService, IService<AdminStaff>
     {
+        private static Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>()
+                {
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_NV)],PositionOptions.NV },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },
+                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_GD)],PositionOptions.GD },
+                };
         public AdminStaffService(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
         {
         }
@@ -114,6 +124,7 @@ namespace MobileAppLab.ApiServices
                 var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(await respone.Content.ReadAsStringAsync());
                 foreach (var staff in listStaff)
                 {
+                    staff.PositionName = _staffPositions.Where(row => row.Value == staff.PositionID).FirstOrDefault().Key ?? "";
                     var res = await this.GetProfilePicture(staff.ID);
                     if (res.IsSuccessStatusCode)
                     {
