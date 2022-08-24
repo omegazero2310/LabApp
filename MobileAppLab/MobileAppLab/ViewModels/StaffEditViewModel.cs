@@ -1,4 +1,5 @@
 ﻿using CommonClass.Enums;
+using CommonClass.Models;
 using MobileAppLab.ApiServices;
 using MobileAppLab.Properties;
 using Prism.Commands;
@@ -88,14 +89,27 @@ namespace MobileAppLab.ViewModels
         
 
 
-        public StaffEditViewModel(INavigationService navigationService) : base(navigationService)
+        public StaffEditViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
         {
+            this._adminStaffService = new AdminStaffService(httpClient);
         }
-
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (parameters == null)
+                return;
+            else
+            {
+                if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Add)
+                {
+                    this.Title = AppResource.Label_Staff_Add;
+                }    
+            }    
+        }
         private async void ExecuteCommandSave()
         {
             try
             {
+                AdminStaff adminStaff = new AdminStaff();
 
             }
             catch (Exception ex)
@@ -103,10 +117,14 @@ namespace MobileAppLab.ViewModels
                 Debug.WriteLine(ex);
                 await this._pageDialog.DisplayAlertAsync("Save Error", ex.Message, "Ok");
             }
+            finally
+            {
+                await this.NavigationService.GoBackAsync();
+            }
         }
         private async void ExecuteCommandCancel()
         {
-
+            await this.NavigationService.GoBackAsync();
         }
 
     }

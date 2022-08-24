@@ -1,5 +1,6 @@
 ﻿using CommonClass.Models;
 using MobileAppLab.ApiServices;
+using MobileAppLab.Properties;
 using MobileAppLab.Views;
 using Prism;
 using Prism.Commands;
@@ -94,8 +95,10 @@ namespace MobileAppLab.ViewModels
         }
         private async void ExecuteCommandNewStaff()
         {
-            await this.NavigationService.NavigateAsync("StaffEditPopupPage");
-            //await this.NavigationService.NavigateAsync("StaffEditPage", null, true, false);
+            NavigationParameters pairs = new NavigationParameters();
+            pairs.Add("Type", AppResource.Label_Staff_Add);
+            pairs.Add("Value", "");
+            await this.NavigationService.NavigateAsync("StaffEditPopupPage", pairs);
         }
         private async void ExecuteCommandSwipeEdit(AdminStaff parameter)
         {
