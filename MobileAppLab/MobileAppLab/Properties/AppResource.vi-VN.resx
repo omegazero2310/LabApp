@@ -201,6 +201,9 @@
   <data name="Label_Staff_Update" xml:space="preserve">
     <value>Cập nhật nhân viên</value>
   </data>
+  <data name="Label_Staff_View" xml:space="preserve">
+    <value>Thông tin chi tiết nhân viên</value>
+  </data>
   <data name="Language_En_US" xml:space="preserve">
     <value>English - US</value>
   </data>

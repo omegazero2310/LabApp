@@ -304,6 +304,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View staff detail.
+        /// </summary>
+        public static string Label_Staff_View {
+            get {
+                return ResourceManager.GetString("Label_Staff_View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Staff name.
         /// </summary>
         public static string Label_StaffName {

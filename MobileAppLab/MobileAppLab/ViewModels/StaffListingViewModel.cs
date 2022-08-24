@@ -51,6 +51,11 @@ namespace MobileAppLab.ViewModels
 
         public DelegateCommand<AdminStaff> CommandSwipeDelete =>
             _commandSwipeDelete ?? (_commandSwipeDelete = new DelegateCommand<AdminStaff>(ExecuteCommandSwipeDelete));
+        private DelegateCommand<AdminStaff> _commandView;
+        public DelegateCommand<AdminStaff> CommandView =>
+            _commandView ?? (_commandView = new DelegateCommand<AdminStaff>(ExecuteCommandView));
+
+        
 
         private DelegateCommand _commandNewStaff;
         public DelegateCommand CommandNewStaff =>
@@ -93,6 +98,15 @@ namespace MobileAppLab.ViewModels
         {
             this.LoadStaffs();
         }
+        private async void ExecuteCommandView(AdminStaff parameter)
+        {
+            if (parameter == null)
+                return;
+            NavigationParameters pairs = new NavigationParameters();
+            pairs.Add("Type", AppResource.Label_Staff_View);
+            pairs.Add("Value", parameter.ID);
+            await this.NavigationService.NavigateAsync("StaffEditPopupPage", pairs);
+        }
         private async void ExecuteCommandNewStaff()
         {
             NavigationParameters pairs = new NavigationParameters();
@@ -104,7 +118,10 @@ namespace MobileAppLab.ViewModels
         {
             if (parameter == null)
                 return;
-            await this.NavigationService.NavigateAsync("StaffEditPage", null, true, true);
+            NavigationParameters pairs = new NavigationParameters();
+            pairs.Add("Type", AppResource.Label_Staff_Update);
+            pairs.Add("Value", parameter.ID);
+            await this.NavigationService.NavigateAsync("StaffEditPopupPage", pairs);
         }
         private async void ExecuteCommandSwipeDelete(AdminStaff parameter)
         {

@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MobileAppLab.ViewModels
 {
@@ -41,6 +42,12 @@ namespace MobileAppLab.ViewModels
                     {AppResource.Position_GD,PositionOptions.GD },
                 };
         public List<string> ListStaffPositions { get; } = _staffPositions.Keys.ToList();
+        private bool _isEdit;
+        public bool IsEditMode
+        {
+            get { return _isEdit; }
+            set { SetProperty(ref _isEdit, value); }
+        }
 
         private string _userName;
         public string UserName
@@ -97,7 +104,7 @@ namespace MobileAppLab.ViewModels
         {
             this._adminStaffService = new AdminStaffService(httpClient);
         }
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             if (parameters == null)
                 return;
@@ -106,7 +113,33 @@ namespace MobileAppLab.ViewModels
                 if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Add)
                 {
                     this.Title = AppResource.Label_Staff_Add;
+                    this.IsEditMode = true;
                 }
+                else if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Update)
+                {
+                    this.Title = AppResource.Label_Staff_Update;
+                    this.IsEditMode = true;
+                    await this.LoadStaffInfo((int)parameters["Value"]);
+                }
+                else if (parameters["Type"]?.ToString() == AppResource.Label_Staff_View)
+                {
+                    this.Title = AppResource.Label_Staff_View;
+                    this.IsEditMode = false;
+                    await this.LoadStaffInfo((int)parameters["Value"]);
+                }
+            }
+        }
+        private async Task LoadStaffInfo(int id)
+        {
+            AdminStaff adminStaff = await this._adminStaffService.GetByID(id);
+            if (adminStaff != null)
+            {
+                this.UserName = adminStaff.UserName;
+                this.Address = adminStaff.Address;
+                this.PhoneNumber = adminStaff.PhoneNumber;
+                this.PositionName = _staffPositions.Where(pos => pos.Value == adminStaff.PositionID).FirstOrDefault().Key;
+                this.EmailAddress = adminStaff.Email;
+                this.Gender = _staffGenders.Where(pos => pos.Value == adminStaff.Gender).FirstOrDefault().Key;
             }
         }
         private async void ExecuteCommandSave()
@@ -114,7 +147,7 @@ namespace MobileAppLab.ViewModels
             try
             {
                 this.ErrorMessages = new Dictionary<string, string>();
-                
+
                 if (string.IsNullOrEmpty(this.PositionName))
                 {
                     this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance["MSG_POSITION_NOT_VALID"]);
@@ -148,9 +181,12 @@ namespace MobileAppLab.ViewModels
                 }
                 else
                 {
-                    await this._adminStaffService.CreateNew(adminStaff);
+                    if (IsEditMode)
+                        await this._adminStaffService.Update(adminStaff);
+                    else
+                        await this._adminStaffService.CreateNew(adminStaff);
                     await this.NavigationService.GoBackAsync();
-                }    
+                }
             }
             catch (Exception ex)
             {
@@ -159,7 +195,7 @@ namespace MobileAppLab.ViewModels
             }
             finally
             {
-                
+
             }
         }
         private async void ExecuteCommandCancel()
