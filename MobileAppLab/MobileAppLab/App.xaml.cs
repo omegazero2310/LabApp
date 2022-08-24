@@ -2,6 +2,7 @@ using MobileAppLab.ViewModels;
 using MobileAppLab.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -35,7 +36,9 @@ namespace MobileAppLab
             containerRegistry.RegisterForNavigation<StaffListingPage, StaffListingViewModel>();
             containerRegistry.RegisterForNavigation<UserNotificationPage, UserNotificationViewModel>();
             containerRegistry.RegisterForNavigation<UserAccountPage, UserAccountViewModel>();
-            containerRegistry.RegisterForNavigation<StaffEditPage, StaffEditViewModel>("StaffEditPage");
+            containerRegistry.RegisterForNavigation<StaffEditPopupPage, StaffEditViewModel>("StaffEditPopupPage");
+            // This updates INavigationService and registers PopupNavigation.Instance
+            containerRegistry.RegisterPopupNavigationService();
         }
     }
 }

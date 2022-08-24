@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace MobileAppLab.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StaffEditPage : ContentPage
+    public partial class StaffEditPopupPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public StaffEditPage()
+        public StaffEditPopupPage()
         {
             InitializeComponent();
         }
