@@ -114,20 +114,25 @@ namespace MobileAppLab.ViewModels
             try
             {
                 this.ErrorMessages = new Dictionary<string, string>();
-                if (!Enum.TryParse(this.PositionName, out PositionOptions position))
+                
+                if (string.IsNullOrEmpty(this.PositionName))
                 {
                     this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance["MSG_POSITION_NOT_VALID"]);
+                    RaisePropertyChanged(nameof(ErrorMessages));
+                    return;
                 }
-                if (!Enum.TryParse(this.Gender, out GenderOptions gender))
+                if (string.IsNullOrEmpty(this.Gender))
                 {
                     this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance["MSG_GENDER_NOT_VALID"]);
+                    RaisePropertyChanged(nameof(ErrorMessages));
+                    return;
                 }
                 AdminStaff adminStaff = new AdminStaff();
                 adminStaff.UserName = this.UserName;
                 adminStaff.Address = this.Address;
                 adminStaff.PhoneNumber = this.PhoneNumber;
-                adminStaff.PositionID = position;
-                adminStaff.Gender = gender;
+                adminStaff.PositionID = _staffPositions[this.PositionName];
+                adminStaff.Gender = _staffGenders[this.Gender];
                 adminStaff.Email = this.EmailAddress;
                 AdminStaffValidator validationRules = new AdminStaffValidator();
                 var resultValidate = validationRules.Validate(adminStaff);
