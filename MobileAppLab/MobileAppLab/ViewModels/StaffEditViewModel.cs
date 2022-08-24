@@ -1,5 +1,8 @@
-﻿using MobileAppLab.ApiServices;
+﻿using CommonClass.Enums;
+using MobileAppLab.ApiServices;
+using MobileAppLab.Properties;
 using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
@@ -12,18 +15,27 @@ using System.Text;
 
 namespace MobileAppLab.ViewModels
 {
-    public class StaffEditViewModel : ViewModelBase, IDialogAware
+    public class StaffEditViewModel : ViewModelBase
     {
         private AdminStaffService _adminStaffService;
         private IPageDialogService _pageDialog;
         public event Action<IDialogParameters> RequestClose;
 
-        private static Dictionary<string, string> _staffGenders = new Dictionary<string, string>()
+        private static Dictionary<string, GenderOptions> _staffGenders = new Dictionary<string, GenderOptions>()
                 {
-                    {"English","en-US" },
-                    {"Tiếng Việt","vi-VN"}
+                    {AppResource.Gender_Male,GenderOptions.Male },
+                    {AppResource.Gender_Female,GenderOptions.Female },
+                    {AppResource.Gender_Other,GenderOptions.Other },
                 };
-        public List<string> ListLanguages { get; } = _staffGenders.Keys.ToList();
+        public List<string> ListStaffGenders { get; } = _staffGenders.Keys.ToList();
+
+        private static Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>()
+                {
+                    {AppResource.Position_NV,PositionOptions.NV },
+                    {AppResource.Position_TP,PositionOptions.TP },
+                    {AppResource.Position_GD,PositionOptions.GD },
+                };
+        public List<string> ListStaffPositions { get; } = _staffPositions.Keys.ToList();
 
         private string _userName;
         public string UserName
@@ -69,9 +81,14 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand _commandSave;
         public DelegateCommand CommandSave =>
             _commandSave ?? (_commandSave = new DelegateCommand(ExecuteCommandSave));
+        private DelegateCommand _commandCancel;
+        public DelegateCommand CommandCancel   =>
+            _commandCancel ?? (_commandCancel = new DelegateCommand(ExecuteCommandCancel));
+
+        
 
 
-        public StaffEditViewModel(INavigationService navigationService, IPageDialogService dialogService, HttpClient httpClient) : base(navigationService)
+        public StaffEditViewModel(INavigationService navigationService) : base(navigationService)
         {
         }
 
@@ -87,20 +104,10 @@ namespace MobileAppLab.ViewModels
                 await this._pageDialog.DisplayAlertAsync("Save Error", ex.Message, "Ok");
             }
         }
-
-        public bool CanCloseDialog()
+        private async void ExecuteCommandCancel()
         {
-            throw new NotImplementedException();
+
         }
 
-        public void OnDialogClosed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

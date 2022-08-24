@@ -159,6 +159,9 @@
   <data name="Gender_Other" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="Label_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="Label_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -168,8 +171,23 @@
   <data name="Label_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Label_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Label_Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="Label_PhoneNumber" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="Label_Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
   <data name="Label_Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Label_StaffName" xml:space="preserve">
+    <value>Staff name</value>
   </data>
   <data name="Label_Staff_Add" xml:space="preserve">
     <value>Add new staff</value>
@@ -228,13 +246,25 @@
   <data name="Picker_Select_Position" xml:space="preserve">
     <value>Select Position</value>
   </data>
-  <data name="Position_CV" xml:space="preserve">
-    <value>Leader</value>
+  <data name="PlaceHolder_Address" xml:space="preserve">
+    <value>Enter address</value>
+  </data>
+  <data name="PlaceHolder_Email" xml:space="preserve">
+    <value>Enter Email</value>
+  </data>
+  <data name="PlaceHolder_PhoneNumber" xml:space="preserve">
+    <value>Enter phone number</value>
+  </data>
+  <data name="PlaceHolder_StaffName" xml:space="preserve">
+    <value>Enter staff name</value>
   </data>
   <data name="Position_GD" xml:space="preserve">
     <value>Manager</value>
   </data>
   <data name="Position_NV" xml:space="preserve">
     <value>Staff</value>
+  </data>
+  <data name="Position_TP" xml:space="preserve">
+    <value>Chief of Department</value>
   </data>
 </root>

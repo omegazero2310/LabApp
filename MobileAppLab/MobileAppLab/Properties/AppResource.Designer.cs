@@ -187,6 +187,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Label_Address {
+            get {
+                return ResourceManager.GetString("Label_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Label_Cancel {
@@ -210,6 +219,42 @@ namespace MobileAppLab.Properties {
         public static string Label_Edit {
             get {
                 return ResourceManager.GetString("Label_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Label_Email {
+            get {
+                return ResourceManager.GetString("Label_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gender.
+        /// </summary>
+        public static string Label_Gender {
+            get {
+                return ResourceManager.GetString("Label_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number.
+        /// </summary>
+        public static string Label_PhoneNumber {
+            get {
+                return ResourceManager.GetString("Label_PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Label_Position {
+            get {
+                return ResourceManager.GetString("Label_Position", resourceCulture);
             }
         }
         
@@ -255,6 +300,15 @@ namespace MobileAppLab.Properties {
         public static string Label_Staff_Update {
             get {
                 return ResourceManager.GetString("Label_Staff_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staff name.
+        /// </summary>
+        public static string Label_StaffName {
+            get {
+                return ResourceManager.GetString("Label_StaffName", resourceCulture);
             }
         }
         
@@ -394,11 +448,38 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leader.
+        ///   Looks up a localized string similar to Enter address.
         /// </summary>
-        public static string Position_CV {
+        public static string PlaceHolder_Address {
             get {
-                return ResourceManager.GetString("Position_CV", resourceCulture);
+                return ResourceManager.GetString("PlaceHolder_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Email.
+        /// </summary>
+        public static string PlaceHolder_Email {
+            get {
+                return ResourceManager.GetString("PlaceHolder_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter phone number.
+        /// </summary>
+        public static string PlaceHolder_PhoneNumber {
+            get {
+                return ResourceManager.GetString("PlaceHolder_PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter staff name.
+        /// </summary>
+        public static string PlaceHolder_StaffName {
+            get {
+                return ResourceManager.GetString("PlaceHolder_StaffName", resourceCulture);
             }
         }
         
@@ -417,6 +498,15 @@ namespace MobileAppLab.Properties {
         public static string Position_NV {
             get {
                 return ResourceManager.GetString("Position_NV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chief of Department.
+        /// </summary>
+        public static string Position_TP {
+            get {
+                return ResourceManager.GetString("Position_TP", resourceCulture);
             }
         }
     }

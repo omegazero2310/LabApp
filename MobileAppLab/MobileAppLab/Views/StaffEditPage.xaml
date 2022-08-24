@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileAppLab.Views.StaffEditPage">
+             x:Class="MobileAppLab.Views.StaffEditPage"
+             xmlns:helper="clr-namespace:MobileAppLab.Utilities">
     <ContentPage.Resources>
         <Color x:Key="BlockingColor">
             <x:Arguments>
@@ -36,7 +37,7 @@
                             </LinearGradientBrush>
                         </Frame.Background>
                         <StackLayout Orientation="Vertical" Margin="0,10,0,0" >
-                            <Label Grid.Column="1" Text="Thêm nhân viên" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="{Binding Title}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
                         </StackLayout>
                     </Frame>
                     <StackLayout Grid.Row="1" Padding="10">
@@ -45,23 +46,37 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Text="Tên nhân viên"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Nhập tên nhân viên"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="{helper:Translate Label_StaffName}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="0" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_StaffName}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Text="Địa chỉ"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                            <Entry Grid.Row="1" Grid.Column="1" Placeholder="Nhập Địa chỉ"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{helper:Translate Label_Address}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="1" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_Address}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Text="Số điện thoại"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                            <Entry Grid.Row="2" Grid.Column="1" Placeholder="Nhập SĐT"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                            <Label Grid.Row="2" Grid.Column="0" Text="{helper:Translate Label_PhoneNumber}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="2" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_PhoneNumber}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
 
                             <Label Grid.Row="3" Grid.Column="0" Text="Chức vụ"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                            <Picker Grid.Row="3" Grid.Column="1" Title="Chọn chức vụ" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand"/>
+                            <Picker Grid.Row="3" 
+                                    Grid.Column="1" 
+                                    Title="{helper:Translate Picker_Select_Position}" 
+                                    HorizontalOptions="Fill" 
+                                    VerticalOptions="CenterAndExpand"
+                                    ItemsSource="{Binding ListStaffPositions}"
+                                    SelectedItem="{Binding PositionName}"
+                                    />
 
-                            <Label Grid.Row="4" Grid.Column="0" Text="Email"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                            <Entry Grid.Row="4" Grid.Column="1" Placeholder="Nhập email"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+                            <Label Grid.Row="4" Grid.Column="0" Text="{helper:Translate Label_Email}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="4" Grid.Column="1" Placeholder="{helper:Translate PlaceHolder_Email}"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
 
                             <Label Grid.Row="5" Grid.Column="0" Text="Giới tính"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                            <Picker Grid.Row="5" Grid.Column="1" Title="Chọn giới tính" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand"/>
+                            <Picker Grid.Row="5" 
+                                    Grid.Column="1" 
+                                    Title="{helper:Translate Picker_Select_Gender}" 
+                                    HorizontalOptions="Fill" 
+                                    VerticalOptions="CenterAndExpand"
+                                    ItemsSource="{Binding ListStaffGenders}"
+                                    SelectedItem="{Binding Gender}"
+                                    />
                         </Grid>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Padding="0,0,0,10">
@@ -70,8 +85,21 @@
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Text="Bỏ qua" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"  BackgroundColor="White" CornerRadius="15" BorderColor="Black" BorderWidth="1"/>
-                            <Button Grid.Column="1" Text="Ok"  WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="15" >
+                            <Button Grid.Column="0" Text="Bỏ qua" 
+                                    WidthRequest="100" 
+                                    HorizontalOptions="Center" 
+                                    VerticalOptions="Center"  
+                                    BackgroundColor="White" 
+                                    CornerRadius="15" 
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    Command="{Binding CommandCancel}"/>
+                            <Button Grid.Column="1" Text="Ok"  
+                                    WidthRequest="100" 
+                                    HorizontalOptions="Center" 
+                                    VerticalOptions="Center" 
+                                    CornerRadius="15" 
+                                    Command="{Binding CommandSave}">
                                 <Button.Background>
                                     <LinearGradientBrush EndPoint="1,1">
                                         <GradientStop Color="#0080cf" Offset="0.1" />
@@ -80,7 +108,6 @@
                                 </Button.Background>
                             </Button>
                         </Grid>
-                        
                     </StackLayout>
                 </StackLayout>
             </Frame>

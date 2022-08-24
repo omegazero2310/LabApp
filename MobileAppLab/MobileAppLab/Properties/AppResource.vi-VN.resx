@@ -159,6 +159,9 @@
   <data name="Gender_Other" xml:space="preserve">
     <value>Khác</value>
   </data>
+  <data name="Label_Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
   <data name="Label_Cancel" xml:space="preserve">
     <value>Hủy</value>
   </data>
@@ -168,8 +171,23 @@
   <data name="Label_Edit" xml:space="preserve">
     <value>Sửa</value>
   </data>
+  <data name="Label_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Label_Gender" xml:space="preserve">
+    <value>Giới tính</value>
+  </data>
+  <data name="Label_PhoneNumber" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
+  <data name="Label_Position" xml:space="preserve">
+    <value>Vị trí</value>
+  </data>
   <data name="Label_Save" xml:space="preserve">
     <value>Lưu</value>
+  </data>
+  <data name="Label_StaffName" xml:space="preserve">
+    <value>Tên nhân viên</value>
   </data>
   <data name="Label_Staff_Add" xml:space="preserve">
     <value>Thêm nhân viên</value>
@@ -228,13 +246,25 @@
   <data name="Picker_Select_Position" xml:space="preserve">
     <value>Chọn vị trí</value>
   </data>
-  <data name="Position_CV" xml:space="preserve">
-    <value>Chuyên viên</value>
+  <data name="PlaceHolder_Address" xml:space="preserve">
+    <value>Nhập địa chỉ</value>
+  </data>
+  <data name="PlaceHolder_Email" xml:space="preserve">
+    <value>Nhập Email</value>
+  </data>
+  <data name="PlaceHolder_PhoneNumber" xml:space="preserve">
+    <value>Nhập số điện thoại</value>
+  </data>
+  <data name="PlaceHolder_StaffName" xml:space="preserve">
+    <value>Nhập họ tên</value>
   </data>
   <data name="Position_GD" xml:space="preserve">
     <value>Giám đốc</value>
   </data>
   <data name="Position_NV" xml:space="preserve">
     <value>Nhân viên</value>
+  </data>
+  <data name="Position_TP" xml:space="preserve">
+    <value>Trưởng phòng</value>
   </data>
 </root>

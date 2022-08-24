@@ -42,8 +42,15 @@
                             </Grid.RowDefinitions>
 
                             <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_white.png}" Rotation="180" HorizontalOptions="Start" VerticalOptions="Center" Scale="3"/>
-                            <Label Grid.Column="1" Text="Danh sách nhân viên" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
-                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_add48.png}" HorizontalOptions="End" VerticalOptions="Center" Scale="2.5" xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=White, Dark=White}"/>
+                            <Label Grid.Column="1" Text="{helper:Translate Main_Tabbed_Page_Listing}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
+                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_add48.png}" HorizontalOptions="End" VerticalOptions="Center" Scale="2.5" xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=White, Dark=White}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding CommandNewStaff}"
+                                        />
+                                </Image.GestureRecognizers>
+                            </Image>
                         </Grid>
                     </StackLayout>
                 </Frame>
@@ -82,7 +89,7 @@
                                                             <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="1">
                                                                 <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_edit48.png }"
                                                                    xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=blue, Dark=White}"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                <Label Text="Edit" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
                                                                 <StackLayout.GestureRecognizers>
                                                                     <TapGestureRecognizer
                                                                         NumberOfTapsRequired="1"
@@ -94,7 +101,7 @@
                                                             <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="0">
                                                                 <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_delete48.png }"
                                                                    xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=red, Dark=red}"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                <Label Text="Delete" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
                                                                 <StackLayout.GestureRecognizers>
                                                                     <TapGestureRecognizer
                                                                         NumberOfTapsRequired="1"

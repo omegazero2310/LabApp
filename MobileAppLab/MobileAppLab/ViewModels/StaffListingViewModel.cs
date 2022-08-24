@@ -4,6 +4,7 @@ using Prism;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,7 @@ namespace MobileAppLab.ViewModels
     {
         private AdminStaffService _adminStaffService;
         private IPageDialogService _dialogService;
+        private IDialogService _dialog;
 
         public ObservableCollection<AdminStaff> Staffs { get; } = new ObservableCollection<AdminStaff>();
         private AdminStaff _selectedStaff;
@@ -48,10 +50,16 @@ namespace MobileAppLab.ViewModels
         public DelegateCommand<AdminStaff> CommandSwipeDelete =>
             _commandSwipeDelete ?? (_commandSwipeDelete = new DelegateCommand<AdminStaff>(ExecuteCommandSwipeDelete));
 
-        public StaffListingViewModel(INavigationService navigationService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
+        private DelegateCommand _commandNewStaff;
+        public DelegateCommand CommandNewStaff =>
+            _commandNewStaff ?? (_commandNewStaff = new DelegateCommand(ExecuteCommandNewStaff));
+
+
+        public StaffListingViewModel(INavigationService navigationService,IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffService(httpClient);
             this._dialogService = pageDialogService;
+            this._dialog = dialogService;
         }
 
         private async void LoadStaffs()
@@ -82,6 +90,10 @@ namespace MobileAppLab.ViewModels
         private void ExecuteCommandLoadData()
         {
             this.LoadStaffs();
+        }
+        private async void ExecuteCommandNewStaff()
+        {
+            await this.NavigationService.NavigateAsync("StaffEditPage", null, true, false);
         }
         private async void ExecuteCommandSwipeEdit(AdminStaff parameter)
         {
