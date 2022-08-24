@@ -115,6 +115,7 @@ namespace MobileAppLab.ViewModels
                 try
                 {
                     await this._adminStaffService.Delete(parameter.ID);
+                    this.Staffs.Remove(parameter);
                 }
                 catch (Exception ex)
                 {

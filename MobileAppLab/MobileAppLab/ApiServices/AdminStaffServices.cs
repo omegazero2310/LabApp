@@ -88,7 +88,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + $"/Delete?id={key}");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Delete, this.BaseUrl + $"/Delete?id={key}");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
@@ -152,7 +152,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + "/Update");
+                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Put, this.BaseUrl + "/Update");
                 message.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
