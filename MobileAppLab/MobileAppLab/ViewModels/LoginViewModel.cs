@@ -63,7 +63,7 @@ namespace MobileAppLab.ViewModels
                     {"English","en-US" },
                     {"Tiếng Việt","vi-VN"}
                 };
-        public List<string> ListLanguages { get; } = _listLanguages.Keys.ToList();
+        public List<string> ListLanguages { get; } = _listLanguages?.Keys.ToList() ?? (new Dictionary<string,string>()).Keys.ToList();
 
         private DelegateCommand _commandLogin;
         public DelegateCommand CommandLogin =>
@@ -113,12 +113,27 @@ namespace MobileAppLab.ViewModels
             if (!Preferences.ContainsKey("LANGUAGE"))
             {
                 Preferences.Set("LANGUAGE", "en-US");
-                this.SelectedLanguage = _listLanguages.Where(val => val.Value == "en-US").FirstOrDefault().Key ?? "English";
+                try
+                {
+                    this.SelectedLanguage = _listLanguages.Where(val => val.Value == "en-US").FirstOrDefault().Key ?? "English";
+                }
+                catch (Exception)
+                {
+                    this.SelectedLanguage = "English";
+                }
+                
             }
             else
             {
                 string language = Preferences.Get("LANGUAGE", "en-US");
-                this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
+                try
+                {
+                    this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
+                }
+                catch (Exception)
+                {
+                    this.SelectedLanguage = "English";
+                }
             }
         }
 
@@ -177,7 +192,15 @@ namespace MobileAppLab.ViewModels
         }
         private async void OnPickerLangChange()
         {
-            var language = _listLanguages[this.SelectedLanguage];
+            string language;
+            try
+            {
+                language = _listLanguages[this.SelectedLanguage];
+            }
+            catch (Exception)
+            {
+                language = "en-US";
+            }
             LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo(language));
             if (Preferences.ContainsKey("LANGUAGE"))
                 Preferences.Set("LANGUAGE", language);

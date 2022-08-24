@@ -5,6 +5,7 @@ using MobileAppLab.Views;
 using Prism;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Navigation.TabbedPages;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
@@ -60,6 +61,11 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand _commandNewStaff;
         public DelegateCommand CommandNewStaff =>
             _commandNewStaff ?? (_commandNewStaff = new DelegateCommand(ExecuteCommandNewStaff));
+        private DelegateCommand _commandBackToHome;
+        public DelegateCommand CommandBackToHome =>
+            _commandBackToHome ?? (_commandBackToHome = new DelegateCommand(ExecuteCommandBackToHome));
+
+        
 
 
         public StaffListingViewModel(INavigationService navigationService,IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
@@ -91,8 +97,13 @@ namespace MobileAppLab.ViewModels
                 this.IsRefreshing = false;
             }
         }
-        private void RaiseIsActiveChanged()
+        private async void RaiseIsActiveChanged()
         {
+            this.IsRefreshing = true;
+        }
+        private async void ExecuteCommandBackToHome()
+        {
+            await this.NavigationService.SelectTabAsync("HomePage");
         }
         private void ExecuteCommandLoadData()
         {

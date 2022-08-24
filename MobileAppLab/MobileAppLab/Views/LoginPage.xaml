@@ -6,7 +6,9 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions"
              xmlns:helper="clr-namespace:MobileAppLab.Utilities"
+             xmlns:views="clr-namespace:MobileAppLab.Views"
              x:Name="LoginView">
+
 
     <StackLayout>
         <Grid>
@@ -157,7 +159,7 @@
 
         </Grid>
 
-
+        
     </StackLayout>
 
 </ContentPage>
