@@ -48,7 +48,6 @@ namespace MobileAppLab.ViewModels
             get { return _isEdit; }
             set { SetProperty(ref _isEdit, value); }
         }
-
         private string _userName;
         public string UserName
         {
