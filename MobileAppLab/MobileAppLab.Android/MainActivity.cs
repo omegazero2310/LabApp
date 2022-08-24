@@ -25,7 +25,7 @@ namespace MobileAppLab.Droid
                 // clear FLAG_TRANSLUCENT_STATUS flag:
                 Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
 
-                Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+                //Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
 
             }
         }

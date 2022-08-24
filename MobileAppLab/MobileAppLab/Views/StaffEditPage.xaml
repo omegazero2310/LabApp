@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppLab.Views.StaffEditPage">
+    <ContentPage.Resources>
+        <Color x:Key="BlockingColor">
+            <x:Arguments>
+                <x:Double>0</x:Double>
+                <x:Double>0</x:Double>
+                <x:Double>0</x:Double>
+                <x:Double>0.4</x:Double>
+            </x:Arguments>
+        </Color>
+        <Style x:Key="BlockingPanel" TargetType="StackLayout">
+            <Setter Property="BackgroundColor" Value="{StaticResource BlockingColor}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource BlockingPanel}">
+            <Frame CornerRadius="20" Margin="15,30" Padding="0">
+                <StackLayout BackgroundColor="White" Padding="0">
+                    <Frame Grid.Row="0"
+                               BorderColor="LightGray"
+                               HasShadow="True"
+                               HeightRequest="50"
+                               Margin="0,0,0,0" 
+                               Padding="0"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="FillAndExpand">
+                        <Frame.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Color="#72c3f6" Offset="0.1" />
+                                <GradientStop Color="#000d6a" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <StackLayout Orientation="Vertical" Margin="0,10,0,0" >
+                            <Label Grid.Column="1" Text="Thêm nhân viên" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout Grid.Row="1" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Tên nhân viên"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Nhập tên nhân viên"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Địa chỉ"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="1" Grid.Column="1" Placeholder="Nhập Địa chỉ"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="Số điện thoại"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="2" Grid.Column="1" Placeholder="Nhập SĐT"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Text="Chức vụ"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Picker Grid.Row="3" Grid.Column="1" Title="Chọn chức vụ" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Text="Email"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Entry Grid.Row="4" Grid.Column="1" Placeholder="Nhập email"  HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" ReturnType="Next"/>
+
+                            <Label Grid.Row="5" Grid.Column="0" Text="Giới tính"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Picker Grid.Row="5" Grid.Column="1" Title="Chọn giới tính" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand"/>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Padding="0,0,0,10">
+                        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Text="Bỏ qua" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"  BackgroundColor="White" CornerRadius="15" BorderColor="Black" BorderWidth="1"/>
+                            <Button Grid.Column="1" Text="Ok"  WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="15" >
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="1,1">
+                                        <GradientStop Color="#0080cf" Offset="0.1" />
+                                        <GradientStop Color="#000f6f" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
+                        </Grid>
+                        
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

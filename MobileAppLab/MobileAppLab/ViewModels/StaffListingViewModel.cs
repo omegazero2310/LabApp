@@ -30,7 +30,7 @@ namespace MobileAppLab.ViewModels
         }
         public event EventHandler IsActiveChanged;
         private bool _isActive;
-        public bool IsActive    
+        public bool IsActive
         {
             get { return _isActive; }
             set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
@@ -81,14 +81,31 @@ namespace MobileAppLab.ViewModels
         }
         private void ExecuteCommandLoadData()
         {
-           this.LoadStaffs();
+            this.LoadStaffs();
         }
         private async void ExecuteCommandSwipeEdit(AdminStaff parameter)
         {
-
+            if (parameter == null)
+                return;
+            await this.NavigationService.NavigateAsync("StaffEditPage", null, true, true);
         }
         private async void ExecuteCommandSwipeDelete(AdminStaff parameter)
         {
+            if (parameter == null)
+                return;
+            if (await this._dialogService.DisplayAlertAsync("Confirm Delete", $"Are you sure to Delete ({parameter.ID} - {parameter.UserName}) ?", "Delete", "Cancel"))
+            {
+                try
+                {
+                    await this._adminStaffService.Delete(parameter.ID);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    await this._dialogService.DisplayAlertAsync("Delete Error", ex.Message, "OK");
+                }
+            }
+
 
         }
 

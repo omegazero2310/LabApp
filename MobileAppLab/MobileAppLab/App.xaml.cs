@@ -35,6 +35,7 @@ namespace MobileAppLab
             containerRegistry.RegisterForNavigation<StaffListingPage, StaffListingViewModel>();
             containerRegistry.RegisterForNavigation<UserNotificationPage, UserNotificationViewModel>();
             containerRegistry.RegisterForNavigation<UserAccountPage, UserAccountViewModel>();
+            containerRegistry.RegisterForNavigation<StaffEditPage, StaffEditViewModel>();
         }
     }
 }
