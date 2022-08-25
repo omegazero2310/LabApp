@@ -114,7 +114,12 @@ namespace MobileAppLab.ViewModels
             else
             {
                 var listStaff = await this._adminStaffService.GetAll();
-                var filtered = listStaff.Where(staff => staff.UserName.Contains(parameter.ToString()));
+                var filtered = listStaff.Where(staff => 
+                        staff.UserName.Contains(parameter.ToString())
+                        || staff.PositionName.Contains(parameter.ToString())
+                        || staff.Email.Contains(parameter.ToString())
+                        || staff.PhoneNumber.Contains(parameter.ToString())
+                        );
                 this.Staffs.Clear();
                 foreach (var user in filtered)
                 {

@@ -14,6 +14,7 @@ using MobileAppLab.ApiServices;
 using System.Net.Http;
 using Prism.Services;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MobileAppLab.ViewModels
 {
@@ -168,7 +169,7 @@ namespace MobileAppLab.ViewModels
 
                     }
                     //chuyển sang trang chủ
-                    await this.NavigationService.NavigateAsync("MainTabbedPage");
+                    await this.NavigationService.NavigateAsync("/MainTabbedPage");
                 }
                 else
                 {
@@ -188,7 +189,64 @@ namespace MobileAppLab.ViewModels
         }
         private async void ExecuteCommandForgotPassword()
         {
-
+            IActionSheetButton selectCallAction = ActionSheetButton.CreateButton("Call", async () => await DialCallSupport());
+            IActionSheetButton selectEmailAction = ActionSheetButton.CreateButton("Email", async () => await SendEmailSupport());
+            IActionSheetButton selectHomePageAction = ActionSheetButton.CreateButton("Go to website", async () => await OpenBrowser(new Uri("https://bagps.vn/")));
+            await this._pageDialogService.DisplayActionSheetAsync("Select Options", selectCallAction, selectEmailAction, selectHomePageAction);
+        }
+        private async Task DialCallSupport()
+        {
+            try
+            {
+                PhoneDialer.Open("19006464");
+            }
+            catch (ArgumentNullException)
+            {
+                await this._pageDialogService.DisplayAlertAsync("Unable to dial", "Phone number was not valid.", "OK");
+            }
+            catch (FeatureNotSupportedException)
+            {
+                await this._pageDialogService.DisplayAlertAsync("Unable to dial", "Phone dialing not supported.", "OK");
+            }
+            catch (Exception)
+            {
+                // Other error has occurred.
+                await this._pageDialogService.DisplayAlertAsync("Unable to dial", "Phone dialing failed.", "OK");
+            }
+        }
+        private async Task SendEmailSupport()
+        {
+            try
+            {
+                var message = new EmailMessage
+                {
+                    Subject = "Account Support",
+                    Body = "",
+                    To = new List<string> { "example@email.com" },
+                    //Cc = ccRecipients,
+                    //Bcc = bccRecipients
+                };
+                await Email.ComposeAsync(message);
+            }
+            catch (FeatureNotSupportedException fbsEx)
+            {
+                // Email is not supported on this device
+            }
+            catch (Exception ex)
+            {
+                // Some other exception occurred
+            }
+        }
+        public async Task OpenBrowser(Uri uri)
+        {
+            try
+            {
+                await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occured. No browser may be installed on the device.
+            }
         }
         private async void OnPickerLangChange()
         {
