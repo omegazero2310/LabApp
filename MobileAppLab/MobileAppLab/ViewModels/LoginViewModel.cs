@@ -261,19 +261,21 @@ namespace MobileAppLab.ViewModels
             }
         }
         private async void OnPickerLangChange()
-        {
+        {    
             string language;
+            if (Preferences.ContainsKey("LANGUAGE"))
+            {
+                language = Preferences.Get("LANGUAGE", "en-US");
+            }
             try
             {
                 language = _listLanguages[this.SelectedLanguage];
             }
             catch (Exception)
             {
-                language = "en-US";
+                language = Preferences.Get("LANGUAGE", "en-US");
             }
             LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo(language));
-            if (Preferences.ContainsKey("LANGUAGE"))
-                Preferences.Set("LANGUAGE", language);
             //tìm ảnh bắt đầu bằng mã quốc gia kết thúc bằng từ flag
             string prefix = this.GetType().Assembly.GetName().Name + ".AssetImages.";
             string resName = prefix + language.ToLower() + "_flag.png";
