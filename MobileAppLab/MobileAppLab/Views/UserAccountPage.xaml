@@ -15,7 +15,6 @@
                 </Grid.RowDefinitions>
 
                 <Frame Grid.Row="0"
-                   BorderColor="LightGray"
                    HasShadow="True"
                    HeightRequest="125"
                    HorizontalOptions="FillAndExpand"
