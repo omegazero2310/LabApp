@@ -5,6 +5,7 @@
             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
             xmlns:helper="clr-namespace:MobileAppLab.Utilities"
             x:Class="MobileAppLab.Views.StaffEditPopupPage"
+            xmlns:behaviors="clr-namespace:MobileAppLab.Utilities.ViewActions"
             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
             CloseWhenBackgroundIsClicked="True">
     <pages:PopupPage.Resources>
@@ -25,7 +26,7 @@
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
     <pages:PopupPage.Content>
-        <StackLayout  Margin="15,50,15,30" Padding="0">
+        <StackLayout  Margin="15,50,15,30" Padding="0" >
             <StackLayout>
                 <!--#region Khung trắng của popup-->
                 <Frame CornerRadius="20" Padding="0">
@@ -60,19 +61,32 @@
                                 <Label Grid.Row="0" Grid.Column="0" Text="{helper:Translate Label_StaffName}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
                                 <Entry Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" Placeholder="{helper:Translate PlaceHolder_StaffName}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
-                               ReturnType="Next" IsEnabled="{Binding IsEditMode}"/>
+                               ReturnType="Next" IsEnabled="{Binding IsEditMode}"
+                                 MaxLength="50">
+                                    <Entry.Behaviors>
+                                        <behaviors:SpecialCharactersValidationBehavior />
+                                    </Entry.Behaviors>
+                                </Entry>
                                 <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[UserName]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
 
                                 <Label Grid.Row="2" Grid.Column="0" Text="{helper:Translate Label_Address}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
                                 <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Address}" Placeholder="{helper:Translate PlaceHolder_Address}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
-                               ReturnType="Next" IsEnabled="{Binding IsEditMode}"/>
+                               ReturnType="Next" IsEnabled="{Binding IsEditMode}">
+                                    <Entry.Behaviors>
+                                        <behaviors:SpecialCharactersValidationBehavior />
+                                    </Entry.Behaviors>
+                                </Entry>
                                 <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Address]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
 
                                 <Label Grid.Row="4" Grid.Column="0" Text="{helper:Translate Label_PhoneNumber}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
                                 <Entry Grid.Row="4" Grid.Column="1" Text="{Binding PhoneNumber}" Placeholder="{helper:Translate PlaceHolder_PhoneNumber}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
-                               ReturnType="Next" Keyboard="Numeric" IsEnabled="{Binding IsEditMode}"/>
+                               ReturnType="Next" Keyboard="Numeric" IsEnabled="{Binding IsEditMode}">
+                                    <Entry.Behaviors>
+                                        <behaviors:SpecialCharactersValidationBehavior />
+                                    </Entry.Behaviors>
+                                </Entry>
                                 <Label Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[PhoneNumber]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
 
                                 <Label Grid.Row="6" Grid.Column="0" Text="{helper:Translate Label_Position}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>

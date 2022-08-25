@@ -6,7 +6,7 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions"
              xmlns:helper="clr-namespace:MobileAppLab.Utilities"
-             xmlns:views="clr-namespace:MobileAppLab.Views"
+             xmlns:behaviors="clr-namespace:MobileAppLab.Utilities.ViewActions"
              x:Name="LoginView">
 
     <AbsoluteLayout>
@@ -69,7 +69,11 @@
                                 <ColumnDefinition Width="20*"/>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="StartAndExpand" Scale="2"/>
-                            <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderUserName}" Text="{Binding UserName}" ReturnType="Next"/>
+                            <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderUserName}" Text="{Binding UserName}" ReturnType="Next" MaxLength="50">
+                                <Entry.Behaviors>
+                                    <behaviors:SpecialCharactersValidationBehavior />
+                                </Entry.Behaviors>
+                            </Entry>
 
                         </Grid>
                         <!--#endregion-->
@@ -83,7 +87,11 @@
 
                             <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.lock48.png}" HorizontalOptions="StartAndExpand" Scale="2"/>
                             <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderPassword}" Text="{Binding Password}" ReturnType="Done"
-                                IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
+                                IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}" MaxLength="50">
+                                <Entry.Behaviors>
+                                    <behaviors:SpecialCharactersValidationBehavior />
+                                </Entry.Behaviors>
+                            </Entry>
                             <ImageButton Grid.Column="1" VerticalOptions="Center"
                                 HeightRequest="20"
                                 HorizontalOptions="End"

@@ -142,6 +142,18 @@ namespace MobileAppLab.ViewModels
         {
             try
             {
+                if(string.IsNullOrEmpty(this.UserName))
+                {
+                    await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: Enter User ID", "Ok");
+                    return;
+                }    
+                    
+                if (string.IsNullOrEmpty(this.Password))
+                {
+                    await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: Enter Password", "Ok");
+                    return;
+                }    
+                    
                 this.IsBusy = true;
                 var result = await this._adminUserServices.Login(this.UserName, this.Password);
                 //var result = (true, "");
