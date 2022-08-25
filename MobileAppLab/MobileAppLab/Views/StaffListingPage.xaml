@@ -86,40 +86,42 @@
                                             SelectionMode="None" >
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Margin="1">
-                                            <SwipeView >
-                                                <SwipeView.RightItems >
-                                                    <SwipeItemView >
-                                                        <!--#region lệnh quẹt phải của dòng-->
-                                                        <Grid>
-                                                            <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                                                                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_edit48.png }"
-                                                                   xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=blue, Dark=White}"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                <StackLayout.GestureRecognizers>
-                                                                    <TapGestureRecognizer
-                                                                        NumberOfTapsRequired="1"
-                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeEdit}"
-                                                                        CommandParameter="{Binding .}"
-                                                                        />
-                                                                </StackLayout.GestureRecognizers>
-                                                            </StackLayout>
-                                                            <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                                                                <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_delete48.png }"
+                                        <SwipeView >
+                                        <SwipeView.RightItems >
+                                            <SwipeItemView >
+                                                <!--#region lệnh quẹt phải của dòng-->
+                                                <Grid>
+                                                    <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                                                        <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_delete48.png }"
                                                                    xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=red, Dark=red}"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                <StackLayout.GestureRecognizers>
-                                                                    <TapGestureRecognizer
+                                                        <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer
                                                                         NumberOfTapsRequired="1"
                                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeDelete}"
                                                                         CommandParameter="{Binding .}"
                                                                         />
-                                                                </StackLayout.GestureRecognizers>
-                                                            </StackLayout>
-                                                        </Grid>
-                                                        <!--#endregion-->
-                                                    </SwipeItemView>
-                                                </SwipeView.RightItems>
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                                                        <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_edit48.png }"
+                                                                   xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=blue, Dark=White}"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                        <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                        NumberOfTapsRequired="1"
+                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeEdit}"
+                                                                        CommandParameter="{Binding .}"
+                                                                        />
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                </Grid>
+                                                <!--#endregion-->
+                                            </SwipeItemView>
+                                        </SwipeView.RightItems>
+                                        <Grid Margin="1">
+                                            
+                                                
                                                 <!--#region gắn dữ liệu-->
                                                 <StackLayout Margin="5" HorizontalOptions="Start" VerticalOptions="Start">
                                                     <StackLayout Orientation="Horizontal" HeightRequest="60">
@@ -168,8 +170,9 @@
                                                     </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                                 <!--#endregion-->
-                                            </SwipeView>
+                                            
                                         </Grid>
+                                        </SwipeView>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
