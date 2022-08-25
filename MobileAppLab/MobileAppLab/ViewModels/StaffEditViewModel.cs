@@ -48,6 +48,7 @@ namespace MobileAppLab.ViewModels
             get { return _isEdit; }
             set { SetProperty(ref _isEdit, value); }
         }
+        public int? ID { get; set; }
         private string _userName;
         public string UserName
         {
@@ -112,12 +113,14 @@ namespace MobileAppLab.ViewModels
                 if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Add)
                 {
                     this.Title = AppResource.Label_Staff_Add;
+                    this.ID = null;
                     this.IsEditMode = true;
                 }
                 else if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Update)
                 {
                     this.Title = AppResource.Label_Staff_Update;
                     this.IsEditMode = true;
+                    this.ID = (int)parameters["Value"];
                     await this.LoadStaffInfo((int)parameters["Value"]);
                 }
                 else if (parameters["Type"]?.ToString() == AppResource.Label_Staff_View)
@@ -133,6 +136,7 @@ namespace MobileAppLab.ViewModels
             AdminStaff adminStaff = await this._adminStaffService.GetByID(id);
             if (adminStaff != null)
             {
+                this.ID = adminStaff.ID;
                 this.UserName = adminStaff.UserName;
                 this.Address = adminStaff.Address;
                 this.PhoneNumber = adminStaff.PhoneNumber;
@@ -160,6 +164,8 @@ namespace MobileAppLab.ViewModels
                     return;
                 }
                 AdminStaff adminStaff = new AdminStaff();
+                if(this.IsEditMode && this.ID.HasValue)
+                    adminStaff.ID = this.ID.Value;
                 adminStaff.UserName = this.UserName;
                 adminStaff.Address = this.Address;
                 adminStaff.PhoneNumber = this.PhoneNumber;

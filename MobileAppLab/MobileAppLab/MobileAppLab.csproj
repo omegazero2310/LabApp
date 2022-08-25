@@ -31,6 +31,7 @@
     <None Remove="AssetImages\vi-vn_flag.png" />
     <None Remove="AssetImages\visibility48.png" />
     <None Remove="AssetImages\visibility_off48.png" />
+    <None Remove="Fonts\Material\MaterialIcons-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +61,7 @@
     <EmbeddedResource Include="AssetImages\vi-vn_flag.png" />
     <EmbeddedResource Include="AssetImages\visibility48.png" />
     <EmbeddedResource Include="AssetImages\visibility_off48.png" />
+    <EmbeddedResource Include="Fonts\Material\MaterialIcons-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>

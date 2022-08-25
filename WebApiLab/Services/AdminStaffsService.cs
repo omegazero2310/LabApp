@@ -1,6 +1,7 @@
 ﻿using CommonClass.ErrorCodes;
 using CommonClass.Models;
 using CommonClass.Validations;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
@@ -92,9 +93,10 @@ namespace WebApiLab.Services
 
         public Task<HttpResponseMessage> Update(AdminStaff data)
         {
-
-            if (this._labDbContext?.AdminStaffs.UpdateIfExists(data, db => db.ID == data.ID) != null)
+            var model = this._labDbContext?.AdminStaffs.UpdateIfExists(data, db => db.ID == data.ID) ?? null;
+            if (model != null)
             {
+                this._labDbContext.Entry<AdminStaff>(model).Property("ProfileImage").IsModified = false;
                 this._labDbContext?.SaveChanges();
                 return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK));
             }
