@@ -24,53 +24,54 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    <StackLayout >
-        <Frame CornerRadius="20" Margin="15,30" Padding="0">
-            <StackLayout BackgroundColor="White" Padding="0">
-                <Frame Grid.Row="0"
-                               BorderColor="LightGray"
+    <pages:PopupPage.Content>
+        <StackLayout  Margin="15,50,15,30" Padding="0">
+            <StackLayout>
+                <Frame CornerRadius="20" Padding="0">
+                    <StackLayout BackgroundColor="White" Padding="0">
+                        <Frame Grid.Row="0"
                                HasShadow="True"
                                HeightRequest="50"
                                Margin="0,0,0,0" 
                                Padding="0"
                                HorizontalOptions="FillAndExpand"
                                VerticalOptions="FillAndExpand">
-                    <Frame.Background>
-                        <LinearGradientBrush>
-                            <GradientStop Color="#72c3f6" Offset="0.1" />
-                            <GradientStop Color="#000d6a" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Frame.Background>
-                    <StackLayout Orientation="Vertical" Margin="0,10,0,0" >
-                        <Label Grid.Column="1" Text="{Binding Title}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
-                    </StackLayout>
-                </Frame>
-                <StackLayout Grid.Row="1" Padding="10">
-                    <Grid Padding="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Text="{helper:Translate Label_StaffName}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" Placeholder="{helper:Translate PlaceHolder_StaffName}"  
+                            <Frame.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#72c3f6" Offset="0.1" />
+                                    <GradientStop Color="#000d6a" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                            <StackLayout Orientation="Vertical" Margin="0,10,0,0" >
+                                <Label Grid.Column="1" Text="{Binding Title}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
+                            </StackLayout>
+                        </Frame>
+                        <StackLayout Grid.Row="1" Padding="10">
+                            <Grid Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="{helper:Translate Label_StaffName}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                                <Entry Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" Placeholder="{helper:Translate PlaceHolder_StaffName}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
                                ReturnType="Next" IsEnabled="{Binding IsEditMode}"/>
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[UserName]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
+                                <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[UserName]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
 
-                        <Label Grid.Row="2" Grid.Column="0" Text="{helper:Translate Label_Address}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Address}" Placeholder="{helper:Translate PlaceHolder_Address}"  
+                                <Label Grid.Row="2" Grid.Column="0" Text="{helper:Translate Label_Address}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                                <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Address}" Placeholder="{helper:Translate PlaceHolder_Address}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
                                ReturnType="Next" IsEnabled="{Binding IsEditMode}"/>
-                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Address]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
+                                <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Address]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
 
-                        <Label Grid.Row="4" Grid.Column="0" Text="{helper:Translate Label_PhoneNumber}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding PhoneNumber}" Placeholder="{helper:Translate PlaceHolder_PhoneNumber}"  
+                                <Label Grid.Row="4" Grid.Column="0" Text="{helper:Translate Label_PhoneNumber}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                                <Entry Grid.Row="4" Grid.Column="1" Text="{Binding PhoneNumber}" Placeholder="{helper:Translate PlaceHolder_PhoneNumber}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
                                ReturnType="Next" Keyboard="Numeric" IsEnabled="{Binding IsEditMode}"/>
-                        <Label Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[PhoneNumber]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
-                        
-                        <Label Grid.Row="6" Grid.Column="0" Text="{helper:Translate Label_Position}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Picker Grid.Row="6" 
+                                <Label Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[PhoneNumber]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
+
+                                <Label Grid.Row="6" Grid.Column="0" Text="{helper:Translate Label_Position}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                                <Picker Grid.Row="6" 
                                     Grid.Column="1" 
                                     Title="{helper:Translate Picker_Select_Position}" 
                                     HorizontalOptions="Fill" 
@@ -79,16 +80,16 @@
                                     SelectedItem="{Binding PositionName}"
                                     IsEnabled="{Binding IsEditMode}"
                                     />
-                        <Label Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[POSITION_ID]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
+                                <Label Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[POSITION_ID]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
 
-                        <Label Grid.Row="8" Grid.Column="0" Text="{helper:Translate Label_Email}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Entry Grid.Row="8" Grid.Column="1" Text="{Binding EmailAddress}" Placeholder="{helper:Translate PlaceHolder_Email}"  
+                                <Label Grid.Row="8" Grid.Column="0" Text="{helper:Translate Label_Email}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                                <Entry Grid.Row="8" Grid.Column="1" Text="{Binding EmailAddress}" Placeholder="{helper:Translate PlaceHolder_Email}"  
                                HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" 
                                ReturnType="Next" IsEnabled="{Binding IsEditMode}"/>
-                        <Label Grid.Row="9" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Email]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
-                        
-                        <Label Grid.Row="10" Grid.Column="0" Text="{helper:Translate Label_Gender}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                        <Picker Grid.Row="10" 
+                                <Label Grid.Row="9" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[Email]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
+
+                                <Label Grid.Row="10" Grid.Column="0" Text="{helper:Translate Label_Gender}"  HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                                <Picker Grid.Row="10" 
                                     Grid.Column="1" 
                                     Title="{helper:Translate Picker_Select_Gender}" 
                                     HorizontalOptions="Fill" 
@@ -97,16 +98,16 @@
                                     SelectedItem="{Binding Gender}"
                                     IsEnabled="{Binding IsEditMode}"
                                     />
-                        <Label Grid.Row="11" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[GENDER]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
-                    </Grid>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" Padding="0,0,0,10" IsVisible="{Binding IsEditMode}">
-                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Text="Bỏ qua" 
+                                <Label Grid.Row="11" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[GENDER]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
+                            </Grid>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Padding="0,0,0,10" IsVisible="{Binding IsEditMode}">
+                            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Text="Bỏ qua" 
                                     WidthRequest="100" 
                                     HorizontalOptions="Center" 
                                     VerticalOptions="Center"  
@@ -115,22 +116,26 @@
                                     BorderColor="Black"
                                     BorderWidth="1"
                                     Command="{Binding CommandCancel}"/>
-                        <Button Grid.Column="1" Text="Ok"  
+                                <Button Grid.Column="1" Text="Ok"  
                                     WidthRequest="100" 
                                     HorizontalOptions="Center" 
                                     VerticalOptions="Center" 
                                     CornerRadius="15" 
                                     Command="{Binding CommandSave}">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="1,1">
-                                    <GradientStop Color="#0080cf" Offset="0.1" />
-                                    <GradientStop Color="#000f6f" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
-                    </Grid>
-                </StackLayout>
+                                    <Button.Background>
+                                        <LinearGradientBrush EndPoint="1,1">
+                                            <GradientStop Color="#0080cf" Offset="0.1" />
+                                            <GradientStop Color="#000f6f" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+                                </Button>
+                            </Grid>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
             </StackLayout>
-        </Frame>
-    </StackLayout>
+        </StackLayout>
+        
+    </pages:PopupPage.Content>
+    
 </pages:PopupPage>

@@ -186,7 +186,7 @@ namespace MobileAppLab.ViewModels
                 }
                 else
                 {
-                    if (IsEditMode)
+                    if (IsEditMode && this.ID.HasValue)
                         await this._adminStaffService.Update(adminStaff);
                     else
                         await this._adminStaffService.CreateNew(adminStaff);
