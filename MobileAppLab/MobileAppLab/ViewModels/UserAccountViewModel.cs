@@ -7,6 +7,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -79,11 +80,20 @@ namespace MobileAppLab.ViewModels
                 var userInfo = await this._adminStaffService.GetByID(token.Id);
                 this.UserName = userInfo?.UserName ?? "PlaceHolder Name";
                 this.PhoneNumber = userInfo?.PhoneNumber ?? "PlaceHolder PhoneNumber";
-                var userProfilePicture = await this._adminStaffService.GetProfilePicture(token.Id);
-                if (userProfilePicture.IsSuccessStatusCode)
+                if (userInfo.ProfilePicture != null)
                 {
-                    this.ProfilePicture = StreamImageSource.FromStream(() => userProfilePicture.Content.ReadAsStreamAsync().Result);
+                    try
+                    {
+                        Stream streamImg = new MemoryStream(userInfo.ProfilePicture);
+                        this.ProfilePicture = ImageSource.FromStream(() => streamImg);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+                    }
                 }
+
             }
 
         }
@@ -131,7 +141,6 @@ namespace MobileAppLab.ViewModels
             var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
             //tải ảnh lên api
             var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
-            //chỉ ảnh tới đường dẫn mới
         }
 
         private async void ExecuteCommandLogout()
@@ -140,18 +149,13 @@ namespace MobileAppLab.ViewModels
             {
                 try
                 {
-
                     AdminUserServices.Logout();
                     await this.NavigationService.NavigateAsync("/LoginPage");
-
-
                 }
                 catch (Exception ex)
                 {
-
-                    throw ex;
+                    Debug.WriteLine(ex);
                 }
-
             }
         }
     }

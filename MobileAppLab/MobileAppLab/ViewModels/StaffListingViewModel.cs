@@ -1,7 +1,6 @@
 ﻿using CommonClass.Models;
 using MobileAppLab.ApiServices;
 using MobileAppLab.Properties;
-using MobileAppLab.Views;
 using Prism;
 using Prism.Commands;
 using Prism.Navigation;
@@ -9,24 +8,29 @@ using Prism.Navigation.TabbedPages;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace MobileAppLab.ViewModels
 {
     public class StaffListingViewModel : ViewModelBase, IActiveAware
     {
+        #region Service        
+        /// <summary>
+        /// Service CRUD bảng admin staff
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private AdminStaffService _adminStaffService;
         private IPageDialogService _dialogService;
         private IDialogService _dialog;
+        #endregion
 
+        #region các thuộc tính binding
         public ObservableCollection<AdminStaff> Staffs { get; } = new ObservableCollection<AdminStaff>();
         private AdminStaff _selectedStaff;
         public AdminStaff SelectedStaff
@@ -41,33 +45,87 @@ namespace MobileAppLab.ViewModels
             get { return _isActive; }
             set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
         }
+        #endregion
 
+        #region các command binding
+
+        /// <summary>
+        /// lệnh load dữ liệu
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand _commandLoadData;
         public DelegateCommand CommandLoadData =>
             _commandLoadData ?? (_commandLoadData = new DelegateCommand(ExecuteCommandLoadData));
+
+        /// <summary>
+        /// lệnh gạt phải chỉnh sửa
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand<AdminStaff> _commandSwipeEdit;
         public DelegateCommand<AdminStaff> CommandSwipeEdit =>
             _commandSwipeEdit ?? (_commandSwipeEdit = new DelegateCommand<AdminStaff>(ExecuteCommandSwipeEdit));
 
+        /// <summary>
+        /// lệnh gạt phải xóa
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand<AdminStaff> _commandSwipeDelete;
-
         public DelegateCommand<AdminStaff> CommandSwipeDelete =>
             _commandSwipeDelete ?? (_commandSwipeDelete = new DelegateCommand<AdminStaff>(ExecuteCommandSwipeDelete));
+
+        /// <summary>
+        /// lệnh chạm để xem chi tiết
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand<AdminStaff> _commandView;
         public DelegateCommand<AdminStaff> CommandView =>
             _commandView ?? (_commandView = new DelegateCommand<AdminStaff>(ExecuteCommandView));
 
-
-
+        /// <summary>
+        /// lệnh tạo mới nhân viên
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand _commandNewStaff;
         public DelegateCommand CommandNewStaff =>
             _commandNewStaff ?? (_commandNewStaff = new DelegateCommand(ExecuteCommandNewStaff));
+
+        /// <summary>
+        /// lệnh quay về màn hình chính (home)
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand _commandBackToHome;
         public DelegateCommand CommandBackToHome =>
             _commandBackToHome ?? (_commandBackToHome = new DelegateCommand(ExecuteCommandBackToHome));
+
+        /// <summary>
+        /// lệnh tìm kiếm khi nhập vào control searchbar
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private DelegateCommand<object> _commandSearch;
         public DelegateCommand<object> CommandSearch =>
             _commandSearch ?? (_commandSearch = new DelegateCommand<object>(ExecuteCommandSearch));
+        #endregion
 
         public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
         {
@@ -75,7 +133,13 @@ namespace MobileAppLab.ViewModels
             this._dialogService = pageDialogService;
             this._dialog = dialogService;
         }
-
+        /// <summary>
+        /// Tải dữ liệu nhân viên
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private async void LoadStaffs()
         {
             try
@@ -107,6 +171,7 @@ namespace MobileAppLab.ViewModels
         {
             this.IsRefreshing = true;
         }
+        #region các method của command
         private async void ExecuteCommandSearch(object parameter)
         {
             if (string.IsNullOrEmpty(parameter?.ToString() ?? ""))
@@ -180,6 +245,7 @@ namespace MobileAppLab.ViewModels
 
 
         }
+        #endregion
 
     }
 }

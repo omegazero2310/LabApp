@@ -28,7 +28,7 @@ namespace MobileAppLab.ApiServices
                 };
         public AdminStaffService(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
         {
-            Barrel.ApplicationId = "AdminStaffService";
+            
         }
 
         public async Task<HttpResponseMessage> GetProfilePicture(int id)
@@ -154,12 +154,27 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
+                if ((Connectivity.NetworkAccess != NetworkAccess.Internet &&
+                    !Barrel.Current.IsExpired(key: this.BaseUrl + $"/Get/{key}")))
+                {
+                    return Barrel.Current.Get<AdminStaff>(key: this.BaseUrl + $"/Get/{key}");
+                }
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/Get?id={key}");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
                 respone.EnsureSuccessStatusCode();
-                return JsonConvert.DeserializeObject<AdminStaff>(await respone.Content.ReadAsStringAsync());
+
+                var staff = JsonConvert.DeserializeObject<AdminStaff>(await respone.Content.ReadAsStringAsync());
+                var profilePic = await this.GetProfilePicture(staff.ID);
+
+                if(profilePic.IsSuccessStatusCode)
+                {
+                    staff.ProfilePicture = await profilePic.Content.ReadAsByteArrayAsync();
+                }    
+
+                Barrel.Current.Add(key: this.BaseUrl + $"/Get/{key}", data: staff, expireIn: TimeSpan.FromDays(1));
+                return staff;
             }
             catch (Exception ex)
             {

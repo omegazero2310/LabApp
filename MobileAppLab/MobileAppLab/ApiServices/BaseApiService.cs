@@ -1,4 +1,5 @@
 ﻿using CommonClass.Models.Request;
+using MonkeyCache.FileStore;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Xamarin.Essentials;
@@ -12,6 +13,7 @@ namespace MobileAppLab.ApiServices
         protected UserTokens UserToken;
         public BaseApiService(HttpClient httpClient, string baseUrl, bool isAuthorize = false)
         {
+            Barrel.ApplicationId = this.GetType().Assembly.GetName().Name;
             HttpClient = httpClient;
             this.BaseUrl = App.API_URL + baseUrl;
             if (isAuthorize)

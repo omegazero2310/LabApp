@@ -1,5 +1,6 @@
 ﻿using CommonClass.Models;
 using CommonClass.Models.Request;
+using MonkeyCache.FileStore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace MobileAppLab.ApiServices
         }
         public async static void Logout()
         {
+            Barrel.Current.EmptyAll();
             SecureStorage.Remove("JWT");
         }
 
