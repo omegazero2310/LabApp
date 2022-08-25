@@ -19,7 +19,6 @@
 
                 <!--#region thanh công cụ và tiêu đề-->
                 <Frame Grid.Row="0"
-                   BorderColor="LightGray"
                    HasShadow="True"
                    HeightRequest="125"
                    Margin="0,0,0,0" >
@@ -71,11 +70,18 @@
                     <StackLayout>
                         <!--#region Thanh tìm kiếm-->
                         <Frame BorderColor="Blue" CornerRadius="10" Padding="0" Margin="0">
-                            <SearchBar x:Name="srcBar" Placeholder="{helper:Translate PlaceHolder_SearchBar}">
-                                <SearchBar.Behaviors>
-                                    <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding CommandSearch}" CommandParameter="{Binding Text, Source={x:Reference srcBar}}"/>
-                                </SearchBar.Behaviors>
-                            </SearchBar>
+                            <StackLayout Orientation="Horizontal">
+                                <SearchBar x:Name="srcBar" Placeholder="{helper:Translate PlaceHolder_SearchBar}">
+                                    <SearchBar.Behaviors>
+                                        <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding CommandSearch}" CommandParameter="{Binding Text, Source={x:Reference srcBar}}"/>
+                                    </SearchBar.Behaviors>
+                                </SearchBar>
+                                <ImageButton Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_more_vert48.png}" 
+                                             BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                             Aspect="AspectFill" Scale="1.4"
+                                             Command="{Binding CommandChangeSearchOption}"
+                                             />
+                            </StackLayout>
                         </Frame>
                         
                         <!--#endregion-->
@@ -92,7 +98,7 @@
                                                 <!--#region lệnh quẹt phải của dòng-->
                                                 <Grid>
                                                     <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                                                        <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_delete48.png }"
+                                                        <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_delete48.png}"
                                                                    xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=red, Dark=red}"  HorizontalOptions="Center" VerticalOptions="Center"/>
                                                         <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
                                                         <StackLayout.GestureRecognizers>
@@ -104,7 +110,7 @@
                                                         </StackLayout.GestureRecognizers>
                                                     </StackLayout>
                                                     <StackLayout Orientation="Vertical" WidthRequest="50" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                                                        <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_edit48.png }"
+                                                        <Image Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_edit48.png}"
                                                                    xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=blue, Dark=White}"  HorizontalOptions="Center" VerticalOptions="Center"/>
                                                         <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
                                                         <StackLayout.GestureRecognizers>

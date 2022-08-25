@@ -27,8 +27,10 @@
     <pages:PopupPage.Content>
         <StackLayout  Margin="15,50,15,30" Padding="0">
             <StackLayout>
+                <!--#region Khung trắng của popup-->
                 <Frame CornerRadius="20" Padding="0">
                     <StackLayout BackgroundColor="White" Padding="0">
+                        <!--#region Khung tiêu đề-->
                         <Frame Grid.Row="0"
                                HasShadow="True"
                                HeightRequest="50"
@@ -46,6 +48,9 @@
                                 <Label Grid.Column="1" Text="{Binding Title}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
                             </StackLayout>
                         </Frame>
+                        <!--#region -->
+                        
+                        <!--#region Khung các trường nhập liệu-->
                         <StackLayout Grid.Row="1" Padding="10">
                             <Grid Padding="0">
                                 <Grid.ColumnDefinitions>
@@ -101,6 +106,9 @@
                                 <Label Grid.Row="11" Grid.ColumnSpan="2" Text="{Binding ErrorMessages[GENDER]}" TextColor="#FF0000" FontAttributes="Bold" HeightRequest="20" VerticalOptions="StartAndExpand" IsVisible="{Binding IsEditMode}"/>
                             </Grid>
                         </StackLayout>
+                        <!--#endregion-->
+                        
+                        <!--#region khung các nút điều khiển-->
                         <StackLayout Orientation="Horizontal" Padding="0,0,0,10" IsVisible="{Binding IsEditMode}">
                             <Grid HorizontalOptions="Center" VerticalOptions="Center">
                                 <Grid.ColumnDefinitions>
@@ -131,8 +139,10 @@
                                 </Button>
                             </Grid>
                         </StackLayout>
+                        <!--#endregion-->
                     </StackLayout>
                 </Frame>
+                <!--#endregion-->
             </StackLayout>
         </StackLayout>
         
