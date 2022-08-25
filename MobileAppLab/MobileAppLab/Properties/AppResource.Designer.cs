@@ -608,5 +608,14 @@ namespace MobileAppLab.Properties {
                 return ResourceManager.GetString("Position_TP", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Filter Options.
+        /// </summary>
+        public static string Select_Filter_Options {
+            get {
+                return ResourceManager.GetString("Select_Filter_Options", resourceCulture);
+            }
+        }
     }
 }

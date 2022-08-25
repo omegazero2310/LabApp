@@ -300,4 +300,7 @@
   <data name="Position_TP" xml:space="preserve">
     <value>Trưởng phòng</value>
   </data>
+  <data name="Select_Filter_Options" xml:space="preserve">
+    <value>Select Filter Options</value>
+  </data>
 </root>

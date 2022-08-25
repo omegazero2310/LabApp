@@ -1,13 +1,17 @@
-﻿using CommonClass.Models;
+﻿using CommonClass.Enums;
+using CommonClass.Models;
 using MobileAppLab.ApiServices;
 using MobileAppLab.Properties;
+using MobileAppLab.Utilities;
 using Prism;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Navigation.TabbedPages;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using Prism.Xaml;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -39,12 +43,39 @@ namespace MobileAppLab.ViewModels
             set { SetProperty(ref _selectedStaff, value); }
         }
         public event EventHandler IsActiveChanged;
+        /// <summary>
+        /// kiểm tra xem tab đã được kích hoạt
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
         private bool _isActive;
         public bool IsActive
         {
             get { return _isActive; }
             set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
         }
+        private readonly static IReadOnlyDictionary<FilterOptions, string> _listFilterOptionsResource = new Dictionary<FilterOptions, string>
+        {
+            {FilterOptions.UserName, LocalizationResourceManager.Instance[nameof(AppResource.Label_StaffName)]},
+            {FilterOptions.Position, LocalizationResourceManager.Instance[nameof(AppResource.Label_Position)]},
+            {FilterOptions.Email, LocalizationResourceManager.Instance[nameof(AppResource.Label_Email)]},
+            {FilterOptions.PhoneNumber, LocalizationResourceManager.Instance[nameof(AppResource.Label_PhoneNumber)]}
+        };
+        private FilterOptions _selectedFilterOption;
+        public FilterOptions SelectedFilterOption
+        {
+            get { return _selectedFilterOption; }
+            set { SetProperty(ref _selectedFilterOption, value, OnSelectFilterOptionChanged); }
+        }
+        private string _filterPrefix;
+        public string FilterPrefix
+        {
+            get { return _filterPrefix; }
+            set { SetProperty(ref _filterPrefix, value); }
+        }
+
         #endregion
 
         #region các command binding
@@ -125,6 +156,18 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand<object> _commandSearch;
         public DelegateCommand<object> CommandSearch =>
             _commandSearch ?? (_commandSearch = new DelegateCommand<object>(ExecuteCommandSearch));
+        /// <summary>
+        /// Chọn kiểu tìm kiếm
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 25/08/2022 created
+        /// </Modified>
+        private DelegateCommand _commandSelectFilter;
+        public DelegateCommand CommandSelectFilter =>
+            _commandSelectFilter ?? (_commandSelectFilter = new DelegateCommand(ExecuteCommandSelectFilter));
+
+        
         #endregion
 
         public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
@@ -169,7 +212,13 @@ namespace MobileAppLab.ViewModels
         }
         private void RaiseIsActiveChanged()
         {
-            this.IsRefreshing = true;
+            if(this.IsActive)
+            {
+                this.IsRefreshing = true;
+                this.SelectedFilterOption = FilterOptions.UserName;
+                this.FilterPrefix = LocalizationResourceManager.Instance[nameof(AppResource.PlaceHolder_SearchBar)];
+            }    
+            
         }
         #region các method của command
         private async void ExecuteCommandSearch(object parameter)
@@ -179,18 +228,48 @@ namespace MobileAppLab.ViewModels
             else
             {
                 var listStaff = await this._adminStaffService.GetAll();
-                var filtered = listStaff.Where(staff => 
-                        staff.UserName.Contains(parameter.ToString())
-                        || staff.PositionName.Contains(parameter.ToString())
-                        || staff.Email.Contains(parameter.ToString())
-                        || staff.PhoneNumber.Contains(parameter.ToString())
-                        );
+                IEnumerable<AdminStaff> filtered = listStaff;
+                switch(this.SelectedFilterOption)
+                {
+                    case FilterOptions.UserName:
+                        filtered = listStaff.Where(x => x.UserName.Contains(parameter.ToString()));
+                        break;
+                    case FilterOptions.Position:
+                        filtered = listStaff.Where(x => x.PositionName.Contains(parameter.ToString()));
+                        break;
+                    case FilterOptions.Email:
+                        filtered = listStaff.Where(x => x.Email.Contains(parameter.ToString()));
+                        break;
+                    case FilterOptions.PhoneNumber:
+                        filtered = listStaff.Where(x => x.PhoneNumber.Contains(parameter.ToString()));
+                        break;
+                    default:
+                        filtered = listStaff.Where(x => x.UserName.Contains(parameter.ToString()));
+                        break;
+                }
                 this.Staffs.Clear();
                 foreach (var user in filtered)
                 {
                     this.Staffs.Add(user);
                 }
-            }    
+            }
+        }
+        private async void ExecuteCommandSelectFilter()
+        {
+            IActionSheetButton filterByUserName = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_StaffName)],
+                () => this.SelectedFilterOption = FilterOptions.UserName);
+            IActionSheetButton filterByPosition = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_Position)],
+                () => this.SelectedFilterOption = FilterOptions.Position);
+            IActionSheetButton filterByEmail = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_Email)],
+                () => this.SelectedFilterOption = FilterOptions.Email);
+            IActionSheetButton filterByPhoneNumber = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_PhoneNumber)],
+                () => this.SelectedFilterOption = FilterOptions.PhoneNumber);
+            await this._dialogService.DisplayActionSheetAsync(LocalizationResourceManager.Instance[nameof(AppResource.Select_Filter_Options)],
+                filterByUserName, filterByPosition, filterByEmail, filterByPhoneNumber);
+        }
+        private void OnSelectFilterOptionChanged()
+        {
+            this.FilterPrefix = $"[{_listFilterOptionsResource[this.SelectedFilterOption]}]";
         }
         private async void ExecuteCommandBackToHome()
         {
@@ -245,6 +324,7 @@ namespace MobileAppLab.ViewModels
 
 
         }
+
         #endregion
 
     }

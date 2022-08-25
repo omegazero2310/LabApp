@@ -71,7 +71,7 @@
                         <!--#region Thanh tìm kiếm-->
                         <Frame BorderColor="Blue" CornerRadius="10" Padding="0" Margin="0">
                             <StackLayout Orientation="Horizontal">
-                                <SearchBar x:Name="srcBar" Placeholder="{helper:Translate PlaceHolder_SearchBar}">
+                                <SearchBar x:Name="srcBar" Placeholder="{Binding FilterPrefix}">
                                     <SearchBar.Behaviors>
                                         <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding CommandSearch}" CommandParameter="{Binding Text, Source={x:Reference srcBar}}"/>
                                     </SearchBar.Behaviors>
@@ -79,7 +79,7 @@
                                 <ImageButton Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_more_vert48.png}" 
                                              BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
                                              Aspect="AspectFill" Scale="1.4"
-                                             Command="{Binding CommandChangeSearchOption}"
+                                             Command="{Binding CommandSelectFilter}"
                                              />
                             </StackLayout>
                         </Frame>
