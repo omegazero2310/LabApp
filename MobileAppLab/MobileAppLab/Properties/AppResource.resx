@@ -285,6 +285,9 @@
   <data name="PlaceHolder_PhoneNumber" xml:space="preserve">
     <value>Enter phone number</value>
   </data>
+  <data name="PlaceHolder_SearchBar" xml:space="preserve">
+    <value>Search staff</value>
+  </data>
   <data name="PlaceHolder_StaffName" xml:space="preserve">
     <value>Enter staff name</value>
   </data>

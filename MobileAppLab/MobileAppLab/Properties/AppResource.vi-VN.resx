@@ -285,6 +285,9 @@
   <data name="PlaceHolder_PhoneNumber" xml:space="preserve">
     <value>Nhập số điện thoại</value>
   </data>
+  <data name="PlaceHolder_SearchBar" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
   <data name="PlaceHolder_StaffName" xml:space="preserve">
     <value>Nhập họ tên</value>
   </data>

@@ -565,6 +565,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search staff.
+        /// </summary>
+        public static string PlaceHolder_SearchBar {
+            get {
+                return ResourceManager.GetString("PlaceHolder_SearchBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter staff name.
         /// </summary>
         public static string PlaceHolder_StaffName {

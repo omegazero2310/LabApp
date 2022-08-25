@@ -70,15 +70,14 @@
                        >
                     <StackLayout>
                         <!--#region Thanh tìm kiếm-->
-                        <Frame CornerRadius="50" BorderColor="Blue" Padding="0">
-                            <Grid Padding="0">
-                                <custom:NoBorderEntry Grid.Row="0" Placeholder="Tìm kiếm" HeightRequest="50"/>
-                                <ImageButton  VerticalOptions="Center" Padding="0"
-                                BackgroundColor="Transparent"
-                                HorizontalOptions="End"
-                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_search_blue.png}" Aspect="AspectFit" HeightRequest="50" WidthRequest="50"/>
-                            </Grid>
+                        <Frame BorderColor="Blue" CornerRadius="10" Padding="0" Margin="0">
+                            <SearchBar x:Name="srcBar" Placeholder="{helper:Translate PlaceHolder_SearchBar}">
+                                <SearchBar.Behaviors>
+                                    <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding CommandSearch}" CommandParameter="{Binding Text, Source={x:Reference srcBar}}"/>
+                                </SearchBar.Behaviors>
+                            </SearchBar>
                         </Frame>
+                        
                         <!--#endregion-->
                         <!--#region Danh sách nhân viên-->
                         <RefreshView  Command="{Binding CommandLoadData}" IsRefreshing="{Binding IsRefreshing}">

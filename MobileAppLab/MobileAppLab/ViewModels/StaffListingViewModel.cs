@@ -64,9 +64,9 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand _commandBackToHome;
         public DelegateCommand CommandBackToHome =>
             _commandBackToHome ?? (_commandBackToHome = new DelegateCommand(ExecuteCommandBackToHome));
-
-        
-
+        private DelegateCommand<object> _commandSearch;
+        public DelegateCommand<object> CommandSearch =>
+            _commandSearch ?? (_commandSearch = new DelegateCommand<object>(ExecuteCommandSearch));
 
         public StaffListingViewModel(INavigationService navigationService,IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
         {
@@ -97,9 +97,18 @@ namespace MobileAppLab.ViewModels
                 this.IsRefreshing = false;
             }
         }
-        private async void RaiseIsActiveChanged()
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            this.IsRefreshing = true;
+        }
+        private void RaiseIsActiveChanged()
         {
             this.IsRefreshing = true;
+        }
+        void ExecuteCommandSearch(object parameter)
+        {
+
         }
         private async void ExecuteCommandBackToHome()
         {
