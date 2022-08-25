@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,7 +57,7 @@ namespace MobileAppLab.ViewModels
         public DelegateCommand<AdminStaff> CommandView =>
             _commandView ?? (_commandView = new DelegateCommand<AdminStaff>(ExecuteCommandView));
 
-        
+
 
         private DelegateCommand _commandNewStaff;
         public DelegateCommand CommandNewStaff =>
@@ -68,7 +69,7 @@ namespace MobileAppLab.ViewModels
         public DelegateCommand<object> CommandSearch =>
             _commandSearch ?? (_commandSearch = new DelegateCommand<object>(ExecuteCommandSearch));
 
-        public StaffListingViewModel(INavigationService navigationService,IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
+        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffService(httpClient);
             this._dialogService = pageDialogService;
@@ -81,8 +82,8 @@ namespace MobileAppLab.ViewModels
             {
                 this.IsRefreshing = true;
                 this.Staffs.Clear();
-                var list = await this._adminStaffService.GetAll();
-                foreach (var user in list)
+                var listStaff = await this._adminStaffService.GetAll(isForceRefresh: true);
+                foreach (var user in listStaff)
                 {
                     this.Staffs.Add(user);
                 }
@@ -106,9 +107,20 @@ namespace MobileAppLab.ViewModels
         {
             this.IsRefreshing = true;
         }
-        void ExecuteCommandSearch(object parameter)
+        private async void ExecuteCommandSearch(object parameter)
         {
-
+            if (string.IsNullOrEmpty(parameter?.ToString() ?? ""))
+                this.IsRefreshing = true;
+            else
+            {
+                var listStaff = await this._adminStaffService.GetAll();
+                var filtered = listStaff.Where(staff => staff.UserName.Contains(parameter.ToString()));
+                this.Staffs.Clear();
+                foreach (var user in filtered)
+                {
+                    this.Staffs.Add(user);
+                }
+            }    
         }
         private async void ExecuteCommandBackToHome()
         {

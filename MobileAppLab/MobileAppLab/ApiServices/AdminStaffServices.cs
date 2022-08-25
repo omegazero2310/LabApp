@@ -3,6 +3,7 @@ using CommonClass.Models;
 using CommonClass.Models.Request;
 using MobileAppLab.Properties;
 using MobileAppLab.Utilities;
+using MonkeyCache.FileStore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace MobileAppLab.ApiServices
                 };
         public AdminStaffService(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
         {
+            Barrel.ApplicationId = "AdminStaffService";
         }
 
         public async Task<HttpResponseMessage> GetProfilePicture(int id)
@@ -112,10 +114,16 @@ namespace MobileAppLab.ApiServices
             }
         }
 
-        public async Task<IEnumerable<AdminStaff>> GetAll(int skip = 0, int take = 0)
+        public async Task<IEnumerable<AdminStaff>> GetAll(int skip = 0, int take = 0 ,bool isForceRefresh =false)
         {
             try
             {
+                if ((Connectivity.NetworkAccess != NetworkAccess.Internet &&
+                    !Barrel.Current.IsExpired(key: this.BaseUrl + $"/GetAll")) || isForceRefresh == false)
+                {
+                    return Barrel.Current.Get<IEnumerable<AdminStaff>>(key: this.BaseUrl + $"/GetAll");
+                }
+
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/GetAll");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
@@ -131,6 +139,7 @@ namespace MobileAppLab.ApiServices
                         staff.ProfilePicture = await res.Content.ReadAsByteArrayAsync();
                     }
                 }
+                Barrel.Current.Add(key: this.BaseUrl + $"/GetAll", data: listStaff, expireIn: TimeSpan.FromDays(1));
                 return listStaff;
             }
             catch (Exception ex)

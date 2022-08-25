@@ -54,7 +54,7 @@ namespace MobileAppLab.ApiServices
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<AdminUser>> GetAll(int skip = 0, int take = 0)
+        public Task<IEnumerable<AdminUser>> GetAll(int skip = 0, int take = 0, bool forceRefresh =false)
         {
             throw new NotImplementedException();
         }

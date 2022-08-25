@@ -7,7 +7,7 @@ namespace MobileAppLab.ApiServices
     public interface IService<T> where T : class
     {
         Task<HttpResponseMessage> CreateNew(T entity);
-        Task<IEnumerable<T>> GetAll(int skip = 0, int take = 0);
+        Task<IEnumerable<T>> GetAll(int skip = 0, int take = 0, bool forceRefresh = false);
         Task<T> GetByID(object key);
         Task<HttpResponseMessage> Update(T entity);
         Task<HttpResponseMessage> Delete(object key);
