@@ -58,7 +58,7 @@ namespace MobileAppLab.ViewModels
             set { SetProperty(ref imageSource, value); }
         }
 
-        private static Dictionary<string, string> _listLanguages = new Dictionary<string, string>()
+        private readonly static IReadOnlyDictionary<string, string> _listLanguages = new Dictionary<string, string>
                 {
                     {"English","en-US" },
                     {"Tiếng Việt","vi-VN"}

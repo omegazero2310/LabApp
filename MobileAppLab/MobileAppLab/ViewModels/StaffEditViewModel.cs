@@ -27,7 +27,7 @@ namespace MobileAppLab.ViewModels
 
         public Dictionary<string, string> ErrorMessages { get; set; }
 
-        private static Dictionary<string, GenderOptions> _staffGenders = new Dictionary<string, GenderOptions>()
+        private readonly static IReadOnlyDictionary<string, GenderOptions> _staffGenders = new Dictionary<string, GenderOptions>
                 {
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Male)],GenderOptions.Male },
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Female)],GenderOptions.Female },
@@ -35,7 +35,7 @@ namespace MobileAppLab.ViewModels
                 };
         public List<string> ListStaffGenders { get; } = _staffGenders.Keys.ToList();
 
-        private static Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>()
+        private readonly static IReadOnlyDictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>
                 {
                     {LocalizationResourceManager.Instance[nameof(AppResource.Position_NV)],PositionOptions.NV },
                     {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },

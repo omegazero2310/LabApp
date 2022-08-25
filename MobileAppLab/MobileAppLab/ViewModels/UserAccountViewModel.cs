@@ -146,7 +146,7 @@ namespace MobileAppLab.ViewModels
                 {
 
                     AdminUserServices.Logout();
-                    await this.NavigationService.NavigateAsync("LoginPage");
+                    await this.NavigationService.NavigateAsync("/LoginPage");
 
 
                 }

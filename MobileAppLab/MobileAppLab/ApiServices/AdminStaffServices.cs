@@ -19,7 +19,7 @@ namespace MobileAppLab.ApiServices
 {
     public class AdminStaffService : BaseApiService, IService<AdminStaff>
     {
-        private static Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>()
+        private static readonly Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>
                 {
                     {LocalizationResourceManager.Instance[nameof(AppResource.Position_NV)],PositionOptions.NV },
                     {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },
