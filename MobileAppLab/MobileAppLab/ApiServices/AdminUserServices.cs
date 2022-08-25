@@ -20,6 +20,7 @@ namespace MobileAppLab.ApiServices
 
         public async Task<(bool,string)> Login(string userName, string password)
         {
+            string contentRespone = "";
             try
             {  
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + "/Login");
@@ -28,6 +29,7 @@ namespace MobileAppLab.ApiServices
                 userLogin.Password = password;
                 message.Content = new StringContent(JsonConvert.SerializeObject(userLogin), Encoding.UTF8, "application/json");
                 var respone = await HttpClient.SendAsync(message);
+                contentRespone = respone.Content.ReadAsStringAsync().Result;
                 respone.EnsureSuccessStatusCode();
                 //lấy token lưu tạm để dùng cho các lần sau
                 await SecureStorage.SetAsync("JWT", respone.Content.ReadAsStringAsync().Result);
@@ -36,7 +38,7 @@ namespace MobileAppLab.ApiServices
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return (false,ex.Message);
+                return (false, contentRespone);
             }
 
         }

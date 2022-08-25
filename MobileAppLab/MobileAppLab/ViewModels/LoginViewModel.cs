@@ -186,12 +186,12 @@ namespace MobileAppLab.ViewModels
                 else
                 {
                     //thông báo lỗi đăng nhập
-                    await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + result.Item2, "Ok");
+                    await this._pageDialogService.DisplayAlertAsync(AppResource.MSG_LOGIN_ERROR, LocalizationResourceManager.Instance[result.Item2], "Ok");
                 }
             }
             catch (Exception ex)
             {
-                await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: " + ex.Message, "Ok");
+                await this._pageDialogService.DisplayAlertAsync(AppResource.MSG_LOGIN_ERROR, "Login Failed: " + ex.Message, "Ok");
             }
             finally
             {

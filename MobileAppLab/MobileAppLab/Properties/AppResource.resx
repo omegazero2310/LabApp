@@ -252,8 +252,17 @@
   <data name="MSG_EMAIL_NOT_VALID" xml:space="preserve">
     <value>Email not valid</value>
   </data>
+  <data name="MSG_ENTER_PASSWORD" xml:space="preserve">
+    <value>Password cannot be empty</value>
+  </data>
+  <data name="MSG_ENTER_USER_ID" xml:space="preserve">
+    <value>User ID cannot be empty</value>
+  </data>
   <data name="MSG_GENDER_NOT_VALID" xml:space="preserve">
     <value>Select valid gender</value>
+  </data>
+  <data name="MSG_LOGIN_ERROR" xml:space="preserve">
+    <value>Login Error</value>
   </data>
   <data name="MSG_PHONE_NUMBER_NOT_EMPTY" xml:space="preserve">
     <value>Phone number must not be emtpy</value>
@@ -263,6 +272,21 @@
   </data>
   <data name="MSG_POSITION_NOT_VALID" xml:space="preserve">
     <value>Select valid Position</value>
+  </data>
+  <data name="MSG_USER_EXIST" xml:space="preserve">
+    <value>User exist, please choose other User ID</value>
+  </data>
+  <data name="MSG_USER_LOGIN_BANNED" xml:space="preserve">
+    <value>Account banned</value>
+  </data>
+  <data name="MSG_USER_LOGIN_NOT_EXIST" xml:space="preserve">
+    <value>Not exist user on the system</value>
+  </data>
+  <data name="MSG_USER_LOGIN_SUPPENDED" xml:space="preserve">
+    <value>Account temporary Suppended</value>
+  </data>
+  <data name="MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD" xml:space="preserve">
+    <value>Wrong User ID or Password</value>
   </data>
   <data name="MSG_USER_NAME_NOT_EMPTY" xml:space="preserve">
     <value>User name cannot be emtpy</value>

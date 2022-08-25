@@ -466,11 +466,38 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password cannot be empty.
+        /// </summary>
+        public static string MSG_ENTER_PASSWORD {
+            get {
+                return ResourceManager.GetString("MSG_ENTER_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User ID cannot be empty.
+        /// </summary>
+        public static string MSG_ENTER_USER_ID {
+            get {
+                return ResourceManager.GetString("MSG_ENTER_USER_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select valid gender.
         /// </summary>
         public static string MSG_GENDER_NOT_VALID {
             get {
                 return ResourceManager.GetString("MSG_GENDER_NOT_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login Error.
+        /// </summary>
+        public static string MSG_LOGIN_ERROR {
+            get {
+                return ResourceManager.GetString("MSG_LOGIN_ERROR", resourceCulture);
             }
         }
         
@@ -498,6 +525,51 @@ namespace MobileAppLab.Properties {
         public static string MSG_POSITION_NOT_VALID {
             get {
                 return ResourceManager.GetString("MSG_POSITION_NOT_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User exist, please choose other User ID.
+        /// </summary>
+        public static string MSG_USER_EXIST {
+            get {
+                return ResourceManager.GetString("MSG_USER_EXIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account banned.
+        /// </summary>
+        public static string MSG_USER_LOGIN_BANNED {
+            get {
+                return ResourceManager.GetString("MSG_USER_LOGIN_BANNED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not exist user on the system.
+        /// </summary>
+        public static string MSG_USER_LOGIN_NOT_EXIST {
+            get {
+                return ResourceManager.GetString("MSG_USER_LOGIN_NOT_EXIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account temporary Suppended.
+        /// </summary>
+        public static string MSG_USER_LOGIN_SUPPENDED {
+            get {
+                return ResourceManager.GetString("MSG_USER_LOGIN_SUPPENDED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong User ID or Password.
+        /// </summary>
+        public static string MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD {
+            get {
+                return ResourceManager.GetString("MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD", resourceCulture);
             }
         }
         
