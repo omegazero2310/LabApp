@@ -200,6 +200,7 @@
                                             <Grid Margin="1">
                                                 <!--#region gắn dữ liệu-->
                                                 <StackLayout
+                                                    Grid.Row="0"
                                                     Margin="5"
                                                     CompressedLayout.IsHeadless="true"
                                                     HorizontalOptions="Start"
@@ -280,8 +281,11 @@
                                                             CommandParameter="{Binding .}"
                                                             NumberOfTapsRequired="1" />
                                                     </StackLayout.GestureRecognizers>
+
                                                 </StackLayout>
                                                 <!--#endregion-->
+
+
                                             </Grid>
                                         </SwipeView>
                                     </DataTemplate>

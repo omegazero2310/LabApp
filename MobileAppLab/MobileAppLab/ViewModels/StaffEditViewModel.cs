@@ -155,13 +155,11 @@ namespace MobileAppLab.ViewModels
                 {
                     this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance[nameof(AppResource.MSG_POSITION_NOT_VALID)]);
                     RaisePropertyChanged(nameof(ErrorMessages));
-                    return;
                 }
                 if (string.IsNullOrEmpty(this.Gender))
                 {
                     this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance[nameof(AppResource.MSG_GENDER_NOT_VALID)]);
                     RaisePropertyChanged(nameof(ErrorMessages));
-                    return;
                 }
                 AdminStaff adminStaff = new AdminStaff();
                 if(this.IsEditMode && this.ID.HasValue)
