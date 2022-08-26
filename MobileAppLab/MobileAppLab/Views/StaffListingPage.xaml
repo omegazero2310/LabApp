@@ -63,7 +63,7 @@
                 <!--#endregion-->
 
                 <!--#region vùng chứa thanh tìm kiếm và danh sách-->
-                
+
                 <Frame Grid.Row="1"
                        CornerRadius="10" Margin="0,-15,0,0"
                        >
@@ -83,7 +83,7 @@
                                              />
                             </StackLayout>
                         </Frame>
-                        
+
                         <!--#endregion-->
                         <!--#region Danh sách nhân viên-->
                         <RefreshView  Command="{Binding CommandLoadData}" IsRefreshing="{Binding IsRefreshing}">
@@ -92,12 +92,12 @@
                                             SelectionMode="None" >
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <SwipeView >
-                                        <SwipeView.RightItems >
-                                            <SwipeItemView >
-                                                <!--#region lệnh quẹt phải của dòng-->
-                                                <Grid>
-                                                    <StackLayout CompressedLayout.IsHeadless="true" Orientation="Vertical" WidthRequest="50" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <SwipeView>
+                                            <SwipeView.RightItems >
+                                                <SwipeItemView >
+                                                    <!--#region lệnh quẹt phải của dòng-->
+                                                    <Grid>
+                                                        <StackLayout CompressedLayout.IsHeadless="true" Orientation="Vertical" WidthRequest="50" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
                                                             <Image  HorizontalOptions="Center" VerticalOptions="Center">
                                                                 <Image.Source>
                                                                     <FontImageSource
@@ -106,16 +106,16 @@
                                                                     Glyph="{StaticResource IconDelete}"/>
                                                                 </Image.Source>
                                                             </Image>
-                                                        <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                        <StackLayout.GestureRecognizers>
-                                                            <TapGestureRecognizer
+                                                            <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                            <StackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer
                                                                         NumberOfTapsRequired="1"
                                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeDelete}"
                                                                         CommandParameter="{Binding .}"
                                                                         />
-                                                        </StackLayout.GestureRecognizers>
-                                                    </StackLayout>
-                                                    <StackLayout CompressedLayout.IsHeadless="true" Orientation="Vertical" WidthRequest="50" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                                                            </StackLayout.GestureRecognizers>
+                                                        </StackLayout>
+                                                        <StackLayout CompressedLayout.IsHeadless="true" Orientation="Vertical" WidthRequest="50" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
                                                             <Image  HorizontalOptions="Center" VerticalOptions="Center">
                                                                 <Image.Source>
                                                                     <FontImageSource
@@ -124,22 +124,20 @@
                                                                     Glyph="{StaticResource IconEdit}"/>
                                                                 </Image.Source>
                                                             </Image>
-                                                        <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                        <StackLayout.GestureRecognizers>
-                                                            <TapGestureRecognizer
+                                                            <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                            <StackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer
                                                                         NumberOfTapsRequired="1"
                                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeEdit}"
                                                                         CommandParameter="{Binding .}"
                                                                         />
-                                                        </StackLayout.GestureRecognizers>
-                                                    </StackLayout>
-                                                </Grid>
-                                                <!--#endregion-->
-                                            </SwipeItemView>
-                                        </SwipeView.RightItems>
-                                        <Grid Margin="1">
-                                            
-                                                
+                                                            </StackLayout.GestureRecognizers>
+                                                        </StackLayout>
+                                                    </Grid>
+                                                    <!--#endregion-->
+                                                </SwipeItemView>
+                                            </SwipeView.RightItems>
+                                            <Grid Margin="1">
                                                 <!--#region gắn dữ liệu-->
                                                 <StackLayout Margin="5" HorizontalOptions="Start" VerticalOptions="Start"  CompressedLayout.IsHeadless="true">
                                                     <StackLayout Orientation="Horizontal" HeightRequest="60"  CompressedLayout.IsHeadless="true">
@@ -188,8 +186,7 @@
                                                     </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                                 <!--#endregion-->
-                                            
-                                        </Grid>
+                                            </Grid>
                                         </SwipeView>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
