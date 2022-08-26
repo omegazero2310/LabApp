@@ -28,7 +28,7 @@ namespace MobileAppLab.ApiServices
                 };
         public AdminStaffService(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
         {
-            
+
         }
 
         public async Task<HttpResponseMessage> GetProfilePicture(int id)
@@ -114,7 +114,7 @@ namespace MobileAppLab.ApiServices
             }
         }
 
-        public async Task<IEnumerable<AdminStaff>> GetAll(int skip = 0, int take = 0 ,bool isForceRefresh =false)
+        public async Task<IEnumerable<AdminStaff>> GetAll(int skip = 0, int take = 0, bool isForceRefresh = false)
         {
             try
             {
@@ -123,6 +123,11 @@ namespace MobileAppLab.ApiServices
                 {
                     return Barrel.Current.Get<IEnumerable<AdminStaff>>(key: this.BaseUrl + $"/GetAll");
                 }
+                var asm = this.GetType().Assembly;
+                //ảnh mặc định
+                System.IO.Stream stream = asm.GetManifestResourceStream("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+                byte[] data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
 
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/GetAll");
                 //Get Token from SecureStorage
@@ -136,7 +141,12 @@ namespace MobileAppLab.ApiServices
                     var res = await this.GetProfilePicture(staff.ID);
                     if (res.IsSuccessStatusCode)
                     {
-                        staff.ProfilePicture = await res.Content.ReadAsByteArrayAsync();
+                        var imgData = await res.Content.ReadAsByteArrayAsync();
+                        if (imgData?.Length > 0)
+
+                            staff.ProfilePicture = await res.Content.ReadAsByteArrayAsync();
+                        else
+                            staff.ProfilePicture = data;
                     }
                 }
                 Barrel.Current.Add(key: this.BaseUrl + $"/GetAll", data: listStaff, expireIn: TimeSpan.FromDays(1));
@@ -168,10 +178,10 @@ namespace MobileAppLab.ApiServices
                 var staff = JsonConvert.DeserializeObject<AdminStaff>(await respone.Content.ReadAsStringAsync());
                 var profilePic = await this.GetProfilePicture(staff.ID);
 
-                if(profilePic.IsSuccessStatusCode)
+                if (profilePic.IsSuccessStatusCode)
                 {
                     staff.ProfilePicture = await profilePic.Content.ReadAsByteArrayAsync();
-                }    
+                }
 
                 Barrel.Current.Add(key: this.BaseUrl + $"/Get/{key}", data: staff, expireIn: TimeSpan.FromDays(1));
                 return staff;
