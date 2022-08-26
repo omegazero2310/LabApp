@@ -82,7 +82,7 @@ namespace WebApiLab.Services.DataAccessLayer
                 this._labDbContext.Entry<AdminStaff>(model).Property("UserCreated").IsModified = false;
                 this._labDbContext.Entry<AdminStaff>(model).Property("DateCreated").IsModified = false;
                 await this._labDbContext?.SaveChangesAsync();
-                return false;
+                return true;
             }
             else
                 return false;

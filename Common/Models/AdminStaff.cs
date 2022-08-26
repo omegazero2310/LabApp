@@ -1,4 +1,5 @@
 ﻿using CommonClass.Enums;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -138,23 +139,31 @@ namespace CommonClass.Models
         [DefaultValue(1)]
         public int PartID { get; set; }
         [ForeignKey("PartID")]
+        [JsonIgnore]
         public virtual AdminParts Parts { get; set; }
 
         [Required]
+        [JsonIgnore]
         public DateTime DateCreated { get; set; }
         [Required]
+        [JsonIgnore]
         public DateTime DateModified { get; set; }
         [Required]
+        [JsonIgnore]
         public string UserCreated { get; set; }
         [Required]
+        [JsonIgnore]
         public string UserModified { get; set; }
 
 
         [NotMapped]
+        [JsonIgnore]
         public byte[] ProfilePicture { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public DateTime CurrentTime { get; set; } = DateTime.Now;
         [NotMapped]
+        [JsonIgnore]
         public string PositionName { get; set; }
     }
 }

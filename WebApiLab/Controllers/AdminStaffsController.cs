@@ -1,10 +1,7 @@
 ﻿using CommonClass.Models;
+using CommonClass.Models.Request;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
-using System.Security.Claims;
-using WebApiLab.Services;
 using WebApiLab.Services.BusinessLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,7 +13,7 @@ namespace WebApiLab.Controllers
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     public class AdminStaffsController : ControllerBase
     {
-        private readonly string _imageFolder = "ProfileImgs";
+
         private readonly IServiceProvider _configuration;
         private AdminStaffsService _adminStaffsService;
         private readonly ILogger<AdminUsersController> _logger;
@@ -67,33 +64,8 @@ namespace WebApiLab.Controllers
             {
                 _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             }
-            string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, _imageFolder);
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-            var user = await this._adminStaffsService.Get(id);
-            if (user != null)
-            {
-                var imgPath = Path.Combine(folderPath, user.ProfileImage);
-                try
-                {
-                    using (FileStream fileStream = new FileStream(imgPath, FileMode.Open))
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            fileStream.CopyTo(memoryStream);
-                            byte[] byteImage = memoryStream.ToArray();
-                            return File(byteImage, "image/jpeg");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    this._logger.LogError(ex, "Failed to get Profile Picture");
-                    return NotFound();
-                }
-            }
-            else
-                return NotFound();
+            var dataImg = await this._adminStaffsService.GetProfilePicture(id, _webHostEnvironment.WebRootPath);
+            return File(dataImg, "image/jpeg");
         }
 
         [HttpPost]
@@ -106,44 +78,11 @@ namespace WebApiLab.Controllers
                 {
                     _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 }
-                string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, _imageFolder);
-                if (!Directory.Exists(folderPath))
-                    Directory.CreateDirectory(folderPath);
-                if (file.Length > 0)
-                {
-                    var user = await this._adminStaffsService.Get(id);
-                    if (user != null)
-                    {
-                        if (string.IsNullOrEmpty(user.ProfileImage))
-                        {
-                            string randomImageName = Path.GetRandomFileName() + ".png";
-                            string fileSavePath = Path.Combine(folderPath, randomImageName);
-                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
-                            {
-                                await file.CopyToAsync(stream);
-                            }
-                            user.ProfileImage = randomImageName;
-                            await this._adminStaffsService.Update(user);
-                        }
-                        else
-                        {
-                            System.IO.File.Delete(Path.Combine(folderPath, user.ProfileImage));
-                            string randomImageName = Path.GetRandomFileName() + ".png";
-                            string fileSavePath = Path.Combine(folderPath, randomImageName);
-                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
-                            {
-                                await file.CopyToAsync(stream);
-                            }
-                            user.ProfileImage = randomImageName;
-                            await this._adminStaffsService.Update(user);
-                        }
-                        return Ok();
-                    }
-                    else
-                        return NotFound();
-                }
+                var result = await this._adminStaffsService.UpdateProfilePicture(id, _webHostEnvironment.WebRootPath, file);
+                if (result == true)
+                    return Ok();
                 else
-                    return BadRequest();
+                    return NoContent();
             }
             catch (Exception ex)
             {
@@ -154,11 +93,21 @@ namespace WebApiLab.Controllers
 
         [HttpPost]
         [ActionName("Create")]
-        public async Task<IActionResult> Post([FromBody] AdminStaff value)
+        public async Task<IActionResult> Post([FromBody] AdminStaffRequest value)
         {
             try
             {
-                var result = await this._adminStaffsService.Create(value);
+                var staff = new AdminStaff();
+                staff.ID = value.ID;
+                staff.UserName = value.UserName;
+                staff.Gender = value.Gender;
+                staff.Email = value.Email;
+                staff.PhoneNumber = value.PhoneNumber;
+                staff.Address = value.Address;
+                staff.DepartmentName = "";
+                staff.ProfileImage = value.ProfileImage ?? "";
+                staff.PartID = value.PartID;
+                var result = await this._adminStaffsService.Create(staff);
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
@@ -171,11 +120,21 @@ namespace WebApiLab.Controllers
 
         [HttpPut]
         [ActionName("Update")]
-        public async Task<IActionResult> Put([FromBody] AdminStaff value)
+        public async Task<IActionResult> Put([FromBody] AdminStaffRequest value)
         {
             try
             {
-                var result = await this._adminStaffsService.Update(value);
+                var staff = new AdminStaff();
+                staff.ID = value.ID;
+                staff.UserName = value.UserName;
+                staff.Gender = value.Gender;
+                staff.Email = value.Email;
+                staff.PhoneNumber = value.PhoneNumber;
+                staff.Address = value.Address;
+                staff.DepartmentName = "";
+                staff.ProfileImage = value.ProfileImage ?? "";
+                staff.PartID = value.PartID;
+                var result = await this._adminStaffsService.Update(staff);
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)

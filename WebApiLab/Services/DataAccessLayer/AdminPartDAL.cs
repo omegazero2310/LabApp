@@ -1,5 +1,6 @@
 ﻿using CommonClass.Models;
 using WebApiLab.DatabaseContext;
+using WebApiLab.Exts;
 using WebApiLab.Services.Interfaces;
 
 namespace WebApiLab.Services.DataAccessLayer
@@ -13,19 +14,36 @@ namespace WebApiLab.Services.DataAccessLayer
             this._serviceProvider = serviceProvider;
             this._labDbContext = serviceProvider.GetService<LabDbContext>();
         }
-        public Task<bool> AddAsync(AdminParts user, string userAdd)
+        public async Task<bool> AddAsync(AdminParts user, string userAdd)
         {
-            throw new NotImplementedException();
+            user.UserCreated = userAdd;
+            user.UserModified = userAdd;
+            user.DateCreated = DateTime.Now;
+            user.DateModified = DateTime.Now;
+            var entity = this._labDbContext?.AdminParts.AddIfNotExists(user, db => db.PartID == user.PartID);
+            if (entity != null)
+            {
+                await this._labDbContext?.SaveChangesAsync();
+                return true;
+            }
+            else
+                return false;
         }
 
-        public Task<bool> DeleteAsync(object key)
+        public async Task<bool> DeleteAsync(object key)
         {
-            throw new NotImplementedException();
+            if (this._labDbContext?.AdminParts.DeleteIfExists(new AdminParts { PartID = Convert.ToInt32(key) }, db => db.PartID == Convert.ToInt32(key)) != null)
+            {
+                await this._labDbContext?.SaveChangesAsync();
+                return true;
+            }
+            else
+                return false;
         }
 
-        public Task<AdminParts?> Get(object key)
+        public async Task<AdminParts?> Get(object key)
         {
-            throw new NotImplementedException();
+            return this._labDbContext.AdminParts.Where(part => part.PartID == (int)key).FirstOrDefault();
         }
 
         public async Task<IEnumerable<AdminParts>> Gets(int skip = 0, int take = 0)
@@ -40,9 +58,20 @@ namespace WebApiLab.Services.DataAccessLayer
                 return this._labDbContext?.AdminParts.ToList() ?? new List<AdminParts>();
         }
 
-        public Task<bool> UpdateAsync(AdminParts user, string userUpdate)
+        public async Task<bool> UpdateAsync(AdminParts user, string userUpdate)
         {
-            throw new NotImplementedException();
+            user.UserModified = userUpdate;
+            user.DateModified = DateTime.Now;
+            var model = this._labDbContext?.AdminParts.UpdateIfExists(user, db => db.PartID == user.PartID) ?? null;
+            if (model != null)
+            {
+                this._labDbContext.Entry<AdminParts>(model).Property("UserCreated").IsModified = false;
+                this._labDbContext.Entry<AdminParts>(model).Property("DateCreated").IsModified = false;
+                await this._labDbContext?.SaveChangesAsync();
+                return false;
+            }
+            else
+                return false;
         }
     }
 }
