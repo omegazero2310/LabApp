@@ -1,60 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileAppLab.Views.StaffListingPage"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:helper="clr-namespace:MobileAppLab.Utilities"
-             xmlns:custom="clr-namespace:MobileAppLab.CustomControl"
-             xmlns:local="clr-namespace:MobileAppLab.ViewModels" 
-             NavigationPage.HasBackButton="True"
-             NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="True">
+<ContentPage
+    x:Class="MobileAppLab.Views.StaffListingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:MobileAppLab.CustomControl"
+    xmlns:helper="clr-namespace:MobileAppLab.Utilities"
+    xmlns:local="clr-namespace:MobileAppLab.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    NavigationPage.HasBackButton="True"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="True">
     <ContentPage.Content>
         <StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.7*"/>
-                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="0.7*" />
+                    <RowDefinition Height="5*" />
                 </Grid.RowDefinitions>
 
                 <!--#region thanh công cụ và tiêu đề-->
-                <Frame Grid.Row="0"
-                   HasShadow="True"
-                   HeightRequest="125"
-                   Margin="0,0,0,0" >
+                <Frame
+                    Grid.Row="0"
+                    Margin="0,0,0,0"
+                    HasShadow="True"
+                    HeightRequest="125">
                     <Frame.Background>
                         <LinearGradientBrush>
-                            <GradientStop Color="#72c3f6" Offset="0.1" />
-                            <GradientStop Color="#000d6a" Offset="1.0" />
+                            <GradientStop Offset="0.1" Color="#72c3f6" />
+                            <GradientStop Offset="1.0" Color="#000d6a" />
                         </LinearGradientBrush>
                     </Frame.Background>
 
-                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0" >
+                    <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.1*"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="0.1*"/>
+                                <ColumnDefinition Width="0.1*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="0.1*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50" />
                             </Grid.RowDefinitions>
 
-                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_white.png}" Rotation="180" HorizontalOptions="Start" VerticalOptions="Center" Scale="3">
+                            <!--<Image
+                                Grid.Column="0"
+                                HorizontalOptions="Start"
+                                Rotation="180"
+                                Scale="3"
+                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_white.png}"
+                                VerticalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        NumberOfTapsRequired="1"
-                                        Command="{Binding CommandBackToHome}"
-                                        />
+                                    <TapGestureRecognizer Command="{Binding CommandBackToHome}" NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
-                            </Image>
-                            <Label Grid.Column="1" Text="{helper:Translate Main_Tabbed_Page_Listing}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" />
-                            <Image Grid.Column="2" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_add48.png}" HorizontalOptions="End" VerticalOptions="Center" Scale="2.5" xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=White, Dark=White}">
+                            </Image>-->
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{helper:Translate Main_Tabbed_Page_Listing}"
+                                TextColor="White"
+                                VerticalOptions="CenterAndExpand" />
+                            <Image
+                                Grid.Column="2"
+                                xct:IconTintColorEffect.TintColor="{AppThemeBinding Light=White,
+                                                                                    Dark=White}"
+                                HorizontalOptions="End"
+                                Scale="2.5"
+                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_add48.png}"
+                                VerticalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        NumberOfTapsRequired="1"
-                                        Command="{Binding CommandNewStaff}"
-                                        />
+                                    <TapGestureRecognizer Command="{Binding CommandNewStaff}" NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                         </Grid>
@@ -64,95 +80,152 @@
 
                 <!--#region vùng chứa thanh tìm kiếm và danh sách-->
 
-                <Frame Grid.Row="1"
-                       CornerRadius="10" Margin="0,-15,0,0"
-                       >
+                <Frame
+                    Grid.Row="1"
+                    Margin="0,-15,0,0"
+                    CornerRadius="10">
                     <StackLayout>
                         <!--#region Thanh tìm kiếm-->
-                        <Frame BorderColor="Blue" CornerRadius="10" Padding="0" Margin="0">
+                        <Frame
+                            Margin="0"
+                            Padding="0"
+                            BorderColor="Blue"
+                            CornerRadius="10">
                             <StackLayout Orientation="Horizontal">
                                 <SearchBar x:Name="srcBar" Placeholder="{Binding FilterPrefix}">
                                     <SearchBar.Behaviors>
-                                        <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding CommandSearch}" CommandParameter="{Binding Text, Source={x:Reference srcBar}}"/>
+                                        <xct:EventToCommandBehavior
+                                            Command="{Binding CommandSearch}"
+                                            CommandParameter="{Binding Text, Source={x:Reference srcBar}}"
+                                            EventName="TextChanged" />
                                     </SearchBar.Behaviors>
                                 </SearchBar>
-                                <ImageButton Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_more_vert48.png}" 
-                                             BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
-                                             Aspect="AspectFill" Scale="1.4"
-                                             Command="{Binding CommandSelectFilter}"
-                                             />
+                                <ImageButton
+                                    Aspect="AspectFill"
+                                    BackgroundColor="White"
+                                    Command="{Binding CommandSelectFilter}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Scale="1.4"
+                                    Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_more_vert48.png}"
+                                    VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </Frame>
 
                         <!--#endregion-->
                         <!--#region Danh sách nhân viên-->
-                        <RefreshView  Command="{Binding CommandLoadData}" IsRefreshing="{Binding IsRefreshing}">
-                            <CollectionView x:Name="ItemsListView"
-                                            ItemsSource="{Binding Staffs}"
-                                            SelectionMode="None" >
+                        <RefreshView Command="{Binding CommandLoadData}" IsRefreshing="{Binding IsRefreshing}">
+                            <CollectionView
+                                x:Name="ItemsListView"
+                                ItemsSource="{Binding Staffs}"
+                                SelectionMode="None">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <SwipeView>
-                                            <SwipeView.RightItems >
-                                                <SwipeItemView >
+                                            <SwipeView.RightItems>
+                                                <SwipeItemView>
                                                     <!--#region lệnh quẹt phải của dòng-->
                                                     <Grid>
-                                                        <StackLayout CompressedLayout.IsHeadless="true" Orientation="Vertical" WidthRequest="50" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                                                            <Image  HorizontalOptions="Center" VerticalOptions="Center">
-                                                                <Image.Source>
-                                                                    <FontImageSource
-                                                                    Size="Large"  Color="Red"
-                                                                    FontFamily="{DynamicResource IconFontFamily}"
-                                                                    Glyph="{StaticResource IconDelete}"/>
-                                                                </Image.Source>
-                                                            </Image>
-                                                            <Label Text="{helper:Translate Label_Delete}" TextColor="Red"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                        <StackLayout
+                                                            Grid.Column="1"
+                                                            Padding="0"
+                                                            HorizontalOptions="Center"
+                                                            VerticalOptions="Center">
+                                                            <StackLayout
+                                                                CompressedLayout.IsHeadless="true"
+                                                                HorizontalOptions="Center"
+                                                                Orientation="Vertical"
+                                                                VerticalOptions="Center"
+                                                                WidthRequest="50">
+                                                                <Image HorizontalOptions="Center" VerticalOptions="Center">
+                                                                    <Image.Source>
+                                                                        <FontImageSource
+                                                                            FontFamily="{DynamicResource IconFontFamily}"
+                                                                            Glyph="{StaticResource IconDelete}"
+                                                                            Size="Large"
+                                                                            Color="Red" />
+                                                                    </Image.Source>
+                                                                </Image>
+                                                                <Label
+                                                                    HorizontalOptions="Center"
+                                                                    Text="{helper:Translate Label_Delete}"
+                                                                    TextColor="Red"
+                                                                    VerticalOptions="Center" />
+                                                            </StackLayout>
                                                             <StackLayout.GestureRecognizers>
                                                                 <TapGestureRecognizer
-                                                                        NumberOfTapsRequired="1"
-                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeDelete}"
-                                                                        CommandParameter="{Binding .}"
-                                                                        />
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeDelete}"
+                                                                    CommandParameter="{Binding .}"
+                                                                    NumberOfTapsRequired="1" />
                                                             </StackLayout.GestureRecognizers>
                                                         </StackLayout>
-                                                        <StackLayout CompressedLayout.IsHeadless="true" Orientation="Vertical" WidthRequest="50" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                                                            <Image  HorizontalOptions="Center" VerticalOptions="Center">
-                                                                <Image.Source>
-                                                                    <FontImageSource
-                                                                    Size="Large"  Color="Blue"
-                                                                    FontFamily="{DynamicResource IconFontFamily}"
-                                                                    Glyph="{StaticResource IconEdit}"/>
-                                                                </Image.Source>
-                                                            </Image>
-                                                            <Label Text="{helper:Translate Label_Edit}" TextColor="Blue"  HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                                                        <StackLayout
+                                                            Grid.Column="0"
+                                                            Padding="0"
+                                                            HorizontalOptions="Center"
+                                                            VerticalOptions="Center">
+                                                            <StackLayout
+                                                                CompressedLayout.IsHeadless="true"
+                                                                HorizontalOptions="Center"
+                                                                Orientation="Vertical"
+                                                                VerticalOptions="Center"
+                                                                WidthRequest="50">
+                                                                <Image HorizontalOptions="Center" VerticalOptions="Center">
+                                                                    <Image.Source>
+                                                                        <FontImageSource
+                                                                            FontFamily="{DynamicResource IconFontFamily}"
+                                                                            Glyph="{StaticResource IconEdit}"
+                                                                            Size="Large"
+                                                                            Color="Blue" />
+                                                                    </Image.Source>
+                                                                </Image>
+                                                                <Label
+                                                                    HorizontalOptions="Center"
+                                                                    Text="{helper:Translate Label_Edit}"
+                                                                    TextColor="Blue"
+                                                                    VerticalOptions="Center" />
+                                                            </StackLayout>
                                                             <StackLayout.GestureRecognizers>
                                                                 <TapGestureRecognizer
-                                                                        NumberOfTapsRequired="1"
-                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeEdit}"
-                                                                        CommandParameter="{Binding .}"
-                                                                        />
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandSwipeEdit}"
+                                                                    CommandParameter="{Binding .}"
+                                                                    NumberOfTapsRequired="1" />
                                                             </StackLayout.GestureRecognizers>
                                                         </StackLayout>
+
                                                     </Grid>
                                                     <!--#endregion-->
                                                 </SwipeItemView>
                                             </SwipeView.RightItems>
                                             <Grid Margin="1">
                                                 <!--#region gắn dữ liệu-->
-                                                <StackLayout Margin="5" HorizontalOptions="Start" VerticalOptions="Start"  CompressedLayout.IsHeadless="true">
-                                                    <StackLayout Orientation="Horizontal" HeightRequest="60"  CompressedLayout.IsHeadless="true">
+                                                <StackLayout
+                                                    Margin="5"
+                                                    CompressedLayout.IsHeadless="true"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Start">
+                                                    <StackLayout
+                                                        CompressedLayout.IsHeadless="true"
+                                                        HeightRequest="60"
+                                                        Orientation="Horizontal">
                                                         <!--#region ảnh đại diện-->
-                                                        <Frame Padding="0" BorderColor="Blue" WidthRequest="60" HeightRequest="60" CornerRadius="100">
-                                                            <Image Source="{Binding ProfilePicture , Converter={xct:ByteArrayToImageSourceConverter}}" 
-                                                                   WidthRequest="50"   
-                                                                   HeightRequest="50"
-                                                                   HorizontalOptions="Center"
-                                                                   VerticalOptions="Center">
+                                                        <Frame
+                                                            Padding="0"
+                                                            BorderColor="Blue"
+                                                            CornerRadius="100"
+                                                            HeightRequest="60"
+                                                            WidthRequest="60">
+                                                            <Image
+                                                                HeightRequest="50"
+                                                                HorizontalOptions="Center"
+                                                                Source="{Binding ProfilePicture, Converter={xct:ByteArrayToImageSourceConverter}}"
+                                                                VerticalOptions="Center"
+                                                                WidthRequest="50">
                                                                 <Image.Clip>
                                                                     <EllipseGeometry
                                                                         Center="25,25"
                                                                         RadiusX="25"
-                                                                        RadiusY="25"/>
+                                                                        RadiusY="25" />
                                                                 </Image.Clip>
                                                             </Image>
                                                         </Frame>
@@ -160,29 +233,52 @@
                                                         <!--#region thông tin chi tiết-->
                                                         <Grid Grid.Column="1">
                                                             <Grid.RowDefinitions>
-                                                                <RowDefinition/>
-                                                                <RowDefinition/>
-                                                                <RowDefinition/>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
                                                             </Grid.RowDefinitions>
                                                             <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="2.7*"/>
-                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="2.7*" />
+                                                                <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
 
-                                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding UserName}" FontSize="Small" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
-                                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding PositionName}" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
-                                                            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Email}" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                                                            <Label
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                FontAttributes="Bold"
+                                                                FontSize="Small"
+                                                                HorizontalOptions="StartAndExpand"
+                                                                Text="{Binding UserName}"
+                                                                VerticalOptions="StartAndExpand" />
+                                                            <Label
+                                                                Grid.Row="1"
+                                                                Grid.Column="0"
+                                                                FontSize="Small"
+                                                                HorizontalOptions="StartAndExpand"
+                                                                Text="{Binding PositionName}"
+                                                                VerticalOptions="StartAndExpand" />
+                                                            <Label
+                                                                Grid.Row="2"
+                                                                Grid.Column="0"
+                                                                FontSize="Small"
+                                                                HorizontalOptions="StartAndExpand"
+                                                                Text="{Binding Email}"
+                                                                VerticalOptions="StartAndExpand" />
 
-                                                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding CurrentTime,StringFormat='{0:dd/MM/yyyy}'}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand"/>
+                                                            <Label
+                                                                Grid.Row="2"
+                                                                Grid.Column="1"
+                                                                HorizontalOptions="EndAndExpand"
+                                                                Text="{Binding CurrentTime, StringFormat='{0:dd/MM/yyyy}'}"
+                                                                VerticalOptions="EndAndExpand" />
                                                         </Grid>
                                                         <!--#endregion-->
                                                     </StackLayout>
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer
-                                                        NumberOfTapsRequired="1"
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandView}"
-                                                        CommandParameter="{Binding .}">
-                                                        </TapGestureRecognizer>
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffListingViewModel}}, Path=CommandView}"
+                                                            CommandParameter="{Binding .}"
+                                                            NumberOfTapsRequired="1" />
                                                     </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                                 <!--#endregion-->
