@@ -81,8 +81,16 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
+                var staffRequest = new AdminStaffRequest();
+                staffRequest.ID = entity.ID;
+                staffRequest.UserName = entity.UserName;
+                staffRequest.Address = entity.Address;
+                staffRequest.PhoneNumber = entity.PhoneNumber;
+                staffRequest.Email = entity.Email;
+                staffRequest.Gender = entity.Gender;
+                staffRequest.PartID = entity.PartID;
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + "/Create");
-                message.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+                message.Content = new StringContent(JsonConvert.SerializeObject(staffRequest), Encoding.UTF8, "application/json");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
@@ -199,8 +207,16 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
+                var staffRequest = new AdminStaffRequest();
+                staffRequest.ID = entity.ID;
+                staffRequest.UserName = entity.UserName;
+                staffRequest.Address = entity.Address;
+                staffRequest.PhoneNumber = entity.PhoneNumber;
+                staffRequest.Email = entity.Email;
+                staffRequest.Gender = entity.Gender;
+                staffRequest.PartID = entity.PartID;
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Put, this.BaseUrl + "/Update");
-                message.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+                message.Content = new StringContent(JsonConvert.SerializeObject(staffRequest), Encoding.UTF8, "application/json");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
