@@ -32,7 +32,8 @@ namespace MobileAppLab.ApiServices
                 contentRespone = respone.Content.ReadAsStringAsync().Result;
                 respone.EnsureSuccessStatusCode();
                 //lấy token lưu tạm để dùng cho các lần sau
-                await SecureStorage.SetAsync("JWT", respone.Content.ReadAsStringAsync().Result);
+                ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
+                await SecureStorage.SetAsync("JWT", serverRespone.Result.ToString());
                 return (true,"");
             }
             catch (Exception ex)

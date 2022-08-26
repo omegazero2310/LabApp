@@ -1,5 +1,6 @@
 ﻿using CommonClass.ErrorCodes;
 using CommonClass.Models;
+using CommonClass.Models.Request;
 using CommonClass.Validations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,69 +32,65 @@ namespace WebApiLab.Services.BusinessLayer
             _validationRules = new AdminStaffValidator();
             _userName = userName;
         }
-        public async Task<HttpResponseMessage> Create(AdminStaff data)
+        public async Task<ServerRespone> Create(AdminStaff data)
         {
             var result = _validationRules.Validate(data);
             if (!result.IsValid)
             {
-                var validationRespone = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                validationRespone.ReasonPhrase = JsonConvert.SerializeObject(result.Errors);
-                return validationRespone;
+                return new ServerRespone { IsSuccess = false, Message = "DataValidateError", HttpStatusCode = HttpStatusCode.BadRequest, Result = result.Errors };
             }
             bool isDuplicateEmail = await _adminStaffsDAL.IsDuplicateEmail(data.Email);
             bool isDuplicatePhoneNumber = await _adminStaffsDAL.IsDuplicatePhoneNumber(data.PhoneNumber);
             if (isDuplicateEmail)
             {
-                var emailRespone = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                emailRespone.ReasonPhrase = AdminStaffErrorCode.DUPLICATE_EMAIL;
-                return emailRespone;
+                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_EMAIL, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
             }
             if (isDuplicatePhoneNumber)
             {
-                var phoneNumberRespone = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                phoneNumberRespone.ReasonPhrase = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
-                return phoneNumberRespone;
+                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
             }
             if (await _adminStaffsDAL?.AddAsync(data, _userName))
             {
-                return new HttpResponseMessage(HttpStatusCode.Created);
+                return new ServerRespone { IsSuccess = true, Message = "Created", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
+                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
 
 
         }
 
-        public async Task<HttpResponseMessage> Delete(object key)
+        public async Task<ServerRespone> Delete(object key)
         {
             if (await _adminStaffsDAL.DeleteAsync(key))
             {
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return new ServerRespone { IsSuccess = true, Message = "Deleted", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
+                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
         }
 
-        public async Task<AdminStaff?> Get(object key)
+        public async Task<ServerRespone> Get(object key)
         {
-            return await _adminStaffsDAL.Get(key);
+            var value = await _adminStaffsDAL.Get(key);
+            return new ServerRespone { IsSuccess = true, Message = "GetSuccess", HttpStatusCode = HttpStatusCode.OK, Result = value };
         }
 
-        public async Task<IEnumerable<AdminStaff>> Gets(int skip, int take)
+        public async Task<ServerRespone> Gets(int skip, int take)
         {
-            return await _adminStaffsDAL.Gets(skip, take);
+            var value = await _adminStaffsDAL.Gets(skip, take);
+            return new ServerRespone { IsSuccess = true, Message = "GetsSuccess", HttpStatusCode = HttpStatusCode.OK, Result = value };
         }
 
-        public async Task<HttpResponseMessage> Update(AdminStaff data)
+        public async Task<ServerRespone> Update(AdminStaff data)
         {
             if (await _adminStaffsDAL.UpdateAsync(data, _userName))
             {
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return new ServerRespone { IsSuccess = true, Message = "Updated", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
+                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
         }
-        public async Task<bool> UpdateProfilePicture(int id, string rootPath, IFormFile file)
+        public async Task<ServerRespone> UpdateProfilePicture(int id, string rootPath, IFormFile file)
         {
             string folderPath = Path.Combine(rootPath, _imageFolder);
             if (!Directory.Exists(folderPath))
@@ -126,14 +123,14 @@ namespace WebApiLab.Services.BusinessLayer
                         user.ProfileImage = randomImageName;
                         await _adminStaffsDAL.UpdateProfilePicture(id, randomImageName, _userName);
                     }
-                    return true;
+                    return new ServerRespone { IsSuccess = true, Message = "Updated", HttpStatusCode = HttpStatusCode.OK, Result = null };
                 }
                 else
-                    return false;
+                    return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
             }
-            return false;
+            return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
         }
-        public async Task<byte[]> GetProfilePicture(int id, string rootPath)
+        public async Task<ServerRespone> GetProfilePicture(int id, string rootPath)
         {
             string folderPath = Path.Combine(rootPath, _imageFolder);
             if (!Directory.Exists(folderPath))
@@ -152,21 +149,21 @@ namespace WebApiLab.Services.BusinessLayer
                             {
                                 fileStream.CopyTo(memoryStream);
                                 byte[] byteImage = memoryStream.ToArray();
-                                return byteImage;//File(byteImage, "image/jpeg")
+                                return new ServerRespone { IsSuccess = true, Message = "GetImageSuccess", HttpStatusCode = HttpStatusCode.OK, Result = byteImage };
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        return new ServerRespone { IsSuccess = false, Message = "GetImageFailed", HttpStatusCode = HttpStatusCode.InternalServerError, Result = new byte[0] };
                     }
                 }
                 else
-                    return new byte[0];
+                    return new ServerRespone { IsSuccess = true, Message = "NoImage", HttpStatusCode = HttpStatusCode.OK, Result = new byte[0] };
 
             }
             else
-                return new byte[0];
+                return new ServerRespone { IsSuccess = true, Message = "NoImage", HttpStatusCode = HttpStatusCode.OK, Result = new byte[0] };
         }
     }
 }

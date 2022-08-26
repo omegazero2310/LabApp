@@ -1,4 +1,5 @@
 ﻿using CommonClass.Models;
+using CommonClass.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,76 +26,76 @@ namespace WebApiLab.Controllers
         }
         // GET: api/<AdminPartsController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ServerRespone> Get()
         {
             try
             {
-                return Ok(await this._adminPartService.Gets(0, 0));
+                return await this._adminPartService.Gets(0, 0);
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex,null);
-                return StatusCode(500);
+                this._logger.LogError(ex, null);
+                return new ServerRespone { IsSuccess = false, Message = "ServerError", Result = ex, HttpStatusCode = System.Net.HttpStatusCode.InternalServerError };
             }
         }
 
         // GET api/<AdminPartsController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<ServerRespone> Get(int id)
         {
             try
             {
-                return Ok(await this._adminPartService.Get(id));
+                return await this._adminPartService.Get(id);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, null);
-                return StatusCode(500);
+                return new ServerRespone { IsSuccess = false, Message = "ServerError", Result = ex, HttpStatusCode = System.Net.HttpStatusCode.InternalServerError };
             }
         }
 
         // POST api/<AdminPartsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AdminParts value)
+        public async Task<ServerRespone> Post([FromBody] AdminParts value)
         {
             try
             {
-                return Ok(await this._adminPartService.Create(value));
+                return await this._adminPartService.Create(value);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, null);
-                return StatusCode(500);
+                return new ServerRespone { IsSuccess = false, Message = "ServerError", Result = ex, HttpStatusCode = System.Net.HttpStatusCode.InternalServerError };
             }
         }
 
         // PUT api/<AdminPartsController>/5
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] AdminParts value)
+        public async Task<ServerRespone> Put([FromBody] AdminParts value)
         {
             try
             {
-                return Ok(await this._adminPartService.Update(value));
+                return await this._adminPartService.Update(value);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, null);
-                return StatusCode(500);
+                return new ServerRespone { IsSuccess = false, Message = "ServerError", Result = ex, HttpStatusCode = System.Net.HttpStatusCode.InternalServerError };
             }
         }
 
         // DELETE api/<AdminPartsController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ServerRespone> Delete(int id)
         {
             try
             {
-                return Ok(await this._adminPartService.Delete(id));
+                return await this._adminPartService.Delete(id);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, null);
-                return StatusCode(500);
+                return new ServerRespone { IsSuccess = false, Message = "ServerError", Result = ex, HttpStatusCode = System.Net.HttpStatusCode.InternalServerError };
             }
         }
     }

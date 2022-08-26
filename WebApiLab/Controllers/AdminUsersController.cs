@@ -2,6 +2,7 @@
 using CommonClass.Models;
 using CommonClass.Models.Request;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using WebApiLab.Exts;
 using WebApiLab.Services;
 using WebApiLab.Services.BusinessLayer;
@@ -39,25 +40,16 @@ namespace WebApiLab.Controllers
         /// <response code="404">Tài khoản không tồn tại</response>
         [HttpPost]
         [ActionName("Login")]
-        public async Task<IActionResult> GetToken([FromBody] LoginRequest userLogins)
+        public async Task<ServerRespone> GetToken([FromBody] LoginRequest userLogins)
         {
             try
             {
-                return Ok(await this._adminUsersService.CheckLogin(userLogins.UserName, userLogins.Password));
+                return await this._adminUsersService.CheckLogin(userLogins.UserName, userLogins.Password);
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, null);
-                if (ex.Message == UserLoginErrorCode.NOT_EXIST)
-                    return NotFound(UserLoginErrorCode.NOT_EXIST);
-                if (ex.Message == UserLoginErrorCode.SUPPENDED)
-                    return Unauthorized(UserLoginErrorCode.SUPPENDED);
-                if (ex.Message == UserLoginErrorCode.BANNED)
-                    return Unauthorized(UserLoginErrorCode.BANNED);
-                if (ex.Message == UserLoginErrorCode.WRONG_USER_NAME_PASSWORD)
-                    return Unauthorized(UserLoginErrorCode.WRONG_USER_NAME_PASSWORD);
-                else
-                    throw ex;
+                this._logger.LogError(ex, "Server error: Get token failed");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
         /// <summary>
@@ -73,7 +65,7 @@ namespace WebApiLab.Controllers
         /// <response code="401">Đã tồn tại tài khoản</response>
         [HttpPost]
         [ActionName("CreateAccount")]
-        public async Task<HttpResponseMessage> CreateNewAccount([FromBody] CreateAccountRequest createAccRequet)
+        public async Task<ServerRespone> CreateNewAccount([FromBody] CreateAccountRequest createAccRequet)
         {
             try
             {
@@ -81,8 +73,8 @@ namespace WebApiLab.Controllers
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, null);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                this._logger.LogError(ex, "Server error: Get token failed");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using CommonClass.Models;
+using CommonClass.Models.Request;
 using System.Net;
 using WebApiLab.Services.DataAccessLayer;
 using WebApiLab.Services.Interfaces;
@@ -14,47 +15,49 @@ namespace WebApiLab.Services.BusinessLayer
             this._adminPartDAL = new AdminPartDAL(serviceProvider);
             _userName = userName;
         }
-        public async Task<HttpResponseMessage> Create(AdminParts data)
+        public async Task<ServerRespone> Create(AdminParts data)
         {
-            
+
             if (await _adminPartDAL?.AddAsync(data, _userName))
             {
-                return new HttpResponseMessage(HttpStatusCode.Created);
+                return new ServerRespone { IsSuccess = true, Message = "Created", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
+                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
 
 
         }
 
-        public async Task<HttpResponseMessage> Delete(object key)
+        public async Task<ServerRespone> Delete(object key)
         {
             if (await _adminPartDAL.DeleteAsync(key))
             {
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return new ServerRespone { IsSuccess = true, Message = "Deleted", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
+                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
         }
 
-        public async Task<AdminParts?> Get(object key)
+        public async Task<ServerRespone> Get(object key)
         {
-            return await _adminPartDAL.Get(key);
+            var value = await _adminPartDAL.Get(key);
+            return new ServerRespone { IsSuccess = true, Message = "GetSuccess", HttpStatusCode = HttpStatusCode.OK, Result = value };
         }
 
-        public async Task<IEnumerable<AdminParts>> Gets(int skip, int take)
+        public async Task<ServerRespone> Gets(int skip, int take)
         {
-            return await _adminPartDAL.Gets(skip, take);
+            var value = await _adminPartDAL.Gets(skip, take);
+            return new ServerRespone { IsSuccess = true, Message = "GetsSuccess", HttpStatusCode = HttpStatusCode.OK, Result = value };
         }
 
-        public async Task<HttpResponseMessage> Update(AdminParts data)
+        public async Task<ServerRespone> Update(AdminParts data)
         {
             if (await _adminPartDAL.UpdateAsync(data, _userName))
             {
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return new ServerRespone { IsSuccess = true, Message = "Updated", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.NotModified);
+                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
         }
     }
 }

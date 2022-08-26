@@ -28,7 +28,7 @@ namespace WebApiLab.Services.BusinessLayer
             this._jwtSettings = jwtSettings;
 
         }
-        public async Task<HttpResponseMessage> Create(CreateAccountRequest data)
+        public async Task<ServerRespone> Create(CreateAccountRequest data)
         {
             var account = await this._adminUsers.Get(data.UserID);
             if (account == null)
@@ -53,18 +53,18 @@ namespace WebApiLab.Services.BusinessLayer
                 await this._adminStaff.AddAsync(newStaff, "System");
                 newUser.ID = newStaff.ID;
                 await this._adminUsers.AddAsync(newUser);
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return new ServerRespone { IsSuccess = true, Message = "Created", HttpStatusCode = HttpStatusCode.OK, Result = null };
             }
             else
-                return new HttpResponseMessage(HttpStatusCode.Forbidden);
+                return new ServerRespone { IsSuccess = false, Message = "Existed", HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
         }
-        public async Task<UserTokens> CheckLogin(string userName, string password)
+        public async Task<ServerRespone> CheckLogin(string userName, string password)
         {
             var token = new UserTokens();
             var user = await this._adminUsers.Get(userName);
             if (user == null)
             {
-                throw new Exception(UserLoginErrorCode.NOT_EXIST);
+                return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.NOT_EXIST, HttpStatusCode = HttpStatusCode.NotFound, Result = null };
             }
             else
             {
@@ -73,11 +73,11 @@ namespace WebApiLab.Services.BusinessLayer
                 {
                     if (user.AccountStatus == CommonClass.Enums.AccountStatusOptions.Suppended)
                     {
-                        throw new Exception(UserLoginErrorCode.SUPPENDED);
+                        return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.SUPPENDED, HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
                     }
                     else if (user.AccountStatus == CommonClass.Enums.AccountStatusOptions.Banned)
                     {
-                        throw new Exception(UserLoginErrorCode.BANNED);
+                        return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.BANNED, HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
                     }
                     else
                     {
@@ -102,12 +102,13 @@ namespace WebApiLab.Services.BusinessLayer
                                 UserName = userName,
                             }, _jwtSettings);
                         }
-                        return token;
+                        return new ServerRespone { IsSuccess = true, Message = "GetSuccess", HttpStatusCode = HttpStatusCode.OK, Result = token };
+
                     }
                 }
                 else
                 {
-                    throw new Exception(UserLoginErrorCode.WRONG_USER_NAME_PASSWORD);
+                    return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.WRONG_USER_NAME_PASSWORD, HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
                 }
             }
         }

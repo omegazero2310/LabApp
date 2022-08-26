@@ -134,14 +134,16 @@ namespace MobileAppLab.ApiServices
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
                 respone.EnsureSuccessStatusCode();
-                var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(await respone.Content.ReadAsStringAsync());
+                ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
+                var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(serverRespone.Result.ToString());
                 foreach (var staff in listStaff)
                 {
                     //staff.PositionName = _staffPositions.Where(row => row.Value == staff.PositionID).FirstOrDefault().Key ?? "";
                     var res = await this.GetProfilePicture(staff.ID);
                     if (res.IsSuccessStatusCode)
                     {
-                        var imgData = await res.Content.ReadAsByteArrayAsync();
+                        ServerRespone serverResponeImg = JsonConvert.DeserializeObject<ServerRespone>(res.Content.ReadAsStringAsync().Result);
+                        var imgData = (byte[])serverResponeImg.Result;
                         if (imgData?.Length > 0)
 
                             staff.ProfilePicture = await res.Content.ReadAsByteArrayAsync();
@@ -174,8 +176,8 @@ namespace MobileAppLab.ApiServices
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
                 respone.EnsureSuccessStatusCode();
-
-                var staff = JsonConvert.DeserializeObject<AdminStaff>(await respone.Content.ReadAsStringAsync());
+                ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
+                var staff = JsonConvert.DeserializeObject<AdminStaff>(serverRespone.Result.ToString());
                 var profilePic = await this.GetProfilePicture(staff.ID);
 
                 if (profilePic.IsSuccessStatusCode)

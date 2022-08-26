@@ -29,7 +29,7 @@ namespace WebApiLab.Controllers
 
         [HttpGet]
         [ActionName("GetAll")]
-        public async Task<IEnumerable<AdminStaff>> Get([FromQuery] int skip = 0, [FromQuery] int take = 0)
+        public async Task<ServerRespone> Get([FromQuery] int skip = 0, [FromQuery] int take = 0)
         {
             try
             {
@@ -38,13 +38,13 @@ namespace WebApiLab.Controllers
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Server error: Get data failed");
-                throw;
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
 
         [HttpGet]
         [ActionName("Get")]
-        public async Task<AdminStaff?> Get([FromQuery] int id)
+        public async Task<ServerRespone> Get([FromQuery] int id)
         {
             try
             {
@@ -53,24 +53,12 @@ namespace WebApiLab.Controllers
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Server error: Get data failed");
-                throw;
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
         [HttpGet]
         [ActionName("GetProfilePicture")]
-        public async Task<IActionResult> GetPicture([FromQuery] int id)
-        {
-            if (string.IsNullOrWhiteSpace(_webHostEnvironment.WebRootPath))
-            {
-                _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            }
-            var dataImg = await this._adminStaffsService.GetProfilePicture(id, _webHostEnvironment.WebRootPath);
-            return File(dataImg, "image/jpeg");
-        }
-
-        [HttpPost]
-        [ActionName("UploadProfilePicture")]
-        public async Task<IActionResult> UploadPicture([FromQuery] int id, IFormFile file)
+        public async Task<ServerRespone> GetPicture([FromQuery] int id)
         {
             try
             {
@@ -78,22 +66,40 @@ namespace WebApiLab.Controllers
                 {
                     _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 }
-                var result = await this._adminStaffsService.UpdateProfilePicture(id, _webHostEnvironment.WebRootPath, file);
-                if (result == true)
-                    return Ok();
-                else
-                    return NoContent();
+                var data = await this._adminStaffsService.GetProfilePicture(id, _webHostEnvironment.WebRootPath);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Failed to get Profile Picture");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
+            }
+
+        }
+
+        [HttpPost]
+        [ActionName("UploadProfilePicture")]
+        public async Task<ServerRespone> UploadPicture([FromQuery] int id, IFormFile file)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(_webHostEnvironment.WebRootPath))
+                {
+                    _webHostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                }
+                return await this._adminStaffsService.UpdateProfilePicture(id, _webHostEnvironment.WebRootPath, file);
+                
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Server error: Failed to upload Profile Picture");
-                return StatusCode(500);
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
 
         [HttpPost]
         [ActionName("Create")]
-        public async Task<IActionResult> Post([FromBody] AdminStaffRequest value)
+        public async Task<ServerRespone> Post([FromBody] AdminStaffRequest value)
         {
             try
             {
@@ -108,19 +114,19 @@ namespace WebApiLab.Controllers
                 staff.ProfileImage = value.ProfileImage ?? "";
                 staff.PartID = value.PartID;
                 var result = await this._adminStaffsService.Create(staff);
-                return StatusCode((int)result.StatusCode, result);
+                return result;
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Failed to add new AdminStaff");
-                return StatusCode(500,"Server Error while create new");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
 
         }
 
         [HttpPut]
         [ActionName("Update")]
-        public async Task<IActionResult> Put([FromBody] AdminStaffRequest value)
+        public async Task<ServerRespone> Put([FromBody] AdminStaffRequest value)
         {
             try
             {
@@ -135,28 +141,28 @@ namespace WebApiLab.Controllers
                 staff.ProfileImage = value.ProfileImage ?? "";
                 staff.PartID = value.PartID;
                 var result = await this._adminStaffsService.Update(staff);
-                return StatusCode((int)result.StatusCode, result);
+                return result;
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Failed to update AdminStaff");
-                return StatusCode(500, "Server Error while update");
-            }         
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
+            }
         }
 
         [HttpDelete]
         [ActionName("Delete")]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<ServerRespone> Delete([FromQuery] int id)
         {
             try
             {
                 var result = await this._adminStaffsService.Delete(id);
-                return StatusCode((int)result.StatusCode, result);
+                return result;
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Failed to delete AdminStaff");
-                return StatusCode(500, "Server Error while delete");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
 
         }
