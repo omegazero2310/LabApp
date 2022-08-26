@@ -140,7 +140,7 @@ namespace MobileAppLab.ViewModels
                 this.UserName = adminStaff.UserName;
                 this.Address = adminStaff.Address;
                 this.PhoneNumber = adminStaff.PhoneNumber;
-                this.PositionName = _staffPositions.Where(pos => pos.Value == adminStaff.PositionID).FirstOrDefault().Key;
+                //this.PositionName = _staffPositions.Where(pos => pos.Value == adminStaff.PositionID).FirstOrDefault().Key;
                 this.EmailAddress = adminStaff.Email;
                 this.Gender = _staffGenders.Where(pos => pos.Value == adminStaff.Gender).FirstOrDefault().Key;
             }
@@ -169,7 +169,7 @@ namespace MobileAppLab.ViewModels
                 adminStaff.UserName = this.UserName;
                 adminStaff.Address = this.Address;
                 adminStaff.PhoneNumber = this.PhoneNumber;
-                adminStaff.PositionID = _staffPositions[this.PositionName];
+                //adminStaff.PositionID = _staffPositions[this.PositionName];
                 adminStaff.Gender = _staffGenders[this.Gender];
                 adminStaff.Email = this.EmailAddress;
                 AdminStaffValidator validationRules = new AdminStaffValidator();

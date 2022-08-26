@@ -267,6 +267,9 @@
   <data name="MSG_PHONE_NUMBER_NOT_EMPTY" xml:space="preserve">
     <value>Phone number must not be emtpy</value>
   </data>
+  <data name="MSG_PHONE_NUMBER_NOT_VALID" xml:space="preserve">
+    <value>Phone Number not valid</value>
+  </data>
   <data name="MSG_PHONE_NUMBER_NUMBER_ONLY" xml:space="preserve">
     <value>Phone number contain word, contain number only</value>
   </data>

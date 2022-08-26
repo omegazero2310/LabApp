@@ -113,18 +113,6 @@ namespace CommonClass.Models
         public string DepartmentName { get; set; }
 
         /// <summary>
-        /// Chức danh của nhân viên
-        /// </summary>
-        /// <value>
-        /// Chức danh hiện tại
-        /// </value>
-        /// <Modified>
-        /// Name Date Comments
-        /// annv3 18/08/2022 created
-        /// </Modified>
-        [Required]
-        public PositionOptions PositionID { get; set; }
-        /// <summary>
         /// ID hình ảnh của nhân viên trên API
         /// </summary>
         /// <value>
@@ -136,6 +124,30 @@ namespace CommonClass.Models
         /// </Modified>
         [Column(TypeName = "nvarchar(50)")]
         public string ProfileImage { get; set; }
+
+        /// <summary>
+        /// Chức danh của nhân viên
+        /// </summary>
+        /// <value>
+        /// Chức danh hiện tại
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 18/08/2022 created
+        /// </Modified>
+        [DefaultValue(1)]
+        public int PartID { get; set; }
+        [ForeignKey("PartID")]
+        public virtual AdminParts Parts { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
+        [Required]
+        public DateTime DateModified { get; set; }
+        [Required]
+        public string UserCreated { get; set; }
+        [Required]
+        public string UserModified { get; set; }
 
 
         [NotMapped]

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiLab.DatabaseContext;
 
@@ -11,9 +12,10 @@ using WebApiLab.DatabaseContext;
 namespace WebApiLab.Migrations
 {
     [DbContext(typeof(LabDbContext))]
-    partial class LabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220826065938_addAdminParts")]
+    partial class addAdminParts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,56 +32,13 @@ namespace WebApiLab.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PartID"), 1L, 1);
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("PartName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserCreated")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserModified")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PartID");
 
                     b.ToTable("Admin.Parts");
-
-                    b.HasData(
-                        new
-                        {
-                            PartID = 1,
-                            DateCreated = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8944),
-                            DateModified = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8958),
-                            PartName = "Nhân viên",
-                            UserCreated = "Seed",
-                            UserModified = "Seed"
-                        },
-                        new
-                        {
-                            PartID = 2,
-                            DateCreated = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8960),
-                            DateModified = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8961),
-                            PartName = "Trưởng phòng",
-                            UserCreated = "Seed",
-                            UserModified = "Seed"
-                        },
-                        new
-                        {
-                            PartID = 3,
-                            DateCreated = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8962),
-                            DateModified = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8962),
-                            PartName = "Giám đốc",
-                            UserCreated = "Seed",
-                            UserModified = "Seed"
-                        });
                 });
 
             modelBuilder.Entity("CommonClass.Models.AdminStaff", b =>
@@ -94,12 +53,6 @@ namespace WebApiLab.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("DepartmentName")
                         .HasColumnType("nvarchar(max)");
 
@@ -110,31 +63,21 @@ namespace WebApiLab.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("PartID")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PositionID")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProfileImage")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserCreated")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserModified")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("PartID");
 
                     b.ToTable("Admin.Staffs");
                 });
@@ -146,9 +89,6 @@ namespace WebApiLab.Migrations
 
                     b.Property<int>("AccountStatus")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
@@ -167,30 +107,11 @@ namespace WebApiLab.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("UserCreated")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserModified")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("UserID");
 
                     b.HasIndex("ID");
 
                     b.ToTable("Admin.Users");
-                });
-
-            modelBuilder.Entity("CommonClass.Models.AdminStaff", b =>
-                {
-                    b.HasOne("CommonClass.Models.AdminParts", "Parts")
-                        .WithMany()
-                        .HasForeignKey("PartID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Parts");
                 });
 
             modelBuilder.Entity("CommonClass.Models.AdminUser", b =>

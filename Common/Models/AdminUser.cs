@@ -72,6 +72,9 @@ namespace CommonClass.Models
         [Required]
         public bool IsResetPassword { get; set; }
 
+        
+        [Required]
+        public DateTime DateCreated { get; set; }
         /// <summary>
         /// Lần cuối đổi mật khẩu của nhân viên
         /// </summary>
@@ -84,6 +87,10 @@ namespace CommonClass.Models
         /// </Modified>
         [Required]
         public DateTime DateModified { get; set; }
+        [Required]
+        public string UserCreated { get; set; }
+        [Required]
+        public string UserModified { get; set; }
 
         [Required]
         [DefaultValue(AccountStatusOptions.Normal)]

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiLab.DatabaseContext;
 
@@ -11,9 +12,10 @@ using WebApiLab.DatabaseContext;
 namespace WebApiLab.Migrations
 {
     [DbContext(typeof(LabDbContext))]
-    partial class LabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220826072903_AddSeedAdminParts")]
+    partial class AddSeedAdminParts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +58,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 1,
-                            DateCreated = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8944),
-                            DateModified = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8958),
+                            DateCreated = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7328),
+                            DateModified = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7339),
                             PartName = "Nhân viên",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -65,8 +67,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 2,
-                            DateCreated = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8960),
-                            DateModified = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8961),
+                            DateCreated = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7340),
+                            DateModified = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7341),
                             PartName = "Trưởng phòng",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -74,8 +76,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 3,
-                            DateCreated = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8962),
-                            DateModified = new DateTime(2022, 8, 26, 15, 47, 39, 762, DateTimeKind.Local).AddTicks(8962),
+                            DateCreated = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7342),
+                            DateModified = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7342),
                             PartName = "Giám đốc",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -116,6 +118,9 @@ namespace WebApiLab.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PositionID")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProfileImage")
                         .HasColumnType("nvarchar(50)");

@@ -132,7 +132,7 @@ namespace MobileAppLab.ApiServices
                 var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(await respone.Content.ReadAsStringAsync());
                 foreach (var staff in listStaff)
                 {
-                    staff.PositionName = _staffPositions.Where(row => row.Value == staff.PositionID).FirstOrDefault().Key ?? "";
+                    //staff.PositionName = _staffPositions.Where(row => row.Value == staff.PositionID).FirstOrDefault().Key ?? "";
                     var res = await this.GetProfilePicture(staff.ID);
                     if (res.IsSuccessStatusCode)
                     {

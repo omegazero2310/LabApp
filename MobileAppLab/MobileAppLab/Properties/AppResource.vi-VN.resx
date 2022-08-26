@@ -267,6 +267,9 @@
   <data name="MSG_PHONE_NUMBER_NOT_EMPTY" xml:space="preserve">
     <value>Số điện thoại không được để trống</value>
   </data>
+  <data name="MSG_PHONE_NUMBER_NOT_VALID" xml:space="preserve">
+    <value>Số điện thoại không hợp lệ</value>
+  </data>
   <data name="MSG_PHONE_NUMBER_NUMBER_ONLY" xml:space="preserve">
     <value>Số điện thoại không hợp lệ</value>
   </data>
@@ -325,6 +328,6 @@
     <value>Trưởng phòng</value>
   </data>
   <data name="Select_Filter_Options" xml:space="preserve">
-    <value>Select Filter Options</value>
+    <value>Chọn kiểu lọc</value>
   </data>
 </root>

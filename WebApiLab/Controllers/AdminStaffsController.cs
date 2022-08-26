@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
+using System.Security.Claims;
 using WebApiLab.Services;
+using WebApiLab.Services.BusinessLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,14 +18,15 @@ namespace WebApiLab.Controllers
     {
         private readonly string _imageFolder = "ProfileImgs";
         private readonly IServiceProvider _configuration;
-        private IBackendService<AdminStaff> _adminStaffsService;
+        private AdminStaffsService _adminStaffsService;
         private readonly ILogger<AdminUsersController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminStaffsController(IServiceProvider configuration, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
+        public AdminStaffsController(IServiceProvider configuration, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContext)
         {
             this._configuration = configuration;
             this._logger = logger;
-            this._adminStaffsService = new AdminStaffsService(configuration);
+            var claims = httpContext.HttpContext.User.Identity.Name;
+            this._adminStaffsService = new AdminStaffsService(configuration, claims ?? "Unknow");
             this._webHostEnvironment = webHostEnvironment;
         }
 

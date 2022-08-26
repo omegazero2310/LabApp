@@ -511,6 +511,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone Number not valid.
+        /// </summary>
+        public static string MSG_PHONE_NUMBER_NOT_VALID {
+            get {
+                return ResourceManager.GetString("MSG_PHONE_NUMBER_NOT_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone number contain word, contain number only.
         /// </summary>
         public static string MSG_PHONE_NUMBER_NUMBER_ONLY {
