@@ -199,81 +199,83 @@
                                             </SwipeView.RightItems>
                                             <Grid Margin="1">
                                                 <!--#region gắn dữ liệu-->
-                                                <StackLayout
-                                                    Grid.Row="0"
-                                                    Margin="5"
-                                                    CompressedLayout.IsHeadless="true"
-                                                    HorizontalOptions="Start"
-                                                    VerticalOptions="Start">
+                                                <StackLayout Padding="0">
                                                     <StackLayout
+                                                        Grid.Row="0"
+                                                        Margin="5"
                                                         CompressedLayout.IsHeadless="true"
-                                                        HeightRequest="60"
-                                                        Orientation="Horizontal">
-                                                        <!--#region ảnh đại diện-->
-                                                        <Frame
-                                                            Padding="0"
-                                                            BorderColor="Blue"
-                                                            CornerRadius="100"
+                                                        HorizontalOptions="Start"
+                                                        VerticalOptions="Start">
+                                                        <StackLayout
+                                                            CompressedLayout.IsHeadless="true"
                                                             HeightRequest="60"
-                                                            WidthRequest="60">
-                                                            <Image
-                                                                HeightRequest="50"
-                                                                HorizontalOptions="Center"
-                                                                Source="{Binding ProfilePicture, Converter={xct:ByteArrayToImageSourceConverter}}"
-                                                                VerticalOptions="Center"
-                                                                WidthRequest="50">
-                                                                <Image.Clip>
-                                                                    <EllipseGeometry
-                                                                        Center="25,25"
-                                                                        RadiusX="25"
-                                                                        RadiusY="25" />
-                                                                </Image.Clip>
-                                                            </Image>
-                                                        </Frame>
-                                                        <!--#endregion-->
-                                                        <!--#region thông tin chi tiết-->
-                                                        <Grid Grid.Column="1">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition />
-                                                                <RowDefinition />
-                                                                <RowDefinition />
-                                                            </Grid.RowDefinitions>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="2.7*" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </Grid.ColumnDefinitions>
+                                                            Orientation="Horizontal">
+                                                            <!--#region ảnh đại diện-->
+                                                            <Frame
+                                                                Padding="0"
+                                                                BorderColor="Blue"
+                                                                CornerRadius="100"
+                                                                HeightRequest="60"
+                                                                WidthRequest="60">
+                                                                <Image
+                                                                    HeightRequest="50"
+                                                                    HorizontalOptions="Center"
+                                                                    Source="{Binding ProfilePicture, Converter={xct:ByteArrayToImageSourceConverter}}"
+                                                                    VerticalOptions="Center"
+                                                                    WidthRequest="50">
+                                                                    <Image.Clip>
+                                                                        <EllipseGeometry
+                                                                            Center="25,25"
+                                                                            RadiusX="25"
+                                                                            RadiusY="25" />
+                                                                    </Image.Clip>
+                                                                </Image>
+                                                            </Frame>
+                                                            <!--#endregion-->
+                                                            <!--#region thông tin chi tiết-->
+                                                            <Grid Grid.Column="1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition />
+                                                                    <RowDefinition />
+                                                                    <RowDefinition />
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="2.7*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
 
-                                                            <Label
-                                                                Grid.Row="0"
-                                                                Grid.Column="0"
-                                                                FontAttributes="Bold"
-                                                                FontSize="Small"
-                                                                HorizontalOptions="StartAndExpand"
-                                                                Text="{Binding UserName}"
-                                                                VerticalOptions="StartAndExpand" />
-                                                            <Label
-                                                                Grid.Row="1"
-                                                                Grid.Column="0"
-                                                                FontSize="Small"
-                                                                HorizontalOptions="StartAndExpand"
-                                                                Text="{Binding PositionName}"
-                                                                VerticalOptions="StartAndExpand" />
-                                                            <Label
-                                                                Grid.Row="2"
-                                                                Grid.Column="0"
-                                                                FontSize="Small"
-                                                                HorizontalOptions="StartAndExpand"
-                                                                Text="{Binding Email}"
-                                                                VerticalOptions="StartAndExpand" />
+                                                                <Label
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0"
+                                                                    FontAttributes="Bold"
+                                                                    FontSize="Small"
+                                                                    HorizontalOptions="StartAndExpand"
+                                                                    Text="{Binding UserName}"
+                                                                    VerticalOptions="StartAndExpand" />
+                                                                <Label
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0"
+                                                                    FontSize="Small"
+                                                                    HorizontalOptions="StartAndExpand"
+                                                                    Text="{Binding PositionName}"
+                                                                    VerticalOptions="StartAndExpand" />
+                                                                <Label
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0"
+                                                                    FontSize="Small"
+                                                                    HorizontalOptions="StartAndExpand"
+                                                                    Text="{Binding Email}"
+                                                                    VerticalOptions="StartAndExpand" />
 
-                                                            <Label
-                                                                Grid.Row="2"
-                                                                Grid.Column="1"
-                                                                HorizontalOptions="EndAndExpand"
-                                                                Text="{Binding CurrentTime, StringFormat='{0:dd/MM/yyyy}'}"
-                                                                VerticalOptions="EndAndExpand" />
-                                                        </Grid>
-                                                        <!--#endregion-->
+                                                                <Label
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1"
+                                                                    HorizontalOptions="EndAndExpand"
+                                                                    Text="{Binding CurrentTime, StringFormat='{0:dd/MM/yyyy}'}"
+                                                                    VerticalOptions="EndAndExpand" />
+                                                            </Grid>
+                                                            <!--#endregion-->
+                                                        </StackLayout>
                                                     </StackLayout>
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer
@@ -281,11 +283,9 @@
                                                             CommandParameter="{Binding .}"
                                                             NumberOfTapsRequired="1" />
                                                     </StackLayout.GestureRecognizers>
-
                                                 </StackLayout>
+
                                                 <!--#endregion-->
-
-
                                             </Grid>
                                         </SwipeView>
                                     </DataTemplate>
