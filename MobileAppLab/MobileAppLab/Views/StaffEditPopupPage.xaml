@@ -297,6 +297,7 @@
                                     CornerRadius="15"
                                     HorizontalOptions="Center"
                                     Text="Ok"
+                                    TextColor="White"
                                     VerticalOptions="Center"
                                     WidthRequest="100">
                                     <Button.Background>
