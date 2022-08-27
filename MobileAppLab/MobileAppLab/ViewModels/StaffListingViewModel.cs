@@ -167,7 +167,7 @@ namespace MobileAppLab.ViewModels
         public DelegateCommand CommandSelectFilter =>
             _commandSelectFilter ?? (_commandSelectFilter = new DelegateCommand(ExecuteCommandSelectFilter));
 
-        
+
         #endregion
 
         public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
@@ -208,17 +208,18 @@ namespace MobileAppLab.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            this.IsRefreshing = true;
+            if (Convert.ToBoolean(parameters["IsSuccess"]?.ToString() ?? ""))
+                this.IsRefreshing = true;
         }
         private void RaiseIsActiveChanged()
         {
-            if(this.IsActive)
+            if (this.IsActive)
             {
                 this.IsRefreshing = true;
                 this.SelectedFilterOption = FilterOptions.UserName;
                 this.FilterPrefix = LocalizationResourceManager.Instance[nameof(AppResource.PlaceHolder_SearchBar)];
-            }    
-            
+            }
+
         }
         #region các method của command
         private async void ExecuteCommandSearch(object parameter)
@@ -229,7 +230,7 @@ namespace MobileAppLab.ViewModels
             {
                 var listStaff = await this._adminStaffService.GetAll();
                 IEnumerable<AdminStaff> filtered = listStaff;
-                switch(this.SelectedFilterOption)
+                switch (this.SelectedFilterOption)
                 {
                     case FilterOptions.UserName:
                         filtered = listStaff.Where(x => x.UserName.Contains(parameter.ToString()));

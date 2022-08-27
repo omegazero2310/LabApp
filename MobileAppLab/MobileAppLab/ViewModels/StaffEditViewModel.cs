@@ -1,5 +1,6 @@
 ﻿using CommonClass.Enums;
 using CommonClass.Models;
+using CommonClass.Models.Request;
 using CommonClass.Validations;
 using MobileAppLab.ApiServices;
 using MobileAppLab.Properties;
@@ -11,6 +12,7 @@ using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -22,6 +24,7 @@ namespace MobileAppLab.ViewModels
     public class StaffEditViewModel : ViewModelBase
     {
         private AdminStaffService _adminStaffService;
+        private AdminPartServices _adminPartService;
         private IPageDialogService _pageDialog;
         public event Action<IDialogParameters> RequestClose;
 
@@ -33,15 +36,14 @@ namespace MobileAppLab.ViewModels
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Female)],GenderOptions.Female },
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Other)],GenderOptions.Other },
                 };
-        public List<string> ListStaffGenders { get; } = _staffGenders.Keys.ToList();
-
-        private readonly static IReadOnlyDictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>
-                {
-                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_NV)],PositionOptions.NV },
-                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },
-                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_GD)],PositionOptions.GD },
-                };
-        public List<string> ListStaffPositions { get; } = _staffPositions.Keys.ToList();
+        public ObservableCollection<AdminParts> StaffPositions { get; } = new ObservableCollection<AdminParts>();
+        private int _selectedStaffPosition;
+        public int SelectedStaffPosition
+        {
+            get { return _selectedStaffPosition; }
+            set { SetProperty(ref _selectedStaffPosition, value); }
+        }
+        public List<string> ListStaffPositions { get; }
         private bool _isEdit;
         public bool IsEditMode
         {
@@ -103,6 +105,7 @@ namespace MobileAppLab.ViewModels
         public StaffEditViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffService(httpClient);
+            _adminPartService = new AdminPartServices(httpClient);
         }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -134,13 +137,19 @@ namespace MobileAppLab.ViewModels
         private async Task LoadStaffInfo(int id)
         {
             AdminStaff adminStaff = await this._adminStaffService.GetByID(id);
+            IEnumerable <AdminParts> parts = await this._adminPartService.GetAll();
+            this.StaffPositions.Clear();
+            foreach(var part in parts)
+            {
+                this.StaffPositions.Add(part);
+            }                 
             if (adminStaff != null)
             {
                 this.ID = adminStaff.ID;
                 this.UserName = adminStaff.UserName;
                 this.Address = adminStaff.Address;
                 this.PhoneNumber = adminStaff.PhoneNumber;
-                //this.PositionName = _staffPositions.Where(pos => pos.Value == adminStaff.PositionID).FirstOrDefault().Key;
+                this.SelectedStaffPosition = adminStaff.PartID;
                 this.EmailAddress = adminStaff.Email;
                 this.Gender = _staffGenders.Where(pos => pos.Value == adminStaff.Gender).FirstOrDefault().Key;
             }
@@ -162,12 +171,12 @@ namespace MobileAppLab.ViewModels
                     RaisePropertyChanged(nameof(ErrorMessages));
                 }
                 AdminStaff adminStaff = new AdminStaff();
-                if(this.IsEditMode && this.ID.HasValue)
+                if (this.IsEditMode && this.ID.HasValue)
                     adminStaff.ID = this.ID.Value;
                 adminStaff.UserName = this.UserName;
                 adminStaff.Address = this.Address;
                 adminStaff.PhoneNumber = this.PhoneNumber;
-                //adminStaff.PositionID = _staffPositions[this.PositionName];
+                adminStaff.PartID = this.SelectedStaffPosition;
                 adminStaff.Gender = _staffGenders[this.Gender];
                 adminStaff.Email = this.EmailAddress;
                 AdminStaffValidator validationRules = new AdminStaffValidator();
@@ -184,11 +193,20 @@ namespace MobileAppLab.ViewModels
                 }
                 else
                 {
+                    ServerRespone serverRespone = null;
                     if (IsEditMode && this.ID.HasValue)
-                        await this._adminStaffService.Update(adminStaff);
+                        serverRespone = await this._adminStaffService.Update(adminStaff);
                     else
-                        await this._adminStaffService.CreateNew(adminStaff);
-                    await this.NavigationService.GoBackAsync();
+                        serverRespone = await this._adminStaffService.CreateNew(adminStaff);
+                    if (serverRespone.IsSuccess)
+                    {
+                        NavigationParameters valuePairs = new NavigationParameters();
+                        valuePairs.Add("IsSuccess", true);
+                        await this.NavigationService.GoBackAsync(valuePairs);
+                    }
+                    else
+                        await this.NavigationService.GoBackAsync();
+
                 }
             }
             catch (Exception ex)

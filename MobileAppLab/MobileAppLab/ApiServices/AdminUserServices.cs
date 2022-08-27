@@ -49,12 +49,12 @@ namespace MobileAppLab.ApiServices
             SecureStorage.Remove("JWT");
         }
 
-        public Task<HttpResponseMessage> CreateNew(AdminUser entity)
+        public Task<ServerRespone> CreateNew(AdminUser entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<HttpResponseMessage> Delete(object key)
+        public Task<ServerRespone> Delete(object key)
         {
             throw new NotImplementedException();
         }
@@ -69,7 +69,7 @@ namespace MobileAppLab.ApiServices
             throw new NotImplementedException();
         }
 
-        public Task<HttpResponseMessage> Update(AdminUser entity)
+        public Task<ServerRespone> Update(AdminUser entity)
         {
             throw new NotImplementedException();
         }

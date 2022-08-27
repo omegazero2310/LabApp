@@ -192,8 +192,9 @@
                                     Grid.Column="1"
                                     HorizontalOptions="Fill"
                                     IsEnabled="{Binding IsEditMode}"
-                                    ItemsSource="{Binding ListStaffPositions}"
-                                    SelectedItem="{Binding PositionName}"
+                                    ItemsSource="{Binding StaffPositions}"
+                                    SelectedItem="{Binding SelectedStaffPosition}"
+                                    ItemDisplayBinding="{Binding PartName}"
                                     VerticalOptions="CenterAndExpand" />
                                 <Label
                                     Grid.Row="7"

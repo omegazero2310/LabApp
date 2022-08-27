@@ -31,7 +31,7 @@ namespace MobileAppLab.ApiServices
 
         }
 
-        public async Task<HttpResponseMessage> GetProfilePicture(int id)
+        public async Task<ServerRespone> GetProfilePicture(int id)
         {
             try
             {
@@ -39,16 +39,16 @@ namespace MobileAppLab.ApiServices
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
-                respone.EnsureSuccessStatusCode();
-                return respone;
+                return JsonConvert.DeserializeObject<ServerRespone>(await respone.Content.ReadAsStringAsync());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+                return new ServerRespone() { IsSuccess = false, Result = ex };
             }
+            
         }
-        public async Task<HttpResponseMessage> UploadProfilePicture(int id, string filePath)
+        public async Task<ServerRespone> UploadProfilePicture(int id, string filePath)
         {
             try
             {
@@ -67,17 +67,16 @@ namespace MobileAppLab.ApiServices
                     message.Content = multipartFormContent;
                     //Send it
                     var response = await HttpClient.SendAsync(message);
-                    response.EnsureSuccessStatusCode();
-                    return response;
+                    return JsonConvert.DeserializeObject<ServerRespone>(await response.Content.ReadAsStringAsync());
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                return new ServerRespone() { IsSuccess = false, Result = ex };
             }
         }
-        public async Task<HttpResponseMessage> CreateNew(AdminStaff entity)
+        public async Task<ServerRespone> CreateNew(AdminStaff entity)
         {
             try
             {
@@ -94,17 +93,16 @@ namespace MobileAppLab.ApiServices
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
-                respone.EnsureSuccessStatusCode();
-                return respone;
+                return JsonConvert.DeserializeObject<ServerRespone>(await respone.Content.ReadAsStringAsync());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                return new ServerRespone() { IsSuccess = false, Result = ex };
             }
         }
 
-        public async Task<HttpResponseMessage> Delete(object key)
+        public async Task<ServerRespone> Delete(object key)
         {
             try
             {
@@ -112,13 +110,12 @@ namespace MobileAppLab.ApiServices
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
-                respone.EnsureSuccessStatusCode();
-                return respone;
+                return JsonConvert.DeserializeObject<ServerRespone>(await respone.Content.ReadAsStringAsync());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                return new ServerRespone() { IsSuccess = false, Result = ex };
             }
         }
 
@@ -142,19 +139,20 @@ namespace MobileAppLab.ApiServices
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
                 respone.EnsureSuccessStatusCode();
+
+                AdminPartServices partServices = new AdminPartServices(HttpClient);
+                var ListPosition = await partServices.GetAllAsDictionary();
                 ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
                 var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(serverRespone.Result.ToString());
                 foreach (var staff in listStaff)
                 {
-                    //staff.PositionName = _staffPositions.Where(row => row.Value == staff.PositionID).FirstOrDefault().Key ?? "";
+                    staff.PositionName = ListPosition[staff.ID];
                     var res = await this.GetProfilePicture(staff.ID);
-                    if (res.IsSuccessStatusCode)
+                    if (res.IsSuccess)
                     {
-                        ServerRespone serverResponeImg = JsonConvert.DeserializeObject<ServerRespone>(res.Content.ReadAsStringAsync().Result);
-                        var imgData = (byte[])serverResponeImg.Result;
+                        var imgData = (byte[])res.Result;
                         if (imgData?.Length > 0)
-
-                            staff.ProfilePicture = await res.Content.ReadAsByteArrayAsync();
+                            staff.ProfilePicture = imgData;
                         else
                             staff.ProfilePicture = data;
                     }
@@ -174,11 +172,20 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
+                
+
                 if ((Connectivity.NetworkAccess != NetworkAccess.Internet &&
                     !Barrel.Current.IsExpired(key: this.BaseUrl + $"/Get/{key}")))
                 {
                     return Barrel.Current.Get<AdminStaff>(key: this.BaseUrl + $"/Get/{key}");
                 }
+
+                var asm = this.GetType().Assembly;
+                //ảnh mặc định
+                System.IO.Stream stream = asm.GetManifestResourceStream("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+                byte[] data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
+
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/Get?id={key}");
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
@@ -188,10 +195,14 @@ namespace MobileAppLab.ApiServices
                 var staff = JsonConvert.DeserializeObject<AdminStaff>(serverRespone.Result.ToString());
                 var profilePic = await this.GetProfilePicture(staff.ID);
 
-                if (profilePic.IsSuccessStatusCode)
+                if (profilePic.IsSuccess)
                 {
-                    staff.ProfilePicture = await profilePic.Content.ReadAsByteArrayAsync();
+                    staff.ProfilePicture = (byte[])profilePic.Result;
                 }
+                else
+                {
+                    staff.ProfilePicture = data;
+                }    
 
                 Barrel.Current.Add(key: this.BaseUrl + $"/Get/{key}", data: staff, expireIn: TimeSpan.FromDays(1));
                 return staff;
@@ -203,7 +214,7 @@ namespace MobileAppLab.ApiServices
             }
         }
 
-        public async Task<HttpResponseMessage> Update(AdminStaff entity)
+        public async Task<ServerRespone> Update(AdminStaff entity)
         {
             try
             {
@@ -220,13 +231,12 @@ namespace MobileAppLab.ApiServices
                 //Get Token from SecureStorage
                 message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
                 var respone = await HttpClient.SendAsync(message);
-                respone.EnsureSuccessStatusCode();
-                return respone;
+                return JsonConvert.DeserializeObject<ServerRespone>(await respone.Content.ReadAsStringAsync());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                return new ServerRespone() { IsSuccess = false, Result = ex };
             }
         }
     }
