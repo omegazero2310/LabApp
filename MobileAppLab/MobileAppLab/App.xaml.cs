@@ -11,7 +11,7 @@ namespace MobileAppLab
 {
     public partial class App
     {
-        public static readonly string API_URL = "http://10.1.11.100:8686/api/";
+        public static readonly string API_URL = "http://192.168.1.170:8686/api/";
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {

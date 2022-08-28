@@ -57,7 +57,7 @@ namespace MobileAppLab.ApiServices
         }
         public async Task<IReadOnlyDictionary<int, string>> GetAllAsDictionary()
         {
-            var res = await this.GetAll();
+            var res = await this.GetAll(isforceRefresh: true);
             return res.ToDictionary(objKey => objKey.PartID, objValue => objValue.PartName);
         }
 

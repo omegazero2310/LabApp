@@ -46,7 +46,7 @@ namespace MobileAppLab.ApiServices
                 Debug.WriteLine(ex.Message);
                 return new ServerRespone() { IsSuccess = false, Result = ex };
             }
-            
+
         }
         public async Task<ServerRespone> UploadProfilePicture(int id, string filePath)
         {
@@ -150,12 +150,13 @@ namespace MobileAppLab.ApiServices
                     var res = await this.GetProfilePicture(staff.ID);
                     if (res.IsSuccess)
                     {
-                        var imgData = (byte[])res.Result;
-                        if (imgData?.Length > 0)
-                            staff.ProfilePicture = imgData;
+                        if (res.Message != "NoImage")
+                            staff.ProfilePicture = (byte[])res.Result;
                         else
                             staff.ProfilePicture = data;
                     }
+                    else
+                        staff.ProfilePicture = data;
                 }
                 Barrel.Current.Add(key: this.BaseUrl + $"/GetAll", data: listStaff, expireIn: TimeSpan.FromDays(1));
                 return listStaff;
@@ -172,7 +173,7 @@ namespace MobileAppLab.ApiServices
         {
             try
             {
-                
+
 
                 if ((Connectivity.NetworkAccess != NetworkAccess.Internet &&
                     !Barrel.Current.IsExpired(key: this.BaseUrl + $"/Get/{key}")))
@@ -195,14 +196,15 @@ namespace MobileAppLab.ApiServices
                 var staff = JsonConvert.DeserializeObject<AdminStaff>(serverRespone.Result.ToString());
                 var profilePic = await this.GetProfilePicture(staff.ID);
 
-                if (profilePic.IsSuccess)
+                if (profilePic.IsSuccess && profilePic.Message != "NoImage")
                 {
+
                     staff.ProfilePicture = (byte[])profilePic.Result;
                 }
                 else
                 {
                     staff.ProfilePicture = data;
-                }    
+                }
 
                 Barrel.Current.Add(key: this.BaseUrl + $"/Get/{key}", data: staff, expireIn: TimeSpan.FromDays(1));
                 return staff;

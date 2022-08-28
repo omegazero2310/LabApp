@@ -17,17 +17,17 @@ namespace MobileAppLab.Droid
             Rg.Plugins.Popup.Popup.Init(this);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
-            {
-                // for covering the full screen in android..
-                Window.SetFlags(WindowManagerFlags.LayoutNoLimits, WindowManagerFlags.LayoutNoLimits);
+            //if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
+            //{
+            //    // for covering the full screen in android..
+            //    Window.SetFlags(WindowManagerFlags.LayoutNoLimits, WindowManagerFlags.LayoutNoLimits);
 
-                // clear FLAG_TRANSLUCENT_STATUS flag:
-                Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
+            //    // clear FLAG_TRANSLUCENT_STATUS flag:
+            //    Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
 
-                //Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+            //    //Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
 
-            }
+            //}
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
