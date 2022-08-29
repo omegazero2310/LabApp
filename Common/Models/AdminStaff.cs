@@ -153,13 +153,10 @@ namespace CommonClass.Models
 
 
         [NotMapped]
-        [JsonIgnore]
         public byte[] ProfilePicture { get; set; }
         [NotMapped]
-        [JsonIgnore]
         public DateTime CurrentTime { get; set; } = DateTime.Now;
         [NotMapped]
-        [JsonIgnore]
         public string PositionName { get; set; }
     }
 }

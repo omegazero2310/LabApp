@@ -22,7 +22,7 @@ namespace MobileAppLab.ViewModels
 {
     public class UserAccountViewModel : ViewModelBase, IActiveAware
     {
-        private AdminStaffService _adminStaffService;
+        private AdminStaffServices _adminStaffService;
         private IPageDialogService _pageDialogService;
         private ImageSource _profilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
         public ImageSource ProfilePicture
@@ -66,7 +66,7 @@ namespace MobileAppLab.ViewModels
 
         public UserAccountViewModel(INavigationService navigationService, HttpClient httpClient, IPageDialogService pageDialog) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffService(httpClient);
+            this._adminStaffService = new AdminStaffServices(httpClient);
             this._pageDialogService = pageDialog;
         }
         public override void Initialize(INavigationParameters parameters)

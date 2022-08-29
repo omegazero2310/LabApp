@@ -29,12 +29,14 @@ namespace MobileAppLab.ViewModels
         /// Name Date Comments
         /// annv3 25/08/2022 created
         /// </Modified>
-        private AdminStaffService _adminStaffService;
+        private AdminStaffServices _adminStaffService;
+        private AdminPartServices _adminPartService;
         private IPageDialogService _dialogService;
         private IDialogService _dialog;
         #endregion
 
         #region các thuộc tính binding
+        private static IReadOnlyDictionary<int, string> _staffPositions = new Dictionary<int, string>();
         public ObservableCollection<AdminStaff> Staffs { get; } = new ObservableCollection<AdminStaff>();
         private AdminStaff _selectedStaff;
         public AdminStaff SelectedStaff
@@ -172,7 +174,8 @@ namespace MobileAppLab.ViewModels
 
         public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffService(httpClient);
+            this._adminStaffService = new AdminStaffServices(httpClient);
+            this._adminPartService = new AdminPartServices(httpClient);
             this._dialogService = pageDialogService;
             this._dialog = dialogService;
         }
@@ -187,6 +190,7 @@ namespace MobileAppLab.ViewModels
         {
             try
             {
+                _staffPositions = await this._adminPartService.GetAllAsDictionary();
                 this.IsRefreshing = true;
                 this.Staffs.Clear();
                 var listStaff = await this._adminStaffService.GetAll(isForceRefresh: true);
@@ -233,10 +237,10 @@ namespace MobileAppLab.ViewModels
                 switch (this.SelectedFilterOption)
                 {
                     case FilterOptions.UserName:
-                        filtered = listStaff.Where(x => x.UserName.Contains(parameter.ToString()));
+                        filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
                         break;
                     case FilterOptions.Position:
-                        filtered = listStaff.Where(x => x.PositionName.Contains(parameter.ToString()));
+                        filtered = listStaff.Where(x => x.PositionName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
                         break;
                     case FilterOptions.Email:
                         filtered = listStaff.Where(x => x.Email.Contains(parameter.ToString()));
@@ -245,7 +249,7 @@ namespace MobileAppLab.ViewModels
                         filtered = listStaff.Where(x => x.PhoneNumber.Contains(parameter.ToString()));
                         break;
                     default:
-                        filtered = listStaff.Where(x => x.UserName.Contains(parameter.ToString()));
+                        filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
                         break;
                 }
                 this.Staffs.Clear();

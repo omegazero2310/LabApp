@@ -18,7 +18,7 @@ using Xamarin.Essentials;
 
 namespace MobileAppLab.ApiServices
 {
-    public class AdminStaffService : BaseApiService, IService<AdminStaff>
+    public class AdminStaffServices : BaseApiService, IService<AdminStaff>
     {
         private static readonly Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>
                 {
@@ -26,7 +26,7 @@ namespace MobileAppLab.ApiServices
                     {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },
                     {LocalizationResourceManager.Instance[nameof(AppResource.Position_GD)],PositionOptions.GD },
                 };
-        public AdminStaffService(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
+        public AdminStaffServices(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
         {
 
         }

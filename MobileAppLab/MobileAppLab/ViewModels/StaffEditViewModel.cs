@@ -24,7 +24,7 @@ namespace MobileAppLab.ViewModels
 {
     public class StaffEditViewModel : ViewModelBase
     {
-        private AdminStaffService _adminStaffService;
+        private AdminStaffServices _adminStaffService;
         private AdminPartServices _adminPartService;
         private IPageDialogService _pageDialog;
         public event Action<IDialogParameters> RequestClose;
@@ -106,7 +106,7 @@ namespace MobileAppLab.ViewModels
 
         public StaffEditViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffService(httpClient);
+            this._adminStaffService = new AdminStaffServices(httpClient);
             _adminPartService = new AdminPartServices(httpClient);
         }
         public override async void OnNavigatedTo(INavigationParameters parameters)
