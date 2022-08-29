@@ -291,7 +291,7 @@ namespace MobileAppLab.ViewModels
             NavigationParameters pairs = new NavigationParameters();
             pairs.Add("Type", AppResource.Label_Staff_View);
             pairs.Add("Value", parameter.ID);
-            await this.NavigationService.NavigateAsync("StaffEditPopupPage", pairs);
+            await this.NavigationService.NavigateAsync("StaffDetailInfoPage", pairs);
         }
         private async void ExecuteCommandNewStaff()
         {
@@ -313,7 +313,7 @@ namespace MobileAppLab.ViewModels
         {
             if (parameter == null)
                 return;
-            if (await this._dialogService.DisplayAlertAsync("Confirm Delete", $"Are you sure to Delete ({parameter.ID} - {parameter.UserName}) ?", "Delete", "Cancel"))
+            if (await this._dialogService.DisplayAlertAsync(AppResource.MSG_CONFIRM_DELETE_TITLE, string.Format(AppResource.MSG_CONFIRM_DELETE,parameter.ID, parameter.UserName), AppResource.Label_Delete, "Cancel"))
             {
                 try
                 {

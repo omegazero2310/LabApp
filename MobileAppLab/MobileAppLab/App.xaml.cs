@@ -37,6 +37,7 @@ namespace MobileAppLab
             containerRegistry.RegisterForNavigation<UserNotificationPage, UserNotificationViewModel>();
             containerRegistry.RegisterForNavigation<UserAccountPage, UserAccountViewModel>();
             containerRegistry.RegisterForNavigation<StaffEditPopupPage, StaffEditViewModel>("StaffEditPopupPage");
+            containerRegistry.RegisterForNavigation<StaffDetailInfoPage, StaffInfoDetailViewModel>("StaffDetailInfoPage");
             // This updates INavigationService and registers PopupNavigation.Instance
             containerRegistry.RegisterPopupNavigationService();
         }

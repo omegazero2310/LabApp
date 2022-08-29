@@ -448,6 +448,24 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure to delete driver {0} - {1} ?.
+        /// </summary>
+        public static string MSG_CONFIRM_DELETE {
+            get {
+                return ResourceManager.GetString("MSG_CONFIRM_DELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Delete.
+        /// </summary>
+        public static string MSG_CONFIRM_DELETE_TITLE {
+            get {
+                return ResourceManager.GetString("MSG_CONFIRM_DELETE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email cannot be empty.
         /// </summary>
         public static string MSG_EMAIL_NOT_EMPTY {

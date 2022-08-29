@@ -76,7 +76,7 @@
                                     VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{helper:Translate Label_StaffName}" />
+                                            <Span Text="{helper:Translate Label_StaffName}" FontAttributes="Bold"/>
                                             <Span Text="*" TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -112,7 +112,7 @@
                                     VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{helper:Translate Label_Address}" />
+                                            <Span Text="{helper:Translate Label_Address}"  FontAttributes="Bold"/>
                                             <Span Text="*" TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -147,7 +147,7 @@
                                     VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{helper:Translate Label_PhoneNumber}" />
+                                            <Span Text="{helper:Translate Label_PhoneNumber}"  FontAttributes="Bold"/>
                                             <Span Text="*" TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -183,7 +183,7 @@
                                     VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{helper:Translate Label_Position}" />
+                                            <Span Text="{helper:Translate Label_Position}"  FontAttributes="Bold"/>
                                             <Span Text="*" TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -229,7 +229,7 @@
                                     VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{helper:Translate Label_Email}" />
+                                            <Span Text="{helper:Translate Label_Email}"  FontAttributes="Bold"/>
                                             <Span Text="*" TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -260,7 +260,7 @@
                                     VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{helper:Translate Label_Gender}" />
+                                            <Span Text="{helper:Translate Label_Gender}"  FontAttributes="Bold"/>
                                             <Span Text="*" TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -318,7 +318,7 @@
                                     Command="{Binding CommandCancel}"
                                     CornerRadius="15"
                                     HorizontalOptions="Center"
-                                    Text="Bỏ qua"
+                                    Text="{helper:Translate Confirm_Cancel}"
                                     VerticalOptions="Center"
                                     WidthRequest="100" />
                                 <Button
@@ -326,7 +326,7 @@
                                     Command="{Binding CommandSave}"
                                     CornerRadius="15"
                                     HorizontalOptions="Center"
-                                    Text="Ok"
+                                    Text="{helper:Translate Label_Save}"
                                     TextColor="White"
                                     VerticalOptions="Center"
                                     WidthRequest="100">
