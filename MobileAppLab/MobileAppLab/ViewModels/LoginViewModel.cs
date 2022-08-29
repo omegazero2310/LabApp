@@ -191,19 +191,18 @@ namespace MobileAppLab.ViewModels
             {
                 if (string.IsNullOrEmpty(this.UserName))
                 {
-                    await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: Enter User ID", "Ok");
+                    await this._pageDialogService.DisplayAlertAsync(AppResource.MSG_LOGIN_ERROR, AppResource.MSG_ENTER_USER_ID, "Ok");
                     return;
                 }
 
                 if (string.IsNullOrEmpty(this.Password))
                 {
-                    await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: Enter Password", "Ok");
+                    await this._pageDialogService.DisplayAlertAsync(AppResource.MSG_LOGIN_ERROR, AppResource.MSG_ENTER_PASSWORD, "Ok");
                     return;
                 }
 
                 this.IsBusy = true;
                 var result = await this._adminUserServices.Login(this.UserName, this.Password);
-                //var result = (true, "");
 
                 var language = _listLanguages[this.SelectedLanguage];
                 Preferences.Set("LANGUAGE", language);

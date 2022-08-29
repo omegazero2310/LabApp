@@ -51,8 +51,16 @@ namespace MobileAppLab.ApiServices
                 respone.EnsureSuccessStatusCode();
                 //lấy token lưu tạm để dùng cho các lần sau
                 ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
-                await SecureStorage.SetAsync("JWT", serverRespone.Result.ToString());
-                return (true,"");
+                if(serverRespone.IsSuccess)
+                {
+                    await SecureStorage.SetAsync("JWT", serverRespone.Result.ToString());
+                    return (true, "");
+                }  
+                else
+                {
+                    return (false, serverRespone.Message);
+                }    
+                
             }
             catch (Exception ex)
             {
