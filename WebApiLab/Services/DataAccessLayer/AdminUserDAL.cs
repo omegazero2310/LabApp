@@ -1,4 +1,6 @@
 ﻿using CommonClass.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
 using WebApiLab.Services.Interfaces;
@@ -37,7 +39,21 @@ namespace WebApiLab.Services.DataAccessLayer
 
         public Task<AdminUser?> Get(object key)
         {
-            return Task.FromResult<AdminUser?>(this._labDbContext?.AdminUsers.Where(user => string.Compare(user.UserID, key.ToString(), false) == 0).FirstOrDefault());
+            var userName = new SqlParameter("ID", key);
+            string query = @"SELECT TOP (1) [UserID]
+                              ,[HashedPassword]
+                              ,[Salt]
+                              ,[IsResetPassword]
+                              ,[DateModified]
+                              ,[AccountStatus]
+                              ,[ID]
+                              ,[DateCreated]
+                              ,[UserCreated]
+                              ,[UserModified]
+                          FROM [LabDB].[dbo].[Admin.Users]
+                          where UserID COLLATE SQL_Latin1_General_CP1_CS_AS = @ID";
+            var user = this._labDbContext.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
+            return Task.FromResult<AdminUser?>(user);
         }
 
         public Task<IEnumerable<AdminUser>> Gets(int skip = 0, int take = 0)

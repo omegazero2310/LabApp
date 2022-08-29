@@ -14,6 +14,7 @@
             </OnPlatform>
             <x:String x:Key="IconDelete">&#xe872;</x:String>
             <x:String x:Key="IconEdit">&#xf88d;</x:String>
+            <x:String x:Key="IconExpandMore">&#xe5cf;</x:String>
         </ResourceDictionary>
 
     </Application.Resources>

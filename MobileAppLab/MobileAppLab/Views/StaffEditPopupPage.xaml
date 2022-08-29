@@ -198,6 +198,19 @@
                                     SelectedItem="{Binding SelectedStaffPosition}"
                                     ItemDisplayBinding="{Binding PartName}"
                                     VerticalOptions="CenterAndExpand" />
+                                <ImageButton Grid.Row="6"
+                                    Grid.Column="1" VerticalOptions="Center"
+                                    HeightRequest="20"
+                                    HorizontalOptions="End">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                               FontFamily="{DynamicResource IconFontFamily}"
+                                               Glyph="{StaticResource IconExpandMore}"
+                                               Size="Large"
+                                               Color="Black" />
+                                    </ImageButton.Source>
+                                </ImageButton>
+                                
                                 <Label
                                     Grid.Row="7"
                                     Grid.ColumnSpan="2"
