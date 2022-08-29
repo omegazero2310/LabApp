@@ -249,6 +249,9 @@
   <data name="MSG_ADDRESS_CANNOT_EMPTY" xml:space="preserve">
     <value>Địa chỉ không được để trống</value>
   </data>
+  <data name="MSG_ADDRESS_CONTAIN_SPECIALCHARACTERS" xml:space="preserve">
+    <value>Địa chỉ không được chứa kí tự đặc biệt</value>
+  </data>
   <data name="MSG_CONFIRM_DELETE" xml:space="preserve">
     <value>Bạn có chắc muốn xóa lái xe {0} - {1} ?</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="MSG_LOGIN_ERROR" xml:space="preserve">
     <value>Lỗi đăng nhập</value>
+  </data>
+  <data name="MSG_PHONE_NUMBER_CONTAIN_SPECIALCHARACTERS" xml:space="preserve">
+    <value>Số điện thoại không được chứa kí tự đặc biệt</value>
   </data>
   <data name="MSG_PHONE_NUMBER_NOT_EMPTY" xml:space="preserve">
     <value>Số điện thoại không được để trống</value>
@@ -305,6 +311,9 @@
   </data>
   <data name="MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD" xml:space="preserve">
     <value>Sai tên đăng nhập hoặc mật khẩu</value>
+  </data>
+  <data name="MSG_USER_NAME_CONTAIN_SPECIALCHARACTERS" xml:space="preserve">
+    <value>Tên nhân viên không được chứa kí tự đặc biệt</value>
   </data>
   <data name="MSG_USER_NAME_NOT_EMPTY" xml:space="preserve">
     <value>Tên nhân viên không được để trống</value>

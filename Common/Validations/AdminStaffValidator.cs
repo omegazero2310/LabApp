@@ -2,12 +2,14 @@
 using CommonClass.Models;
 using FluentValidation;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace CommonClass.Validations
 {
     public class AdminStaffValidator : AbstractValidator<AdminStaff>
     {
+        private const string SPECIALCHARACTERS = @"'/\%*‘;$£&#^@|?+=<>\""";
         public AdminStaffValidator()
         {
             RuleFor(user => user.UserName).Custom((value, context) =>
@@ -16,6 +18,8 @@ namespace CommonClass.Validations
                     context.AddFailure("MSG_USER_NAME_NOT_EMPTY");
                 else if (value.Length > 50)
                     context.AddFailure("MSG_USER_NAME_OVER_CHARACTER");
+                else if (value.ToCharArray().Any(ch => SPECIALCHARACTERS.ToCharArray().Contains(ch)))
+                    context.AddFailure("MSG_USER_NAME_CONTAIN_SPECIALCHARACTERS");
             });
             RuleFor(user => user.PhoneNumber).Custom((st, context) =>
             {
@@ -33,8 +37,16 @@ namespace CommonClass.Validations
                 }
                 if(!this.IsValidPhoneNumber(st))
                     context.AddFailure("MSG_PHONE_NUMBER_NOT_VALID");
+                else if (st.ToCharArray().Any(ch => SPECIALCHARACTERS.ToCharArray().Contains(ch)))
+                    context.AddFailure("MSG_PHONE_NUMBER_CONTAIN_SPECIALCHARACTERS");
             });
-            RuleFor(user => user.Address).NotEmpty().WithMessage("MSG_ADDRESS_CANNOT_EMPTY");
+            RuleFor(user => user.Address).Custom((value, context) =>
+            {
+                if (string.IsNullOrEmpty(value))
+                    context.AddFailure("MSG_ADDRESS_CANNOT_EMPTY");
+                else if (value.ToCharArray().Any(ch => SPECIALCHARACTERS.ToCharArray().Contains(ch)))
+                    context.AddFailure("MSG_ADDRESS_CONTAIN_SPECIALCHARACTERS");
+            });
             RuleFor(user => user.Gender).Custom((value, context) =>
             {
                 if (!Enum.IsDefined(typeof(GenderOptions), value))

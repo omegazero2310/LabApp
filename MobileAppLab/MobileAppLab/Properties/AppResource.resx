@@ -249,6 +249,9 @@
   <data name="MSG_ADDRESS_CANNOT_EMPTY" xml:space="preserve">
     <value>Address cannot be emtpy</value>
   </data>
+  <data name="MSG_ADDRESS_CONTAIN_SPECIALCHARACTERS" xml:space="preserve">
+    <value>Address cannot contain some specical characters</value>
+  </data>
   <data name="MSG_CONFIRM_DELETE" xml:space="preserve">
     <value>Are you sure to delete driver {0} - {1} ?</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="MSG_LOGIN_ERROR" xml:space="preserve">
     <value>Login Error</value>
+  </data>
+  <data name="MSG_PHONE_NUMBER_CONTAIN_SPECIALCHARACTERS" xml:space="preserve">
+    <value>Phone Number cannot contain some specical characters</value>
   </data>
   <data name="MSG_PHONE_NUMBER_NOT_EMPTY" xml:space="preserve">
     <value>Phone number must not be emtpy</value>
@@ -305,6 +311,9 @@
   </data>
   <data name="MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD" xml:space="preserve">
     <value>Wrong User ID or Password</value>
+  </data>
+  <data name="MSG_USER_NAME_CONTAIN_SPECIALCHARACTERS" xml:space="preserve">
+    <value>User Name cannot contain some specical characters</value>
   </data>
   <data name="MSG_USER_NAME_NOT_EMPTY" xml:space="preserve">
     <value>User name cannot be emtpy</value>

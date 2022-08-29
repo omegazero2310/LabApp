@@ -91,9 +91,9 @@
                                     ReturnType="Next"
                                     Text="{Binding UserName}"
                                     VerticalOptions="CenterAndExpand">
-                                    <Entry.Behaviors>
+                                    <!--<Entry.Behaviors>
                                         <behaviors:SpecialCharactersValidationBehavior />
-                                    </Entry.Behaviors>
+                                    </Entry.Behaviors>-->
                                 </Entry>
                                 <Label
                                     Grid.Row="1"
@@ -126,9 +126,9 @@
                                     ReturnType="Next"
                                     Text="{Binding Address}"
                                     VerticalOptions="CenterAndExpand">
-                                    <Entry.Behaviors>
+                                    <!--<Entry.Behaviors>
                                         <behaviors:SpecialCharactersValidationBehavior />
-                                    </Entry.Behaviors>
+                                    </Entry.Behaviors>-->
                                 </Entry>
                                 <Label
                                     Grid.Row="3"
@@ -162,9 +162,9 @@
                                     ReturnType="Next"
                                     Text="{Binding PhoneNumber}"
                                     VerticalOptions="CenterAndExpand">
-                                    <Entry.Behaviors>
+                                    <!--<Entry.Behaviors>
                                         <behaviors:SpecialCharactersValidationBehavior />
-                                    </Entry.Behaviors>
+                                    </Entry.Behaviors>-->
                                 </Entry>
                                 <Label
                                     Grid.Row="5"

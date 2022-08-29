@@ -457,6 +457,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address cannot contain some specical characters.
+        /// </summary>
+        public static string MSG_ADDRESS_CONTAIN_SPECIALCHARACTERS {
+            get {
+                return ResourceManager.GetString("MSG_ADDRESS_CONTAIN_SPECIALCHARACTERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure to delete driver {0} - {1} ?.
         /// </summary>
         public static string MSG_CONFIRM_DELETE {
@@ -525,6 +534,15 @@ namespace MobileAppLab.Properties {
         public static string MSG_LOGIN_ERROR {
             get {
                 return ResourceManager.GetString("MSG_LOGIN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number cannot contain some specical characters.
+        /// </summary>
+        public static string MSG_PHONE_NUMBER_CONTAIN_SPECIALCHARACTERS {
+            get {
+                return ResourceManager.GetString("MSG_PHONE_NUMBER_CONTAIN_SPECIALCHARACTERS", resourceCulture);
             }
         }
         
@@ -624,6 +642,15 @@ namespace MobileAppLab.Properties {
         public static string MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD {
             get {
                 return ResourceManager.GetString("MSG_USER_LOGIN_WRONG_USERNAME_OR_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name cannot contain some specical characters.
+        /// </summary>
+        public static string MSG_USER_NAME_CONTAIN_SPECIALCHARACTERS {
+            get {
+                return ResourceManager.GetString("MSG_USER_NAME_CONTAIN_SPECIALCHARACTERS", resourceCulture);
             }
         }
         
