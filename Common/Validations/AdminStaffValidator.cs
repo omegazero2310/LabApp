@@ -7,6 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace CommonClass.Validations
 {
+    /// <summary>
+    /// Lớp check dữ liệu hợp lệ bảng AdminStaff
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="FluentValidation.AbstractValidator&lt;CommonClass.Models.AdminStaff&gt;" />
     public class AdminStaffValidator : AbstractValidator<AdminStaff>
     {
         private const string SPECIALCHARACTERS = @"'/\%*‘;$£&#^@|?+=<>\""";

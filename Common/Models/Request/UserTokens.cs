@@ -2,6 +2,13 @@
 
 namespace CommonClass.Models.Request
 {
+    /// <summary>
+    /// Mẫu chứa thông tin token JWT
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
     public class UserTokens
     {
         public string Token

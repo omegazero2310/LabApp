@@ -12,12 +12,30 @@ using Xamarin.Essentials;
 
 namespace MobileAppLab.ApiServices
 {
+    /// <summary>
+    /// Service tương tác với API đăng nhập
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ApiServices.BaseApiService" />
+    /// <seealso cref="MobileAppLab.ApiServices.IService&lt;CommonClass.Models.AdminUser&gt;" />
     public class AdminUserServices : BaseApiService, IService<AdminUser>
     {
         public AdminUserServices(HttpClient httpClient) : base(httpClient, "AdminUsers")
         {
         }
-
+        /// <summary>
+        /// Đăng nhập vào hệ thống
+        /// </summary>
+        /// <param name="userName">tên đăng nhập.</param>
+        /// <param name="password">mật khẩu.</param>
+        /// <returns>Lưu lại JWT và trả kết quả <c>true</c> và chuỗi trống, trả về false và thông báo lỗi nếu có lỗi xảy ra </returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public async Task<(bool,string)> Login(string userName, string password)
         {
             string contentRespone = "";
@@ -43,6 +61,13 @@ namespace MobileAppLab.ApiServices
             }
 
         }
+        /// <summary>
+        /// Đăng xuất, xóa tất cả cache và JWT
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public async static void Logout()
         {
             Barrel.Current.EmptyAll();

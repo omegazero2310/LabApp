@@ -9,6 +9,14 @@ using WebApiLab.Services.BusinessLayer;
 
 namespace WebApiLab.Controllers
 {
+    /// <summary>
+    /// API controller tương tác với bảng Admin.Parts ( chức danh của nhân viên)
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]

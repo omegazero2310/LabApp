@@ -2,7 +2,7 @@
 
 namespace CommonClass.Models.Request
 {
-    /// <summary>Request class for login</summary>
+    /// <summary>Mẫu Request đăng nhập</summary>
     /// <Modified>
     /// Name Date Comments
     /// annv3 17/08/2022 created

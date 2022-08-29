@@ -5,6 +5,14 @@ using WebApiLab.Services.Interfaces;
 
 namespace WebApiLab.Services.DataAccessLayer
 {
+    /// <summary>
+    /// Lớp DAL bảng AdminStaff
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="WebApiLab.Services.Interfaces.IAdminStaffs&lt;CommonClass.Models.AdminStaff&gt;" />
     public class AdminStaffDAL : IAdminStaffs<AdminStaff>
     {
         private LabDbContext _labDbContext;

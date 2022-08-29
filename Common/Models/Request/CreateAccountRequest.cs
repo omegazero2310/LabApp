@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CommonClass.Models.Request
 {
 
-    /// <summary>Request class to create new account</summary>
+    /// <summary>Mẫu Request tạo tài khoản đăng nhập mới</summary>
     /// <Modified>
     /// Name Date Comments
     /// annv3 17/08/2022 created

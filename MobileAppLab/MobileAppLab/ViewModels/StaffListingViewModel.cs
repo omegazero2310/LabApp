@@ -19,16 +19,18 @@ using System.Net.Http;
 
 namespace MobileAppLab.ViewModels
 {
+    /// <summary>
+    /// ViewModel màn hình hiển thị danh sách nhân viên
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ViewModels.ViewModelBase" />
+    /// <seealso cref="Prism.IActiveAware" />
     public class StaffListingViewModel : ViewModelBase, IActiveAware
     {
-        #region Service        
-        /// <summary>
-        /// Service CRUD bảng admin staff
-        /// </summary>
-        /// <Modified>
-        /// Name Date Comments
-        /// annv3 25/08/2022 created
-        /// </Modified>
+        #region Service      
         private AdminStaffServices _adminStaffService;
         private AdminPartServices _adminPartService;
         private IPageDialogService _dialogService;

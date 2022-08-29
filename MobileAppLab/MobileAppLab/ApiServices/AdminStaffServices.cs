@@ -18,14 +18,17 @@ using Xamarin.Essentials;
 
 namespace MobileAppLab.ApiServices
 {
+    /// <summary>
+    /// Service tương tác với API bảng Admin.Staff
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ApiServices.BaseApiService" />
+    /// <seealso cref="MobileAppLab.ApiServices.IService&lt;CommonClass.Models.AdminStaff&gt;" />
     public class AdminStaffServices : BaseApiService, IService<AdminStaff>
     {
-        private static readonly Dictionary<string, PositionOptions> _staffPositions = new Dictionary<string, PositionOptions>
-                {
-                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_NV)],PositionOptions.NV },
-                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_TP)],PositionOptions.TP },
-                    {LocalizationResourceManager.Instance[nameof(AppResource.Position_GD)],PositionOptions.GD },
-                };
         public AdminStaffServices(HttpClient httpClient) : base(httpClient, "AdminStaffs", true)
         {
 

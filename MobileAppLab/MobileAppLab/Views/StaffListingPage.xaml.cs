@@ -9,6 +9,14 @@ using Xamarin.Forms.Xaml;
 
 namespace MobileAppLab.Views
 {
+    /// <summary>
+    /// View màn hình danh sách nhân viên
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Xamarin.Forms.ContentPage" />
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StaffListingPage : ContentPage
     {

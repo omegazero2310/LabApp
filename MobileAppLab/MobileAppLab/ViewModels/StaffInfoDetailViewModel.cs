@@ -14,12 +14,23 @@ using System.Threading.Tasks;
 
 namespace MobileAppLab.ViewModels
 {
+    /// <summary>
+    /// ViewModel màn hình hiển thị chi tiết thông tin nhân viên
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ViewModels.ViewModelBase" />
     public class StaffInfoDetailViewModel : ViewModelBase
     {
+        #region Service
         private AdminStaffServices _adminStaffService;
         private AdminPartServices _adminPartService;
         public event Action<IDialogParameters> RequestClose;
+        #endregion
 
+        #region List và Dictionary
         public Dictionary<string, string> ErrorMessages { get; set; }
 
         private readonly static IReadOnlyDictionary<string, GenderOptions> _staffGenders = new Dictionary<string, GenderOptions>
@@ -29,6 +40,9 @@ namespace MobileAppLab.ViewModels
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Other)],GenderOptions.Other },
                 };
         public List<string> StaffGenders { get; } = _staffGenders.Keys.ToList();
+        #endregion
+
+        #region thuộc tính binding với các view
         public int? ID { get; set; }
         private string _userName;
         public string UserName
@@ -71,19 +85,25 @@ namespace MobileAppLab.ViewModels
             set { SetProperty(ref _gender, value); }
 
         }
+        #endregion
 
+        #region Command binding với view
         private DelegateCommand _commandCancel;
         public DelegateCommand CommandCancel =>
             _commandCancel ?? (_commandCancel = new DelegateCommand(ExecuteCommandCancel));
+        #endregion
 
 
 
-
+        #region Contructor
         public StaffInfoDetailViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffServices(httpClient);
             this._adminPartService = new AdminPartServices(httpClient);
         }
+        #endregion
+
+        #region override method
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             if (parameters == null)
@@ -97,6 +117,9 @@ namespace MobileAppLab.ViewModels
                 }
             }
         }
+        #endregion
+
+        #region command method
         private async Task LoadStaffInfo(int id)
         {
             AdminStaff adminStaff = await this._adminStaffService.GetByID(id);
@@ -117,6 +140,7 @@ namespace MobileAppLab.ViewModels
         {
             await this.NavigationService.GoBackAsync();
         }
+        #endregion
 
     }
 }

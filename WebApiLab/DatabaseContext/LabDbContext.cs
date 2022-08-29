@@ -5,8 +5,38 @@ namespace WebApiLab.DatabaseContext
 {
     public class LabDbContext : DbContext
     {
+        /// <summary>
+        /// Bảng danh sách nhân viên
+        /// </summary>
+        /// <value>
+        /// The admin staffs.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public DbSet<AdminStaff> AdminStaffs { get; set; }
+        /// <summary>
+        /// Bảng thông tin đăng nhập phần mềm
+        /// </summary>
+        /// <value>
+        /// The admin users.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public DbSet<AdminUser> AdminUsers { get; set; }
+        /// <summary>
+        /// Bảng chức danh
+        /// </summary>
+        /// <value>
+        /// The admin parts.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public DbSet<AdminParts> AdminParts { get; set; }
         public LabDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {

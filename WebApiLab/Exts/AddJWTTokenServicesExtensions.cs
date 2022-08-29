@@ -5,6 +5,15 @@ namespace WebApiLab.Exts
 {
     public static class AddJWTTokenServicesExtensions
     {
+        /// <summary>
+        /// thêm chức năng dùng JWT
+        /// </summary>
+        /// <param name="Services">The services.</param>
+        /// <param name="Configuration">The configuration.</param>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public static void AddJWTTokenServices(this IServiceCollection Services, IConfiguration Configuration)
         {
             // Add Jwt Setings

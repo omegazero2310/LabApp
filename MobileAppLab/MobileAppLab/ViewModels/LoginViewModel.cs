@@ -1,33 +1,55 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using MobileAppLab.ApiServices;
+using MobileAppLab.Properties;
+using MobileAppLab.Utilities;
+using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using System.Resources;
-using MobileAppLab.Properties;
-using MobileAppLab.Utilities;
-using MobileAppLab.ApiServices;
-using System.Net.Http;
-using Prism.Services;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace MobileAppLab.ViewModels
 {
+    /// <summary>
+    /// ViewModel màn hình login
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ViewModels.ViewModelBase" />
     public class LoginViewModel : ViewModelBase
     {
+        #region các services   
         private AdminUserServices _adminUserServices;
         private IPageDialogService _pageDialogService;
+        #endregion
+
+        #region các thuộc tính         
+        /// <summary>
+        /// Phiên bản phần mềm
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         private string _appVersion;
         public string AppVersion
         {
             get { return _appVersion; }
             set { SetProperty(ref _appVersion, value); }
         }
+        /// <summary>
+        /// Đánh dấu lưu lại thông tin đăng nhập
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         private bool _isSaveLoginInfo;
         public bool IsSaveLoginInfo
         {
@@ -35,46 +57,91 @@ namespace MobileAppLab.ViewModels
             set { SetProperty(ref _isSaveLoginInfo, value); }
         }
         private string _userName;
+        /// <summary>
+        /// Tên đăng nhập
+        /// </summary>
+        /// <value>
+        /// The name of the user.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public string UserName
         {
             get { return _userName; }
             set { SetProperty(ref _userName, value); }
         }
         private string _password;
+        /// <summary>
+        /// mật khẩu
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public string Password
         {
             get { return _password; }
             set { SetProperty(ref _password, value); }
         }
         private string _language = "EN";
+        /// <summary>
+        /// ngôn ngữ được chọn ở combobox
+        /// </summary>
+        /// <value>
+        /// The selected language.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public string SelectedLanguage
         {
             get { return _language; }
             set { SetProperty(ref _language, value, OnPickerLangChange); }
         }
         private ImageSource imageSource;
+        /// <summary>
+        /// Hình ảnh logo
+        /// </summary>
+        /// <value>
+        /// The image language.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public ImageSource ImageLanguage
         {
             get { return imageSource; }
             set { SetProperty(ref imageSource, value); }
         }
+        #endregion
 
+        #region các Dictionary cho combobox
         private readonly static IReadOnlyDictionary<string, string> _listLanguages = new Dictionary<string, string>
                 {
                     {"English","en-US" },
                     {"Tiếng Việt","vi-VN"}
                 };
         public List<string> ListLanguages { get; } = _listLanguages?.Keys.ToList() ?? (new Dictionary<string, string>()).Keys.ToList();
+        #endregion
 
+        #region các command
         private DelegateCommand _commandLogin;
         public DelegateCommand CommandLogin =>
             _commandLogin ?? (_commandLogin = new DelegateCommand(ExecuteCommandLogin));
         private DelegateCommand _commandForgotPassword;
         public DelegateCommand CommandForgotPassword =>
             _commandForgotPassword ?? (_commandForgotPassword = new DelegateCommand(ExecuteCommandForgotPassword));
+        #endregion
 
 
-
+        #region Contructor và Destructor
         public LoginViewModel(INavigationService navigationService, IPageDialogService pageDialog, HttpClient httpClient)
             : base(navigationService)
         {
@@ -83,10 +150,9 @@ namespace MobileAppLab.ViewModels
             this.AppVersion = this.GetType().Assembly.GetName().Version.ToString();
             this._adminUserServices = new AdminUserServices(httpClient);
         }
-        ~LoginViewModel()
-        {
+        #endregion
 
-        }
+        #region Override method
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
@@ -97,6 +163,9 @@ namespace MobileAppLab.ViewModels
         {
             base.OnNavigatedToAsync(parameters);
         }
+        #endregion
+
+        #region Command method
         private void GetSavedUserLogin()
         {
             this.IsSaveLoginInfo = Preferences.Get("REMEMBER_LOGIN", false);
@@ -257,5 +326,6 @@ namespace MobileAppLab.ViewModels
             string resName = prefix + language.ToLower() + "_flag.png";
             this.ImageLanguage = ImageSource.FromResource(resName);
         }
+        #endregion
     }
 }

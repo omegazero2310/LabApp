@@ -7,7 +7,6 @@ using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -15,15 +14,27 @@ using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Converters;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using static System.Net.WebRequestMethods;
 using File = System.IO.File;
 
 namespace MobileAppLab.ViewModels
 {
+    /// <summary>
+    /// ViewModel Màn hình thông tin tài khoản đang đăng nhập
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ViewModels.ViewModelBase" />
+    /// <seealso cref="Prism.IActiveAware" />
     public class UserAccountViewModel : ViewModelBase, IActiveAware
     {
+        #region Services
         private AdminStaffServices _adminStaffService;
         private IPageDialogService _pageDialogService;
+        #endregion
+
+        #region Thuộc tính binding với View
         private ImageSource _profilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
         public ImageSource ProfilePicture
         {
@@ -48,9 +59,9 @@ namespace MobileAppLab.ViewModels
             get { return _isActive; }
             set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
         }
+        #endregion
 
-
-
+        #region Command binding với View
         private DelegateCommand _commandChangeProfilePicture;
 
         public event EventHandler IsActiveChanged;
@@ -60,20 +71,27 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand _commandLogout;
         public DelegateCommand CommandLogout =>
             _commandLogout ?? (_commandLogout = new DelegateCommand(ExecuteCommandLogout));
+        #endregion
 
 
 
-
+        #region Contructor
         public UserAccountViewModel(INavigationService navigationService, HttpClient httpClient, IPageDialogService pageDialog) : base(navigationService)
         {
             this._adminStaffService = new AdminStaffServices(httpClient);
             this._pageDialogService = pageDialog;
         }
+        #endregion
+
+        #region override menthod
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
             RaiseIsActiveChanged();
         }
+        #endregion
+
+        #region Interface menthod
         public async void RaiseIsActiveChanged()
         {
             if (this.IsActive)
@@ -101,6 +119,9 @@ namespace MobileAppLab.ViewModels
             }
 
         }
+        #endregion
+
+        #region Command method
         private async void ExecuteChangeProfilePicture()
         {
             try
@@ -177,5 +198,6 @@ namespace MobileAppLab.ViewModels
                 }
             }
         }
+        #endregion
     }
 }

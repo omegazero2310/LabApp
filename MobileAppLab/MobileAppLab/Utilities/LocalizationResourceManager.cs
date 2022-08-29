@@ -6,6 +6,14 @@ using System.Threading;
 
 namespace MobileAppLab.Utilities
 {
+    /// <summary>
+    /// Class hỗ trợ dịch thuật từ resource
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class LocalizationResourceManager : INotifyPropertyChanged
     {
         public static LocalizationResourceManager Instance { get; } = new LocalizationResourceManager();

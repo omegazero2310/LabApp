@@ -3,6 +3,15 @@ using Xamarin.Forms;
 
 namespace MobileAppLab.Utilities.ViewActions
 {
+    /// <summary>
+    /// Trigger Action cho nút ẩn hiện mật khẩu (thay đổi icon ẩn hiện)
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Xamarin.Forms.TriggerAction&lt;Xamarin.Forms.ImageButton&gt;" />
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class ShowPasswordTriggerAction : TriggerAction<ImageButton>, INotifyPropertyChanged
     {
         public ImageSource ShowIcon { get; set; }

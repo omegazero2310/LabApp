@@ -10,6 +10,14 @@ using Xamarin.Forms.Xaml;
 
 namespace MobileAppLab.Views
 {
+    /// <summary>
+    /// View của overlay loading trong màn hình login
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Xamarin.Forms.ContentView" />
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoadingView : ContentView
     {

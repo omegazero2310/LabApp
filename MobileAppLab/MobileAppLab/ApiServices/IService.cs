@@ -5,6 +5,14 @@ using System.Threading.Tasks;
 
 namespace MobileAppLab.ApiServices
 {
+    /// <summary>
+    /// Interface CRUD cơ bản
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
     public interface IService<T> where T : class
     {
         Task<ServerRespone> CreateNew(T entity);

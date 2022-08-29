@@ -19,6 +19,15 @@ namespace MobileAppLab.ApiServices
             if (isAuthorize)
                 this.GetToken();
         }
+        /// <summary>
+        /// Lấy JWT đã lưu trong SecureStorage
+        /// </summary>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
+        /// <exception cref="System.Exception">MSG_NOT_LOGINED</exception>
         public virtual bool GetToken()
         {
             if (UserToken == null)

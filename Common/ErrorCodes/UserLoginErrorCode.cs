@@ -1,5 +1,12 @@
 ﻿namespace CommonClass.ErrorCodes
 {
+    /// <summary>
+    /// Thông báo lỗi trả về khi Login hoặc tạo tài khoản Admin.User
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
     public static class UserLoginErrorCode
     {
         public const string EXIST = "MSG_USER_EXIST";

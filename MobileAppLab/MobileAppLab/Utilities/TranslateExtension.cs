@@ -6,6 +6,14 @@ using Xamarin.Forms;
 
 namespace MobileAppLab.Utilities
 {
+    /// <summary>
+    /// Markup hỗ trợ dịch thuật trên xaml
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Xamarin.Forms.Xaml.IMarkupExtension&lt;Xamarin.Forms.BindingBase&gt;" />
     [ContentProperty("Text")]
     public class TranslateExtension : IMarkupExtension<BindingBase>
     {

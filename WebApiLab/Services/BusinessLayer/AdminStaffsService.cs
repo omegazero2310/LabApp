@@ -15,7 +15,7 @@ using WebApiLab.Services.Interfaces;
 namespace WebApiLab.Services.BusinessLayer
 {
 
-    /// <summary>CRUD trên bảng Admin.Staffs</summary>
+    /// <summary>Lớp nghiệp vụ tương tác với bảng AdminStaff</summary>
     /// <Modified>
     /// Name Date Comments
     /// annv3 18/08/2022 created

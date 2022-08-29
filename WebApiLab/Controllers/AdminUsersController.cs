@@ -11,6 +11,14 @@ using WebApiLab.Services.BusinessLayer;
 
 namespace WebApiLab.Controllers
 {
+    /// <summary>
+    /// API Controller tương tác với bảng Admin.Users và lấy JWT token
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminUsersController : ControllerBase

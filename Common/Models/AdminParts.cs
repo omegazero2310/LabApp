@@ -6,6 +6,13 @@ using System.Text;
 
 namespace CommonClass.Models
 {
+    /// <summary>
+    /// Bảng lưu danh sách chức danh
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
     [Table("Admin.Parts")]
     public class AdminParts
     {

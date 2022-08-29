@@ -3,6 +3,14 @@ using Xamarin.Forms;
 
 namespace MobileAppLab.Utilities.ViewActions
 {
+    /// <summary>
+    /// Behavior cho Entry, Entry không được phép nhập các kí tự đặc biệt
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="Xamarin.Forms.Behavior&lt;Xamarin.Forms.Entry&gt;" />
     public class SpecialCharactersValidationBehavior : Behavior<Entry>
     {
         //Here we have added the characters we wanted to restrict while entering data

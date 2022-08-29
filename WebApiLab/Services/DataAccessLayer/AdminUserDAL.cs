@@ -7,6 +7,14 @@ using WebApiLab.Services.Interfaces;
 
 namespace WebApiLab.Services.DataAccessLayer
 {
+    /// <summary>
+    /// Lớp DAL bảng AdminUser
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="WebApiLab.Services.Interfaces.IAdminUsers&lt;CommonClass.Models.AdminUser&gt;" />
     public class AdminUserDAL : IAdminUsers<AdminUser>
     {
         private LabDbContext _labDbContext;

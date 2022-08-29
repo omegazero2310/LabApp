@@ -6,6 +6,14 @@ using System.Text;
 
 namespace MobileAppLab.ViewModels
 {
+    /// <summary>
+    /// ViewModel Màn hình chính
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 29/08/2022 created
+    /// </Modified>
+    /// <seealso cref="MobileAppLab.ViewModels.ViewModelBase" />
     public class MainTabbedViewModel : ViewModelBase
     {
         private DelegateCommand _commandTabbedPage;
