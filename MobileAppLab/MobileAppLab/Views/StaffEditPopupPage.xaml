@@ -201,7 +201,8 @@
                                 <ImageButton Grid.Row="6"
                                     Grid.Column="1" VerticalOptions="Center"
                                     HeightRequest="20"
-                                    HorizontalOptions="End">
+                                    HorizontalOptions="End"
+                                    BackgroundColor="White">
                                     <ImageButton.Source>
                                         <FontImageSource
                                                FontFamily="{DynamicResource IconFontFamily}"
@@ -273,6 +274,19 @@
                                     ItemsSource="{Binding StaffGenders}"
                                     SelectedItem="{Binding Gender}"
                                     VerticalOptions="CenterAndExpand" />
+                                <ImageButton Grid.Row="10"
+                                    Grid.Column="1" VerticalOptions="Center"
+                                    HeightRequest="20"
+                                    HorizontalOptions="End"
+                                    BackgroundColor="White">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                               FontFamily="{DynamicResource IconFontFamily}"
+                                               Glyph="{StaticResource IconExpandMore}"
+                                               Size="Large"
+                                               Color="Black" />
+                                    </ImageButton.Source>
+                                </ImageButton>
                                 <Label
                                     Grid.Row="11"
                                     Grid.ColumnSpan="2"
