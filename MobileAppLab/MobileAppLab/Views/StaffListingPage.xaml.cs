@@ -17,21 +17,36 @@ namespace MobileAppLab.Views
         {
             InitializeComponent();
         }
-        private void SwipeView_SwipeStarted(object sender, SwipeStartedEventArgs e)
+        private async void SwipeView_SwipeStarted(object sender, SwipeStartedEventArgs e)
         {
-            //Console.WriteLine("SwipeView_SwipeStarted");
-
-            if (_swipeViews.Count == 1)
+            try
             {
-                _swipeViews[0].Close();
-                _swipeViews.Remove(_swipeViews[0]);
+                //Console.WriteLine("SwipeView_SwipeStarted");
+                if (_swipeViews.Count == 1)
+                {
+                    _swipeViews[0].Close();
+                    _swipeViews.Remove(_swipeViews[0]);
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
 
-        private void SwipeView_SwipeEnded(object sender, SwipeEndedEventArgs e)
+        private async void SwipeView_SwipeEnded(object sender, SwipeEndedEventArgs e)
         {
-            //Console.WriteLine("SwipeView_SwipeEnded");
-            _swipeViews.Add((SwipeView)sender);
+            try
+            {
+                //Console.WriteLine("SwipeView_SwipeEnded");
+                _swipeViews.Add((SwipeView)sender);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
     }
 }
