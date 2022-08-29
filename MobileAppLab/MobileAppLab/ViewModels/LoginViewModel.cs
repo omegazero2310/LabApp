@@ -64,7 +64,7 @@ namespace MobileAppLab.ViewModels
                     {"English","en-US" },
                     {"Tiếng Việt","vi-VN"}
                 };
-        public List<string> ListLanguages { get; } = _listLanguages?.Keys.ToList() ?? (new Dictionary<string,string>()).Keys.ToList();
+        public List<string> ListLanguages { get; } = _listLanguages?.Keys.ToList() ?? (new Dictionary<string, string>()).Keys.ToList();
 
         private DelegateCommand _commandLogin;
         public DelegateCommand CommandLogin =>
@@ -99,42 +99,20 @@ namespace MobileAppLab.ViewModels
         }
         private void GetSavedUserLogin()
         {
-            if (Preferences.ContainsKey("REMEMBER_LOGIN"))
+            this.IsSaveLoginInfo = Preferences.Get("REMEMBER_LOGIN", false);
+            if (this.IsSaveLoginInfo)
             {
-                this.IsSaveLoginInfo = Preferences.Get("REMEMBER_LOGIN", false);
-                if (this.IsSaveLoginInfo)
-                {
-                    this.UserName = SecureStorage.GetAsync("USER_NAME").Result;
-                    this.Password = SecureStorage.GetAsync("USER_PASSWORD").Result;
-                }
+                this.UserName = SecureStorage.GetAsync("USER_NAME").Result;
+                this.Password = SecureStorage.GetAsync("USER_PASSWORD").Result;
             }
-            else
-                Preferences.Set("REMEMBER_LOGIN", false);
-
-            if (!Preferences.ContainsKey("LANGUAGE"))
+            string language = Preferences.Get("LANGUAGE", "en-US");
+            try
             {
-                Preferences.Set("LANGUAGE", "en-US");
-                try
-                {
-                    this.SelectedLanguage = _listLanguages.Where(val => val.Value == "en-US").FirstOrDefault().Key ?? "English";
-                }
-                catch (Exception)
-                {
-                    this.SelectedLanguage = "English";
-                }
-                
+                this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
             }
-            else
+            catch (Exception)
             {
-                string language = Preferences.Get("LANGUAGE", "en-US");
-                try
-                {
-                    this.SelectedLanguage = _listLanguages.Where(val => val.Value == language).FirstOrDefault().Key ?? "English";
-                }
-                catch (Exception)
-                {
-                    this.SelectedLanguage = "English";
-                }
+                this.SelectedLanguage = "English";
             }
         }
 
@@ -142,27 +120,24 @@ namespace MobileAppLab.ViewModels
         {
             try
             {
-                if(string.IsNullOrEmpty(this.UserName))
+                if (string.IsNullOrEmpty(this.UserName))
                 {
                     await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: Enter User ID", "Ok");
                     return;
-                }    
-                    
+                }
+
                 if (string.IsNullOrEmpty(this.Password))
                 {
                     await this._pageDialogService.DisplayAlertAsync("Login Error", "Login Failed: Enter Password", "Ok");
                     return;
-                }    
-                    
+                }
+
                 this.IsBusy = true;
                 var result = await this._adminUserServices.Login(this.UserName, this.Password);
                 //var result = (true, "");
 
                 var language = _listLanguages[this.SelectedLanguage];
-                if (Preferences.ContainsKey("LANGUAGE"))
-                    Preferences.Set("LANGUAGE", language);
-                else
-                    Preferences.Set("LANGUAGE", "en-US");
+                Preferences.Set("LANGUAGE", language);
                 if (result.Item1)//nếu login thành công
                 {
                     //Lưu lại thông tin đăng nhập nếu tích vào checkbox
@@ -172,12 +147,13 @@ namespace MobileAppLab.ViewModels
                         {
                             await SecureStorage.SetAsync("USER_NAME", this.UserName);
                             await SecureStorage.SetAsync("USER_PASSWORD", this.Password);
-
-                            if (Preferences.ContainsKey("REMEMBER_LOGIN"))
-                                Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
-                            else
-                                Preferences.Set("REMEMBER_LOGIN", false);
                         }
+                        else
+                        {
+                            SecureStorage.Remove("USER_NAME");
+                            SecureStorage.Remove("USER_PASSWORD");
+                        }    
+                        Preferences.Set("REMEMBER_LOGIN", IsSaveLoginInfo);
 
                     }
                     //chuyển sang trang chủ
@@ -261,7 +237,7 @@ namespace MobileAppLab.ViewModels
             }
         }
         private async void OnPickerLangChange()
-        {    
+        {
             string language;
             if (Preferences.ContainsKey("LANGUAGE"))
             {
