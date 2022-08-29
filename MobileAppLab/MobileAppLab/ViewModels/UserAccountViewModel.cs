@@ -7,6 +7,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -14,6 +15,8 @@ using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Converters;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace MobileAppLab.ViewModels
 {
@@ -132,9 +135,14 @@ namespace MobileAppLab.ViewModels
             var newFile = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
             using (var stream = await photo.OpenReadAsync())
             using (var newStream = File.OpenWrite(newFile))
+            {
                 await stream.CopyToAsync(newStream);
+            }
+
 
             photoPath = newFile;
+            
+            
 
             //Lấy ảnh upload lên API
             //lấy id user đăng nhập 
@@ -142,6 +150,16 @@ namespace MobileAppLab.ViewModels
             var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
             //tải ảnh lên api
             var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
+            try
+            {
+                byte[] imageImg = File.ReadAllBytes(photoPath);
+                ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
+                this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(imageImg);
+            }
+            catch (Exception)
+            {
+                this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+            }
         }
 
         private async void ExecuteCommandLogout()

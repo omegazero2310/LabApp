@@ -84,14 +84,14 @@
                                     <ColumnDefinition Width="6*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Entry Grid.Column="0" x:Name="srcBar" Placeholder="{Binding FilterPrefix}" HeightRequest="60">
-                                    <Entry.Behaviors>
+                                <custom:NoBorderEntry Grid.Column="0" x:Name="srcBar" Placeholder="{Binding FilterPrefix}" HeightRequest="60">
+                                    <custom:NoBorderEntry.Behaviors>
                                         <xct:EventToCommandBehavior
                                             Command="{Binding CommandSearch}"
                                             CommandParameter="{Binding Text, Source={x:Reference srcBar}}"
                                             EventName="TextChanged" />
-                                    </Entry.Behaviors>
-                                </Entry>
+                                    </custom:NoBorderEntry.Behaviors>
+                                </custom:NoBorderEntry>
                                 <ImageButton Grid.Column="1"
                                     Aspect="AspectFill"
                                     BackgroundColor="#0B94F3"
