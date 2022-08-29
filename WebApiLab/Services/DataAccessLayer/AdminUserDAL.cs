@@ -37,7 +37,7 @@ namespace WebApiLab.Services.DataAccessLayer
 
         public Task<AdminUser?> Get(object key)
         {
-            return Task.FromResult<AdminUser?>(this._labDbContext?.AdminUsers.Where(user => user.UserID == key.ToString()).FirstOrDefault());
+            return Task.FromResult<AdminUser?>(this._labDbContext?.AdminUsers.Where(user => string.Compare(user.UserID, key.ToString(), false) == 0).FirstOrDefault());
         }
 
         public Task<IEnumerable<AdminUser>> Gets(int skip = 0, int take = 0)
