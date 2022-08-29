@@ -121,7 +121,7 @@
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout Orientation="Vertical">
-                                            <SwipeView>
+                                            <SwipeView SwipeStarted="SwipeView_SwipeStarted" SwipeEnded="SwipeView_SwipeEnded">
                                                 <SwipeView.RightItems>
                                                     <SwipeItemView>
                                                         <!--#region lệnh quẹt phải của dòng-->
