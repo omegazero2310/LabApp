@@ -216,7 +216,7 @@
                                     Command="{Binding CommandCancel}"
                                     CornerRadius="15"
                                     HorizontalOptions="CenterAndExpand"
-                                    Text="Bỏ qua"
+                                    Text="{helper:Translate Label_Close}"
                                     VerticalOptions="CenterAndExpand"
                                     WidthRequest="100" />
                         </StackLayout>

@@ -165,6 +165,9 @@
   <data name="Label_Cancel" xml:space="preserve">
     <value>Hủy</value>
   </data>
+  <data name="Label_Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
   <data name="Label_Delete" xml:space="preserve">
     <value>Xóa</value>
   </data>

@@ -193,7 +193,7 @@ namespace MobileAppLab.ViewModels
                 adminStaff.Email = this.EmailAddress;
                 AdminStaffValidator validationRules = new AdminStaffValidator();
                 var resultValidate = validationRules.Validate(adminStaff);
-                if (!resultValidate.IsValid && this.ErrorMessages.Count > 0)
+                if (!resultValidate.IsValid || this.ErrorMessages.Count > 0)
                 {
                     foreach (var e in resultValidate.Errors)
                     {

@@ -205,6 +205,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Label_Close {
+            get {
+                return ResourceManager.GetString("Label_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Label_Delete {
