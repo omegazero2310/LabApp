@@ -32,7 +32,14 @@ namespace WebApiLab.Controllers
             var claims = httpContext.HttpContext.User.Identity.Name;
             this._adminPartService = new AdminPartService(configuration, claims ?? "Unknow");
         }
-        // GET: api/<AdminPartsController>
+        /// <summary>
+        /// Lấy danh sách chức danh
+        /// </summary>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpGet]
         public async Task<ServerRespone> Get()
         {
@@ -47,7 +54,15 @@ namespace WebApiLab.Controllers
             }
         }
 
-        // GET api/<AdminPartsController>/5
+        /// <summary>
+        /// Lấy chức danh theo ID
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpGet("{id}")]
         public async Task<ServerRespone> Get(int id)
         {
@@ -62,7 +77,15 @@ namespace WebApiLab.Controllers
             }
         }
 
-        // POST api/<AdminPartsController>
+        /// <summary>
+        /// Tạo chức danh mới
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpPost]
         public async Task<ServerRespone> Post([FromBody] AdminParts value)
         {
@@ -77,7 +100,15 @@ namespace WebApiLab.Controllers
             }
         }
 
-        // PUT api/<AdminPartsController>/5
+        /// <summary>
+        /// Cập nhật chức danh
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpPut]
         public async Task<ServerRespone> Put([FromBody] AdminParts value)
         {
@@ -92,7 +123,15 @@ namespace WebApiLab.Controllers
             }
         }
 
-        // DELETE api/<AdminPartsController>/5
+        /// <summary>
+        /// Xóa chức danh
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpDelete("{id}")]
         public async Task<ServerRespone> Delete(int id)
         {

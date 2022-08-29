@@ -35,6 +35,17 @@ namespace WebApiLab.Controllers
             this._webHostEnvironment = webHostEnvironment;
         }
 
+        /// <summary>
+        /// Lấy danh sách nhân viên
+        /// </summary>
+        /// <param name="skip">số bản ghi bỏ qua</param>
+        /// <param name="take">số bản ghi lấy</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
+        /// <response code="200">trả về danh sahcs</response>
         [HttpGet]
         [ActionName("GetAll")]
         public async Task<ServerRespone> Get([FromQuery] int skip = 0, [FromQuery] int take = 0)
@@ -50,6 +61,16 @@ namespace WebApiLab.Controllers
             }
         }
 
+        /// <summary>
+        /// Lấy thông tin chi tiết của một người
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
+        /// <response code="200">trả về một dòng trong bảng nếu có</response>
         [HttpGet]
         [ActionName("Get")]
         public async Task<ServerRespone> Get([FromQuery] int id)
@@ -64,6 +85,15 @@ namespace WebApiLab.Controllers
                 return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
+        /// <summary>
+        /// Lấy ảnh đại diện của user
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpGet]
         [ActionName("GetProfilePicture")]
         public async Task<ServerRespone> GetPicture([FromQuery] int id)
@@ -84,7 +114,16 @@ namespace WebApiLab.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Tải ảnh đại diện lên máy chủ
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpPost]
         [ActionName("UploadProfilePicture")]
         public async Task<ServerRespone> UploadPicture([FromQuery] int id, IFormFile file)
@@ -105,6 +144,15 @@ namespace WebApiLab.Controllers
             }
         }
 
+        /// <summary>
+        /// Tạo mới nhân viên
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpPost]
         [ActionName("Create")]
         public async Task<ServerRespone> Post([FromBody] AdminStaffRequest value)
@@ -131,7 +179,15 @@ namespace WebApiLab.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Cập nhật thông tin nhân viên
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpPut]
         [ActionName("Update")]
         public async Task<ServerRespone> Put([FromBody] AdminStaffRequest value)
@@ -158,6 +214,15 @@ namespace WebApiLab.Controllers
             }
         }
 
+        /// <summary>
+        /// Xóa nhân viên
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         [HttpDelete]
         [ActionName("Delete")]
         public async Task<ServerRespone> Delete([FromQuery] int id)
