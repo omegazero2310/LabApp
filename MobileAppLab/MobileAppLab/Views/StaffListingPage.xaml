@@ -79,24 +79,36 @@
                             Padding="0"
                             BorderColor="Blue"
                             CornerRadius="10">
-                            <StackLayout Orientation="Horizontal">
-                                <SearchBar x:Name="srcBar" Placeholder="{Binding FilterPrefix}">
-                                    <SearchBar.Behaviors>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="6*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Entry Grid.Column="0" x:Name="srcBar" Placeholder="{Binding FilterPrefix}" HeightRequest="60">
+                                    <Entry.Behaviors>
                                         <xct:EventToCommandBehavior
                                             Command="{Binding CommandSearch}"
                                             CommandParameter="{Binding Text, Source={x:Reference srcBar}}"
                                             EventName="TextChanged" />
-                                    </SearchBar.Behaviors>
-                                </SearchBar>
-                                <ImageButton
+                                    </Entry.Behaviors>
+                                </Entry>
+                                <ImageButton Grid.Column="1"
                                     Aspect="AspectFill"
-                                    BackgroundColor="White"
+                                    BackgroundColor="#0B94F3"
                                     Command="{Binding CommandSelectFilter}"
                                     HorizontalOptions="CenterAndExpand"
                                     Scale="1.4"
-                                    Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_more_vert48.png}"
-                                    VerticalOptions="CenterAndExpand" />
-                            </StackLayout>
+                                    VerticalOptions="CenterAndExpand" 
+                                             CornerRadius="100">
+                                    <ImageButton.Source>
+                                        <FontImageSource FontFamily="{DynamicResource IconFontFamily}"
+                                                         Glyph="{StaticResource IconSearch}"
+                                                         Size="Large"
+                                                         Color="White" />
+                                    </ImageButton.Source>
+                                </ImageButton>
+
+                            </Grid>
                         </Frame>
 
                         <!--#endregion-->
