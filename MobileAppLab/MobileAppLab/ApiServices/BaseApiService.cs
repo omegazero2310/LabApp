@@ -8,7 +8,7 @@ namespace MobileAppLab.ApiServices
 {
     public class BaseApiService
     {
-        protected static HttpClient HttpClient;
+        protected HttpClient HttpClient;
         protected string BaseUrl = "";
         protected UserTokens UserToken;
         public BaseApiService(HttpClient httpClient, string baseUrl, bool isAuthorize = false)

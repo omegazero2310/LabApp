@@ -146,12 +146,12 @@ namespace MobileAppLab.ApiServices
                 var listStaff = JsonConvert.DeserializeObject<IEnumerable<AdminStaff>>(serverRespone.Result.ToString());
                 foreach (var staff in listStaff)
                 {
-                    staff.PositionName = ListPosition[staff.ID];
+                    staff.PositionName = ListPosition[staff.PartID];
                     var res = await this.GetProfilePicture(staff.ID);
                     if (res.IsSuccess)
                     {
                         if (res.Message != "NoImage")
-                            staff.ProfilePicture = (byte[])res.Result;
+                            staff.ProfilePicture = Convert.FromBase64String(res.Result.ToString());
                         else
                             staff.ProfilePicture = data;
                     }
@@ -198,8 +198,7 @@ namespace MobileAppLab.ApiServices
 
                 if (profilePic.IsSuccess && profilePic.Message != "NoImage")
                 {
-
-                    staff.ProfilePicture = (byte[])profilePic.Result;
+                    staff.ProfilePicture = Convert.FromBase64String(profilePic.Result.ToString());
                 }
                 else
                 {

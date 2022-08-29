@@ -143,16 +143,12 @@ namespace CommonClass.Models
         public virtual AdminParts Parts { get; set; }
 
         [Required]
-        [JsonIgnore]
         public DateTime DateCreated { get; set; }
         [Required]
-        [JsonIgnore]
         public DateTime DateModified { get; set; }
         [Required]
-        [JsonIgnore]
         public string UserCreated { get; set; }
         [Required]
-        [JsonIgnore]
         public string UserModified { get; set; }
 
 

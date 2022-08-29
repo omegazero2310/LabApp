@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Converters;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -84,8 +85,8 @@ namespace MobileAppLab.ViewModels
                 {
                     try
                     {
-                        Stream streamImg = new MemoryStream(userInfo.ProfilePicture);
-                        this.ProfilePicture = ImageSource.FromStream(() => streamImg);
+                        ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
+                        this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(userInfo.ProfilePicture);
                     }
                     catch (Exception ex)
                     {

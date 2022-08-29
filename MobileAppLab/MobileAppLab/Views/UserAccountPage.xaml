@@ -18,8 +18,7 @@
                    HasShadow="True"
                    HeightRequest="125"
                    HorizontalOptions="FillAndExpand"
-                   VerticalOptions="FillAndExpand"
-                   Margin="0,-10,0,0" >
+                   VerticalOptions="FillAndExpand">
                     <Frame.Background>
                         <LinearGradientBrush>
                             <GradientStop Color="#72c3f6" Offset="0.1" />
@@ -36,25 +35,17 @@
                                 <RowDefinition Height="100"/>
                             </Grid.RowDefinitions>
 
-                            <Frame Grid.Column="0" Padding="0" BorderColor="Blue" WidthRequest="100" HeightRequest="100" CornerRadius="100">
-                                <Image Source="{Binding ProfilePicture}" 
+                            <xct:AvatarView Grid.Column="0" Padding="0" Source="{Binding ProfilePicture}" 
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
-                                       WidthRequest="100" 
-                                       HeightRequest="100">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                       Size="100">
+                                <xct:AvatarView.GestureRecognizers>
+                                    <TapGestureRecognizer
                                             NumberOfTapsRequired="1"
                                             Command="{Binding CommandName}"
                                             />
-                                    </Image.GestureRecognizers>
-                                    <Image.Clip>
-                                        <EllipseGeometry Center="50,50"
-                                                         RadiusX="50"
-                                                         RadiusY="50"/>
-                                    </Image.Clip>
-                                </Image>
-                            </Frame>
+                                </xct:AvatarView.GestureRecognizers>
+                            </xct:AvatarView>
 
                             <Grid Grid.Column="1" Padding="0" >
                                 <Grid.RowDefinitions>

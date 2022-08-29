@@ -8,7 +8,9 @@
     xmlns:helper="clr-namespace:MobileAppLab.Utilities"
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    CloseWhenBackgroundIsClicked="True">
+    CloseWhenBackgroundIsClicked="True"
+    HasKeyboardOffset="False"
+    HasSystemPadding="True">
     <pages:PopupPage.Resources>
         <ResourceDictionary>
             <!--<xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />-->
@@ -255,7 +257,7 @@
                                     Grid.Column="1"
                                     HorizontalOptions="Fill"
                                     IsEnabled="{Binding IsEditMode}"
-                                    ItemsSource="{Binding ListStaffGenders}"
+                                    ItemsSource="{Binding StaffGenders}"
                                     SelectedItem="{Binding Gender}"
                                     VerticalOptions="CenterAndExpand" />
                                 <Label

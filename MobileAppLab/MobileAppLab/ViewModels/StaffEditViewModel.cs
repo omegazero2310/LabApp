@@ -36,9 +36,10 @@ namespace MobileAppLab.ViewModels
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Female)],GenderOptions.Female },
                     {LocalizationResourceManager.Instance[nameof(AppResource.Gender_Other)],GenderOptions.Other },
                 };
+        public List<string> StaffGenders { get; } = _staffGenders.Keys.ToList();
         public ObservableCollection<AdminParts> StaffPositions { get; } = new ObservableCollection<AdminParts>();
-        private int _selectedStaffPosition;
-        public int SelectedStaffPosition
+        private AdminParts _selectedStaffPosition;
+        public AdminParts SelectedStaffPosition
         {
             get { return _selectedStaffPosition; }
             set { SetProperty(ref _selectedStaffPosition, value); }
@@ -118,6 +119,12 @@ namespace MobileAppLab.ViewModels
                     this.Title = AppResource.Label_Staff_Add;
                     this.ID = null;
                     this.IsEditMode = true;
+                    IEnumerable<AdminParts> parts = await this._adminPartService.GetAll();
+                    this.StaffPositions.Clear();
+                    foreach (var part in parts)
+                    {
+                        this.StaffPositions.Add(part);
+                    }
                 }
                 else if (parameters["Type"]?.ToString() == AppResource.Label_Staff_Update)
                 {
@@ -137,19 +144,19 @@ namespace MobileAppLab.ViewModels
         private async Task LoadStaffInfo(int id)
         {
             AdminStaff adminStaff = await this._adminStaffService.GetByID(id);
-            IEnumerable <AdminParts> parts = await this._adminPartService.GetAll();
+            IEnumerable<AdminParts> parts = await this._adminPartService.GetAll();
             this.StaffPositions.Clear();
-            foreach(var part in parts)
+            foreach (var part in parts)
             {
                 this.StaffPositions.Add(part);
-            }                 
+            }
             if (adminStaff != null)
             {
                 this.ID = adminStaff.ID;
                 this.UserName = adminStaff.UserName;
                 this.Address = adminStaff.Address;
                 this.PhoneNumber = adminStaff.PhoneNumber;
-                this.SelectedStaffPosition = adminStaff.PartID;
+                this.SelectedStaffPosition = this.StaffPositions.Where(part => part.PartID == adminStaff.PartID).FirstOrDefault();
                 this.EmailAddress = adminStaff.Email;
                 this.Gender = _staffGenders.Where(pos => pos.Value == adminStaff.Gender).FirstOrDefault().Key;
             }
@@ -160,24 +167,28 @@ namespace MobileAppLab.ViewModels
             {
                 this.ErrorMessages = new Dictionary<string, string>();
 
-                if (string.IsNullOrEmpty(this.PositionName))
-                {
-                    this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance[nameof(AppResource.MSG_POSITION_NOT_VALID)]);
-                    RaisePropertyChanged(nameof(ErrorMessages));
-                }
-                if (string.IsNullOrEmpty(this.Gender))
-                {
-                    this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance[nameof(AppResource.MSG_GENDER_NOT_VALID)]);
-                    RaisePropertyChanged(nameof(ErrorMessages));
-                }
+
+
                 AdminStaff adminStaff = new AdminStaff();
                 if (this.IsEditMode && this.ID.HasValue)
                     adminStaff.ID = this.ID.Value;
                 adminStaff.UserName = this.UserName;
                 adminStaff.Address = this.Address;
                 adminStaff.PhoneNumber = this.PhoneNumber;
-                adminStaff.PartID = this.SelectedStaffPosition;
-                adminStaff.Gender = _staffGenders[this.Gender];
+                if (this.SelectedStaffPosition == null)
+                {
+                    this.ErrorMessages.Add("POSITION_ID", LocalizationResourceManager.Instance[nameof(AppResource.MSG_POSITION_NOT_VALID)]);
+                    RaisePropertyChanged(nameof(ErrorMessages));
+                }
+                else
+                    adminStaff.PartID = this.SelectedStaffPosition.PartID;
+                if (string.IsNullOrEmpty(this.Gender))
+                {
+                    this.ErrorMessages.Add("GENDER", LocalizationResourceManager.Instance[nameof(AppResource.MSG_GENDER_NOT_VALID)]);
+                    RaisePropertyChanged(nameof(ErrorMessages));
+                }
+                else
+                    adminStaff.Gender = _staffGenders[this.Gender];
                 adminStaff.Email = this.EmailAddress;
                 AdminStaffValidator validationRules = new AdminStaffValidator();
                 var resultValidate = validationRules.Validate(adminStaff);

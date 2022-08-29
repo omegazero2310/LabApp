@@ -41,18 +41,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50" />
                             </Grid.RowDefinitions>
-
-                            <!--<Image
-                                Grid.Column="0"
-                                HorizontalOptions="Start"
-                                Rotation="180"
-                                Scale="3"
-                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.icon_arrow_left_white.png}"
-                                VerticalOptions="Center">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding CommandBackToHome}" NumberOfTapsRequired="1" />
-                                </Image.GestureRecognizers>
-                            </Image>-->
                             <Label
                                 Grid.Column="1"
                                 FontAttributes="Bold"
@@ -211,26 +199,15 @@
                                                             HeightRequest="60"
                                                             Orientation="Horizontal">
                                                             <!--#region ảnh đại diện-->
-                                                            <Frame
-                                                                Padding="0"
-                                                                BorderColor="Blue"
-                                                                CornerRadius="100"
-                                                                HeightRequest="60"
-                                                                WidthRequest="60">
-                                                                <Image
-                                                                    HeightRequest="50"
+                                                            <Frame HeightRequest="60" WidthRequest="60" BorderColor="Blue" CornerRadius="100" Padding="0" >
+                                                                <xct:AvatarView
                                                                     HorizontalOptions="Center"
                                                                     Source="{Binding ProfilePicture, Converter={xct:ByteArrayToImageSourceConverter}}"
                                                                     VerticalOptions="Center"
-                                                                    WidthRequest="50">
-                                                                    <Image.Clip>
-                                                                        <EllipseGeometry
-                                                                            Center="25,25"
-                                                                            RadiusX="25"
-                                                                            RadiusY="25" />
-                                                                    </Image.Clip>
-                                                                </Image>
+                                                                    Size="60">
+                                                                </xct:AvatarView>
                                                             </Frame>
+                                                            
                                                             <!--#endregion-->
                                                             <!--#region thông tin chi tiết-->
                                                             <Grid Grid.Column="1">
@@ -271,7 +248,7 @@
                                                                     Grid.Row="2"
                                                                     Grid.Column="1"
                                                                     HorizontalOptions="EndAndExpand"
-                                                                    Text="{Binding CurrentTime, StringFormat='{0:dd/MM/yyyy}'}"
+                                                                    Text="{Binding DateCreated, StringFormat='{0:dd/MM/yyyy}'}"
                                                                     VerticalOptions="EndAndExpand" />
                                                             </Grid>
                                                             <!--#endregion-->
