@@ -276,6 +276,12 @@
   <data name="MSG_POSITION_NOT_VALID" xml:space="preserve">
     <value>Select valid Position</value>
   </data>
+  <data name="MSG_STAFF_DUPLICATE_EMAIL" xml:space="preserve">
+    <value>Email Exist</value>
+  </data>
+  <data name="MSG_STAFF_PHONE_NUMBER" xml:space="preserve">
+    <value>Phone Number Exist</value>
+  </data>
   <data name="MSG_USER_EXIST" xml:space="preserve">
     <value>User exist, please choose other User ID</value>
   </data>

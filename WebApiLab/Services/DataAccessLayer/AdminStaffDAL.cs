@@ -60,15 +60,67 @@ namespace WebApiLab.Services.DataAccessLayer
             else
                 return this._labDbContext?.AdminStaffs.ToList() ?? new List<AdminStaff>();
         }
-
+        /// <summary>
+        /// Kiểm tra trùng địa chỉ email.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>
+        ///   <c>true</c> if [is duplicate email] [the specified email]; otherwise, <c>false</c>.
+        /// </returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public async Task<bool> IsDuplicateEmail(string email)
         {
             return this._labDbContext.AdminStaffs.Any(staff => staff.Email == email);
         }
-
+        /// <summary>
+        /// kiểm tra trùng địa chỉ email trừ người được update
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="excludeID">The exclude identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [is duplicate email] [the specified email]; otherwise, <c>false</c>.
+        /// </returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
+        public async Task<bool> IsDuplicateEmail(string email, int excludeID)
+        {
+            return this._labDbContext.AdminStaffs.Any(staff => staff.Email == email && staff.ID != excludeID);
+        }
+        /// <summary>
+        /// Kiểm tra trùng số điện thoại
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns>
+        ///   <c>true</c> if [is duplicate phone number] [the specified phone number]; otherwise, <c>false</c>.
+        /// </returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
         public async Task<bool> IsDuplicatePhoneNumber(string phoneNumber)
         {
             return this._labDbContext.AdminStaffs.Any(staff => staff.PhoneNumber == phoneNumber);
+        }
+        /// <summary>
+        /// Kiểm tra trùng số điện thoại khi update
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="excludeID">The exclude identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [is duplicate phone number] [the specified phone number]; otherwise, <c>false</c>.
+        /// </returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 29/08/2022 created
+        /// </Modified>
+        public async Task<bool> IsDuplicatePhoneNumber(string phoneNumber, int excludeID)
+        {
+            return this._labDbContext.AdminStaffs.Any(staff => staff.PhoneNumber == phoneNumber && staff.ID != excludeID);
         }
 
         public async Task<bool> UpdateAsync(AdminStaff user , string userUpdate)

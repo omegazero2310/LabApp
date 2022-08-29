@@ -1,4 +1,5 @@
 ﻿using CommonClass.Enums;
+using CommonClass.ErrorCodes;
 using CommonClass.Models;
 using CommonClass.Models.Request;
 using CommonClass.Validations;
@@ -192,7 +193,7 @@ namespace MobileAppLab.ViewModels
                 adminStaff.Email = this.EmailAddress;
                 AdminStaffValidator validationRules = new AdminStaffValidator();
                 var resultValidate = validationRules.Validate(adminStaff);
-                if (!resultValidate.IsValid)
+                if (!resultValidate.IsValid && this.ErrorMessages.Count > 0)
                 {
                     foreach (var e in resultValidate.Errors)
                     {
@@ -209,15 +210,33 @@ namespace MobileAppLab.ViewModels
                         serverRespone = await this._adminStaffService.Update(adminStaff);
                     else
                         serverRespone = await this._adminStaffService.CreateNew(adminStaff);
-                    if (serverRespone.IsSuccess)
+                    if (serverRespone.IsSuccess && (serverRespone.Message == "Updated" || serverRespone.Message == "Created"))
                     {
                         NavigationParameters valuePairs = new NavigationParameters();
                         valuePairs.Add("IsSuccess", true);
                         await this.NavigationService.GoBackAsync(valuePairs);
                     }
-                    else
+                    else if (serverRespone.IsSuccess && serverRespone.Message == "NoChange")
+                    {
                         await this.NavigationService.GoBackAsync();
-
+                    }
+                    else if (!serverRespone.IsSuccess)
+                    {
+                        if (serverRespone.Message == AdminStaffErrorCode.DUPLICATE_EMAIL)
+                        {
+                            ErrorMessages["Email"] = LocalizationResourceManager.Instance[AdminStaffErrorCode.DUPLICATE_EMAIL];
+                            RaisePropertyChanged(nameof(ErrorMessages));
+                        } 
+                        else if(serverRespone.Message == AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER)
+                        {
+                            ErrorMessages["PhoneNumber"] = LocalizationResourceManager.Instance[AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER];
+                            RaisePropertyChanged(nameof(ErrorMessages));
+                        }    
+                        else
+                        {
+                            await this._pageDialog.DisplayAlertAsync("Save Error", serverRespone.Message, "Ok");
+                        }    
+                    }
                 }
             }
             catch (Exception ex)

@@ -83,6 +83,10 @@ namespace WebApiLab.Services.BusinessLayer
 
         public async Task<ServerRespone> Update(AdminStaff data)
         {
+            if (await _adminStaffsDAL.IsDuplicateEmail(data.Email, data.ID))
+                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_EMAIL, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
+            if (await _adminStaffsDAL.IsDuplicatePhoneNumber(data.PhoneNumber, data.ID))
+                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
             if (await _adminStaffsDAL.UpdateAsync(data, _userName))
             {
                 return new ServerRespone { IsSuccess = true, Message = "Updated", HttpStatusCode = HttpStatusCode.OK, Result = null };

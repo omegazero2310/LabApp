@@ -538,6 +538,24 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Exist.
+        /// </summary>
+        public static string MSG_STAFF_DUPLICATE_EMAIL {
+            get {
+                return ResourceManager.GetString("MSG_STAFF_DUPLICATE_EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number Exist.
+        /// </summary>
+        public static string MSG_STAFF_PHONE_NUMBER {
+            get {
+                return ResourceManager.GetString("MSG_STAFF_PHONE_NUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User exist, please choose other User ID.
         /// </summary>
         public static string MSG_USER_EXIST {

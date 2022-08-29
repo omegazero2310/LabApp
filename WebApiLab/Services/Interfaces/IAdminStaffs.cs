@@ -9,6 +9,8 @@
         Task<T?> Get(object key);
         Task<IEnumerable<T>> Gets(int skip = 0, int take = 0);
         Task<bool> IsDuplicateEmail(string email);
+        Task<bool> IsDuplicateEmail(string email, int id);
         Task<bool> IsDuplicatePhoneNumber(string phoneNumber);
+        Task<bool> IsDuplicatePhoneNumber(string phoneNumber, int id);
     }
 }
