@@ -17,23 +17,34 @@ namespace WebApiLab.Services.DataAccessLayer
     /// <seealso cref="WebApiLab.Services.Interfaces.IAdminUsers&lt;CommonClass.Models.AdminUser&gt;" />
     public class AdminUserDAL :LabDbContext, IAdminUsers<AdminUser>
     {
-        public AdminUserDAL(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        private ILogger<AdminUserDAL> _logger;
+        public AdminUserDAL(DbContextOptions dbContextOptions, ILogger<AdminUserDAL> logger) : base(dbContextOptions)
         {
+            this._logger = logger;
         }
 
         public async Task<bool> AddAsync(AdminUser user)
         {
-            user.UserCreated = "System";
-            user.UserModified = "System";
-            user.DateCreated = DateTime.Now;
-            user.DateModified = DateTime.Now;
-            if (this.AdminUsers.AddIfNotExists(user, db => db.UserID == user.UserID) != null)
+            try
             {
-                await this.SaveChangesAsync();
-                return true;
+                user.UserCreated = "System";
+                user.UserModified = "System";
+                user.DateCreated = DateTime.Now;
+                user.DateModified = DateTime.Now;
+                if (this.AdminUsers.AddIfNotExists(user, db => db.UserID == user.UserID) != null)
+                {
+                    await this.SaveChangesAsync();
+                    return true;
+                }
+                else
+                    return false;
             }
-            else
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, nameof(AdminUserDAL));
                 return false;
+            }
+            
         }
 
         public Task<bool> DeleteAsync(object key)
@@ -43,8 +54,10 @@ namespace WebApiLab.Services.DataAccessLayer
 
         public Task<AdminUser?> Get(object key)
         {
-            var userName = new SqlParameter("ID", key);
-            string query = @"SELECT TOP (1) [UserID]
+            try
+            {
+                var userName = new SqlParameter("ID", key);
+                string query = @"SELECT TOP (1) [UserID]
                               ,[HashedPassword]
                               ,[Salt]
                               ,[IsResetPassword]
@@ -56,10 +69,16 @@ namespace WebApiLab.Services.DataAccessLayer
                               ,[UserModified]
                           FROM [LabDB].[dbo].[Admin.Users]
                           where UserID COLLATE SQL_Latin1_General_CP1_CS_AS = @ID";
-            var user = this.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
-            return Task.FromResult<AdminUser?>(user);
-        }
+                var user = this.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
+                return Task.FromResult<AdminUser?>(user);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, nameof(AdminUserDAL));
+                return null;
+            }
 
+        }
         public Task<IEnumerable<AdminUser>> Gets(int skip = 0, int take = 0)
         {
             throw new NotImplementedException();

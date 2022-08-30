@@ -16,8 +16,10 @@ namespace WebApiLab.Services.DataAccessLayer
     /// <seealso cref="WebApiLab.Services.Interfaces.IAdminStaffs&lt;CommonClass.Models.AdminStaff&gt;" />
     public class AdminStaffDAL : LabDbContext, IAdminStaffs<AdminStaff>
     {
-        public AdminStaffDAL(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        private ILogger<AdminStaffDAL> _logger;
+        public AdminStaffDAL(DbContextOptions dbContextOptions, ILogger<AdminStaffDAL> logger) : base(dbContextOptions)
         {
+            this._logger = logger;
         }
 
         public async Task<bool> AddAsync(AdminStaff user, string userUpdate)

@@ -21,11 +21,13 @@ namespace WebApiLab.Services.BusinessLayer
         private IAdminUsers<AdminUser> _adminUsers;
         private IAdminStaffs<AdminStaff> _adminStaff;
         private JwtSettings _jwtSettings;
-        public AdminUsersService(IAdminStaffs<AdminStaff> adminStaffsDAL, IAdminUsers<AdminUser> adminUsers, JwtSettings jwtSettings)
+        private ILogger<AdminUsersService> _logger;
+        public AdminUsersService(IAdminStaffs<AdminStaff> adminStaffsDAL, IAdminUsers<AdminUser> adminUsers, JwtSettings jwtSettings, ILogger<AdminUsersService> logger)
         {
             _adminUsers = adminUsers;
             _adminStaff = adminStaffsDAL;
             this._jwtSettings = jwtSettings;
+            _logger = logger;
         }
         public async Task<ServerRespone> Create(CreateAccountRequest data)
         {

@@ -16,9 +16,10 @@ namespace WebApiLab.Services.DataAccessLayer
     /// <seealso cref="WebApiLab.Services.Interfaces.IAdminParts&lt;CommonClass.Models.AdminParts&gt;" />
     public class AdminPartDAL : LabDbContext, IAdminParts<AdminParts>
     {
-        public AdminPartDAL(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        private ILogger<AdminPartDAL> _logger;
+        public AdminPartDAL(DbContextOptions dbContextOptions, ILogger<AdminPartDAL> logger) : base(dbContextOptions)
         {
-
+            this._logger = logger;
         }
 
         public async Task<bool> AddAsync(AdminParts user, string userAdd)

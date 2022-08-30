@@ -26,11 +26,13 @@ namespace WebApiLab.Services.BusinessLayer
         private AdminStaffValidator _validationRules;
         private string _userName;
         private readonly string _imageFolder = "ProfileImgs";
-        public AdminStaffsService(IAdminStaffs<AdminStaff> adminStaffsDAL, IHttpContextAccessor currentContext)
+        private ILogger<AdminStaffsService> _logger;
+        public AdminStaffsService(IAdminStaffs<AdminStaff> adminStaffsDAL, IHttpContextAccessor currentContext, ILogger<AdminStaffsService> logger)
         {
             this._adminStaffsDAL = adminStaffsDAL;
             _validationRules = new AdminStaffValidator();
             _userName = currentContext.HttpContext.User.Identity.Name ?? "Unknows";
+            _logger = logger;
         }
         public async Task<ServerRespone> Create(AdminStaff data)
         {
