@@ -23,14 +23,13 @@ namespace WebApiLab.Controllers
     public class AdminPartsController : ControllerBase
     {
         private readonly IServiceProvider _configuration;
-        private AdminPartService _adminPartService;
+        private IAdminPartService _adminPartService;
         private readonly ILogger<AdminPartsController> _logger;
-        public AdminPartsController(IServiceProvider configuration, ILogger<AdminPartsController> logger, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContext)
+        public AdminPartsController(IServiceProvider configuration, ILogger<AdminPartsController> logger, IAdminPartService adminPartService)
         {
             this._configuration = configuration;
-            this._logger = logger;
-            var claims = httpContext.HttpContext.User.Identity.Name;
-            this._adminPartService = new AdminPartService(configuration, claims ?? "Unknow");
+            this._logger = logger;        
+            this._adminPartService = adminPartService;
         }
         /// <summary>
         /// Lấy danh sách chức danh

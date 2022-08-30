@@ -16,17 +16,16 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public class AdminUsersService
+    public class AdminUsersService : IAdminUsersService
     {
         private IAdminUsers<AdminUser> _adminUsers;
         private IAdminStaffs<AdminStaff> _adminStaff;
         private JwtSettings _jwtSettings;
-        public AdminUsersService(IServiceProvider serviceProvider, JwtSettings jwtSettings)
+        public AdminUsersService(IAdminStaffs<AdminStaff> adminStaffsDAL, IAdminUsers<AdminUser> adminUsers, JwtSettings jwtSettings)
         {
-            _adminUsers = new AdminUserDAL(serviceProvider);
-            _adminStaff = new AdminStaffDAL(serviceProvider);
+            _adminUsers = adminUsers;
+            _adminStaff = adminStaffsDAL;
             this._jwtSettings = jwtSettings;
-
         }
         public async Task<ServerRespone> Create(CreateAccountRequest data)
         {

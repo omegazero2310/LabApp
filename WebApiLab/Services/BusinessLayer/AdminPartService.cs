@@ -1,5 +1,6 @@
 ﻿using CommonClass.Models;
 using CommonClass.Models.Request;
+using Microsoft.AspNetCore.Http;
 using System.Net;
 using WebApiLab.Services.DataAccessLayer;
 using WebApiLab.Services.Interfaces;
@@ -13,14 +14,14 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 29/08/2022 created
     /// </Modified>
-    public class AdminPartService
+    public class AdminPartService : IAdminPartService
     {
         private IAdminParts<AdminParts> _adminPartDAL;
         private string _userName;
-        public AdminPartService(IServiceProvider serviceProvider, string userName)
+        public AdminPartService(IAdminParts<AdminParts> adminPartsDAL, IHttpContextAccessor currentContext)
         {
-            this._adminPartDAL = new AdminPartDAL(serviceProvider);
-            _userName = userName;
+            this._adminPartDAL = adminPartsDAL;
+            _userName = currentContext.HttpContext.User.Identity.Name ?? "Unknows";
         }
         public async Task<ServerRespone> Create(AdminParts data)
         {

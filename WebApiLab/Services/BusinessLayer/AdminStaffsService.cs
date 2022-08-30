@@ -20,17 +20,17 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public class AdminStaffsService
+    public class AdminStaffsService : IAdminStaffsService
     {
         private IAdminStaffs<AdminStaff> _adminStaffsDAL;
         private AdminStaffValidator _validationRules;
         private string _userName;
         private readonly string _imageFolder = "ProfileImgs";
-        public AdminStaffsService(IServiceProvider serviceProvider, string userName)
+        public AdminStaffsService(IAdminStaffs<AdminStaff> adminStaffsDAL, IHttpContextAccessor currentContext)
         {
-            this._adminStaffsDAL = new AdminStaffDAL(serviceProvider);
+            this._adminStaffsDAL = adminStaffsDAL;
             _validationRules = new AdminStaffValidator();
-            _userName = userName;
+            _userName = currentContext.HttpContext.User.Identity.Name ?? "Unknows";
         }
         public async Task<ServerRespone> Create(AdminStaff data)
         {

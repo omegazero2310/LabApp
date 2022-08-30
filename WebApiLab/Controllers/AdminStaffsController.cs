@@ -22,16 +22,13 @@ namespace WebApiLab.Controllers
     public class AdminStaffsController : ControllerBase
     {
 
-        private readonly IServiceProvider _configuration;
-        private AdminStaffsService _adminStaffsService;
+        private IAdminStaffsService _adminStaffsService;
         private readonly ILogger<AdminUsersController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminStaffsController(IServiceProvider configuration, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContext)
+        public AdminStaffsController(IAdminStaffsService usersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
         {
-            this._configuration = configuration;
             this._logger = logger;
-            var claims = httpContext.HttpContext.User.Identity.Name;
-            this._adminStaffsService = new AdminStaffsService(configuration, claims ?? "Unknow");
+            this._adminStaffsService = usersService;
             this._webHostEnvironment = webHostEnvironment;
         }
 

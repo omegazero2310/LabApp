@@ -15,25 +15,21 @@ namespace WebApiLab.Services.DataAccessLayer
     /// annv3 29/08/2022 created
     /// </Modified>
     /// <seealso cref="WebApiLab.Services.Interfaces.IAdminUsers&lt;CommonClass.Models.AdminUser&gt;" />
-    public class AdminUserDAL : IAdminUsers<AdminUser>
+    public class AdminUserDAL :LabDbContext, IAdminUsers<AdminUser>
     {
-        private LabDbContext _labDbContext;
-        private IServiceProvider _serviceProvider;
-        public AdminUserDAL(IServiceProvider serviceProvider)
+        public AdminUserDAL(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            this._serviceProvider = serviceProvider;
-            this._labDbContext = serviceProvider.GetService<LabDbContext>();
-
         }
+
         public async Task<bool> AddAsync(AdminUser user)
         {
             user.UserCreated = "System";
             user.UserModified = "System";
             user.DateCreated = DateTime.Now;
             user.DateModified = DateTime.Now;
-            if (this._labDbContext?.AdminUsers.AddIfNotExists(user, db => db.UserID == user.UserID) != null)
+            if (this.AdminUsers.AddIfNotExists(user, db => db.UserID == user.UserID) != null)
             {
-                await this._labDbContext?.SaveChangesAsync();
+                await this.SaveChangesAsync();
                 return true;
             }
             else
@@ -60,7 +56,7 @@ namespace WebApiLab.Services.DataAccessLayer
                               ,[UserModified]
                           FROM [LabDB].[dbo].[Admin.Users]
                           where UserID COLLATE SQL_Latin1_General_CP1_CS_AS = @ID";
-            var user = this._labDbContext.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
+            var user = this.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
             return Task.FromResult<AdminUser?>(user);
         }
 
