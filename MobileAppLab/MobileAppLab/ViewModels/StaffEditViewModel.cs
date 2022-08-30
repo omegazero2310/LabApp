@@ -3,6 +3,7 @@ using CommonClass.ErrorCodes;
 using CommonClass.Models;
 using CommonClass.Models.Request;
 using CommonClass.Validations;
+using DryIoc;
 using MobileAppLab.ApiServices;
 using MobileAppLab.Properties;
 using MobileAppLab.Utilities;
@@ -19,6 +20,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace MobileAppLab.ViewModels
 {
@@ -204,6 +206,12 @@ namespace MobileAppLab.ViewModels
         private DelegateCommand _commandCancel;
         public DelegateCommand CommandCancel =>
             _commandCancel ?? (_commandCancel = new DelegateCommand(ExecuteCommandCancel));
+
+        private DelegateCommand<object> _commandOpenPicker;
+        public DelegateCommand<object> CommandOpenPicker =>
+            _commandOpenPicker ?? (_commandOpenPicker = new DelegateCommand<object>(ExecuteCommandOpenPicker));
+
+        
         #endregion
 
 
@@ -364,6 +372,21 @@ namespace MobileAppLab.ViewModels
         private async void ExecuteCommandCancel()
         {
             await this.NavigationService.GoBackAsync();
+        }
+        void ExecuteCommandOpenPicker(object parameter)
+        {
+            try
+            {
+                var picker = parameter as Picker;
+
+                picker.IsEnabled = true;
+                picker.IsVisible = true;
+                picker.Focus();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
         #endregion
 

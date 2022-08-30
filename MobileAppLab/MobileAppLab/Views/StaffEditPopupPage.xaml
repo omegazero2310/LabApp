@@ -190,6 +190,7 @@
                                 </Label>
                                 <Picker
                                     Title="{helper:Translate Picker_Select_Position}"
+                                    x:Name="pickerPosition"
                                     Grid.Row="6"
                                     Grid.Column="1"
                                     HorizontalOptions="Fill"
@@ -202,7 +203,9 @@
                                     Grid.Column="1" VerticalOptions="Center"
                                     HeightRequest="20"
                                     HorizontalOptions="End"
-                                    BackgroundColor="White">
+                                    BackgroundColor="White"
+                                    Command="{Binding CommandOpenPicker}"
+                                    CommandParameter="{Binding Source={x:Reference pickerPosition} ,Path=.}">
                                     <ImageButton.Source>
                                         <FontImageSource
                                                FontFamily="{DynamicResource IconFontFamily}"
@@ -267,6 +270,7 @@
                                 </Label>
                                 <Picker
                                     Title="{helper:Translate Picker_Select_Gender}"
+                                    x:Name="pickerGender"
                                     Grid.Row="10"
                                     Grid.Column="1"
                                     HorizontalOptions="Fill"
@@ -278,7 +282,9 @@
                                     Grid.Column="1" VerticalOptions="Center"
                                     HeightRequest="20"
                                     HorizontalOptions="End"
-                                    BackgroundColor="White">
+                                    BackgroundColor="White"
+                                    Command="{Binding CommandOpenPicker}"
+                                    CommandParameter="{Binding Source={x:Reference pickerGender} ,Path=.}">
                                     <ImageButton.Source>
                                         <FontImageSource
                                                FontFamily="{DynamicResource IconFontFamily}"
