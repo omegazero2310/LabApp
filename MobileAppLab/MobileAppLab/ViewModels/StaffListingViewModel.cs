@@ -16,6 +16,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MobileAppLab.ViewModels
 {
@@ -228,38 +230,55 @@ namespace MobileAppLab.ViewModels
 
         }
         #region các method của command
+        private CancellationTokenSource throttleCts = new CancellationTokenSource();
         private async void ExecuteCommandSearch(object parameter)
         {
-            if (string.IsNullOrEmpty(parameter?.ToString() ?? ""))
-                this.IsRefreshing = true;
-            else
+            try
             {
-                var listStaff = await this._adminStaffService.GetAll();
-                IEnumerable<AdminStaff> filtered = listStaff;
-                switch (this.SelectedFilterOption)
-                {
-                    case FilterOptions.UserName:
-                        filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
-                        break;
-                    case FilterOptions.Position:
-                        filtered = listStaff.Where(x => x.PositionName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
-                        break;
-                    case FilterOptions.Email:
-                        filtered = listStaff.Where(x => x.Email.Contains(parameter.ToString()));
-                        break;
-                    case FilterOptions.PhoneNumber:
-                        filtered = listStaff.Where(x => x.PhoneNumber.Contains(parameter.ToString()));
-                        break;
-                    default:
-                        filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
-                        break;
-                }
-                this.Staffs.Clear();
-                foreach (var user in filtered)
-                {
-                    this.Staffs.Add(user);
-                }
+                Interlocked.Exchange(ref this.throttleCts, new CancellationTokenSource()).Cancel();
+                await Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token)
+                    .ContinueWith(async (obj) =>
+                    {
+                        if (string.IsNullOrEmpty(parameter?.ToString() ?? ""))
+                            this.IsRefreshing = true;
+                        else
+                        {
+                            var listStaff = await this._adminStaffService.GetAll();
+                            IEnumerable<AdminStaff> filtered = listStaff;
+                            switch (this.SelectedFilterOption)
+                            {
+                                case FilterOptions.UserName:
+                                    filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
+                                    break;
+                                case FilterOptions.Position:
+                                    filtered = listStaff.Where(x => x.PositionName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
+                                    break;
+                                case FilterOptions.Email:
+                                    filtered = listStaff.Where(x => x.Email.Contains(parameter.ToString()));
+                                    break;
+                                case FilterOptions.PhoneNumber:
+                                    filtered = listStaff.Where(x => x.PhoneNumber.Contains(parameter.ToString()));
+                                    break;
+                                default:
+                                    filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
+                                    break;
+                            }
+                            this.Staffs.Clear();
+                            foreach (var user in filtered)
+                            {
+                                this.Staffs.Add(user);
+                            }
+                        }
+                    },
+                    CancellationToken.None,
+                    TaskContinuationOptions.OnlyOnRanToCompletion,
+                    TaskScheduler.FromCurrentSynchronizationContext());
             }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            
         }
         private async void ExecuteCommandSelectFilter()
         {
