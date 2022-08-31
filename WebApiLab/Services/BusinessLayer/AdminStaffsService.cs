@@ -9,8 +9,7 @@ using Newtonsoft.Json;
 using System.Net;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
-using WebApiLab.Services.DataAccessLayer;
-using WebApiLab.Services.Interfaces;
+using WebApiLab.Services.UnitOfWork;
 
 namespace WebApiLab.Services.BusinessLayer
 {
@@ -20,156 +19,293 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public class AdminStaffsService : IAdminStaffsService
+    public class AdminStaffsService
     {
-        private IAdminStaffs<AdminStaff> _adminStaffsDAL;
+        private IUnitOfWork _unitOfWork;
         private AdminStaffValidator _validationRules;
         private string _userName;
         private readonly string _imageFolder = "ProfileImgs";
         private ILogger<AdminStaffsService> _logger;
-        public AdminStaffsService(IAdminStaffs<AdminStaff> adminStaffsDAL, IHttpContextAccessor currentContext, ILogger<AdminStaffsService> logger)
+        public AdminStaffsService(IUnitOfWork unitOfWork, IHttpContextAccessor currentContext, ILogger<AdminStaffsService> logger)
         {
-            this._adminStaffsDAL = adminStaffsDAL;
+            this._unitOfWork = unitOfWork;
             _validationRules = new AdminStaffValidator();
             _userName = currentContext.HttpContext.User.Identity.Name ?? "Unknows";
             _logger = logger;
         }
         public async Task<ServerRespone> Create(AdminStaff data)
         {
-            var result = _validationRules.Validate(data);
-            if (!result.IsValid)
+            ServerRespone serverRespone = new ServerRespone();
+            try
             {
-                return new ServerRespone { IsSuccess = false, Message = "DataValidateError", HttpStatusCode = HttpStatusCode.BadRequest, Result = result.Errors };
+                var result = _validationRules.Validate(data);
+                if (!result.IsValid)
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = "DataValidateError";
+                    serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
+                    serverRespone.Result = result.Errors;
+                }
+                bool isDuplicateEmail = await _unitOfWork.AdminStaffRepository.IsDuplicateEmail(data.Email);
+                bool isDuplicatePhoneNumber = await _unitOfWork.AdminStaffRepository.IsDuplicatePhoneNumber(data.PhoneNumber);
+                if (isDuplicateEmail)
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = AdminStaffErrorCode.DUPLICATE_EMAIL;
+                    serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
+                }
+                if (isDuplicatePhoneNumber)
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
+                    serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
+                }
+                if (_unitOfWork.AdminStaffRepository.Add(data, _userName))
+                {
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "Created";
+                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                    _unitOfWork.Save();
+                }
+                else
+                {
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "NoChange";
+                    serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+                }
             }
-            bool isDuplicateEmail = await _adminStaffsDAL.IsDuplicateEmail(data.Email);
-            bool isDuplicatePhoneNumber = await _adminStaffsDAL.IsDuplicatePhoneNumber(data.PhoneNumber);
-            if (isDuplicateEmail)
+            catch (Exception ex)
             {
-                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_EMAIL, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: Create New Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
             }
-            if (isDuplicatePhoneNumber)
-            {
-                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
-            }
-            if (await _adminStaffsDAL?.AddAsync(data, _userName))
-            {
-                return new ServerRespone { IsSuccess = true, Message = "Created", HttpStatusCode = HttpStatusCode.OK, Result = null };
-            }
-            else
-                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
+            return serverRespone;
 
 
         }
 
         public async Task<ServerRespone> Delete(object key)
         {
-            if (await _adminStaffsDAL.DeleteAsync(key))
+            ServerRespone serverRespone = new ServerRespone();
+            try
             {
-                return new ServerRespone { IsSuccess = true, Message = "Deleted", HttpStatusCode = HttpStatusCode.OK, Result = null };
+                if (_unitOfWork.AdminStaffRepository.Remove(new AdminStaff { StaffID = (int)key }))
+                {
+                    _unitOfWork.Save();
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "Deleted";
+                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                }
+                else
+                {
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "NoChange";
+                    serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+                }
             }
-            else
-                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: Delete Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
 
         public async Task<ServerRespone> Get(object key)
         {
-            var value = await _adminStaffsDAL.Get(key);
-            return new ServerRespone { IsSuccess = true, Message = "GetSuccess", HttpStatusCode = HttpStatusCode.OK, Result = value };
+            ServerRespone serverRespone = new ServerRespone();
+            try
+            {
+                var value = _unitOfWork.AdminStaffRepository.GetById(key);
+                serverRespone.IsSuccess = true;
+                serverRespone.Message = "GetSuccess";
+                serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                serverRespone.Result = value;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: Get Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
         }
 
         public async Task<ServerRespone> Gets(int skip, int take)
         {
-            var value = await _adminStaffsDAL.Gets(skip, take);
-            return new ServerRespone { IsSuccess = true, Message = "GetsSuccess", HttpStatusCode = HttpStatusCode.OK, Result = value };
+            ServerRespone serverRespone = new ServerRespone();
+            try
+            {
+                var value = _unitOfWork.AdminStaffRepository.GetAll();
+                serverRespone.IsSuccess = true;
+                serverRespone.Message = "GetsSuccess";
+                serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                serverRespone.Result = value;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: Gets Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
 
         public async Task<ServerRespone> Update(AdminStaff data)
         {
-            if (await _adminStaffsDAL.IsDuplicateEmail(data.Email, data.ID))
-                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_EMAIL, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
-            if (await _adminStaffsDAL.IsDuplicatePhoneNumber(data.PhoneNumber, data.ID))
-                return new ServerRespone { IsSuccess = false, Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER, HttpStatusCode = HttpStatusCode.BadRequest, Result = null };
-            if (await _adminStaffsDAL.UpdateAsync(data, _userName))
+            ServerRespone serverRespone = new ServerRespone();
+            try
             {
-                return new ServerRespone { IsSuccess = true, Message = "Updated", HttpStatusCode = HttpStatusCode.OK, Result = null };
+                if (await _unitOfWork.AdminStaffRepository.IsDuplicateEmail(data.Email, data.StaffID))
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = AdminStaffErrorCode.DUPLICATE_EMAIL;
+                    serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
+                }
+                if (await _unitOfWork.AdminStaffRepository.IsDuplicatePhoneNumber(data.PhoneNumber, data.StaffID))
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
+                    serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
+                }
+                if (_unitOfWork.AdminStaffRepository.Update(data, _userName))
+                {
+                    _unitOfWork.Save();
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "Updated";
+                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                }
+                else
+                {
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "NoChange";
+                    serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+                }    
             }
-            else
-                return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: Gets Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
         public async Task<ServerRespone> UpdateProfilePicture(int id, string rootPath, IFormFile file)
         {
-            string folderPath = Path.Combine(rootPath, _imageFolder);
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-            if (file.Length > 0)
+            ServerRespone serverRespone = new ServerRespone();
+            serverRespone.IsSuccess = true;
+            serverRespone.Message = "NoChange";
+            serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+            try
             {
-                var user = await this._adminStaffsDAL.Get(id);
-                if (user != null)
+                string folderPath = Path.Combine(rootPath, _imageFolder);
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+                if (file.Length > 0)
                 {
-                    if (string.IsNullOrEmpty(user.ProfileImage))
+                    var user = _unitOfWork.AdminStaffRepository.GetById(id);
+                    if (user != null)
                     {
-                        string randomImageName = Path.GetRandomFileName() + ".png";
-                        string fileSavePath = Path.Combine(folderPath, randomImageName);
-                        using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                        if (string.IsNullOrEmpty(user.ProfileImage))
                         {
-                            await file.CopyToAsync(stream);
+                            string randomImageName = Path.GetRandomFileName() + ".png";
+                            string fileSavePath = Path.Combine(folderPath, randomImageName);
+                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            user.ProfileImage = randomImageName;
+                            await _unitOfWork.AdminStaffRepository.UpdateProfilePicture(id, randomImageName, _userName);
                         }
-                        user.ProfileImage = randomImageName;
-                        await _adminStaffsDAL.UpdateProfilePicture(id, randomImageName, _userName);
-                    }
-                    else
-                    {
-                        System.IO.File.Delete(Path.Combine(folderPath, user.ProfileImage));
-                        string randomImageName = Path.GetRandomFileName() + ".png";
-                        string fileSavePath = Path.Combine(folderPath, randomImageName);
-                        using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                        else
                         {
-                            await file.CopyToAsync(stream);
+                            System.IO.File.Delete(Path.Combine(folderPath, user.ProfileImage));
+                            string randomImageName = Path.GetRandomFileName() + ".png";
+                            string fileSavePath = Path.Combine(folderPath, randomImageName);
+                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            user.ProfileImage = randomImageName;
+                            await _unitOfWork.AdminStaffRepository.UpdateProfilePicture(id, randomImageName, _userName);
                         }
-                        user.ProfileImage = randomImageName;
-                        await _adminStaffsDAL.UpdateProfilePicture(id, randomImageName, _userName);
+                        _unitOfWork.Save();
+                        serverRespone.IsSuccess = true;
+                        serverRespone.Message = "ImageUploaded";
+                        serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
                     }
-                    return new ServerRespone { IsSuccess = true, Message = "Updated", HttpStatusCode = HttpStatusCode.OK, Result = null };
                 }
-                else
-                    return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
             }
-            return new ServerRespone { IsSuccess = true, Message = "NoChange", HttpStatusCode = HttpStatusCode.NoContent, Result = null };
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: UpdateProfilePicture Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
         public async Task<ServerRespone> GetProfilePicture(int id, string rootPath)
         {
-            string folderPath = Path.Combine(rootPath, _imageFolder);
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-            var user = await this._adminStaffsDAL.Get(id);
-            if (user != null)
+            ServerRespone serverRespone = new ServerRespone();
+            serverRespone.IsSuccess = true;
+            serverRespone.Message = "NoImage";
+            serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+            serverRespone.Result = new byte[0];
+            try
             {
-                if (!string.IsNullOrEmpty(user.ProfileImage))
+                string folderPath = Path.Combine(rootPath, _imageFolder);
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+                var user = _unitOfWork.AdminStaffRepository.GetById(id);
+                if (user != null)
                 {
-                    var imgPath = Path.Combine(folderPath, user.ProfileImage);
-                    try
+                    if (!string.IsNullOrEmpty(user.ProfileImage))
                     {
-                        using (FileStream fileStream = new FileStream(imgPath, FileMode.Open))
+                        var imgPath = Path.Combine(folderPath, user.ProfileImage);
+                        try
                         {
-                            using (var memoryStream = new MemoryStream())
+                            using (FileStream fileStream = new FileStream(imgPath, FileMode.Open))
                             {
-                                fileStream.CopyTo(memoryStream);
-                                byte[] byteImage = memoryStream.ToArray();
-                                return new ServerRespone { IsSuccess = true, Message = "GetImageSuccess", HttpStatusCode = HttpStatusCode.OK, Result = byteImage };
+                                using (var memoryStream = new MemoryStream())
+                                {
+                                    fileStream.CopyTo(memoryStream);
+                                    byte[] byteImage = memoryStream.ToArray();
+                                    serverRespone.IsSuccess = true;
+                                    serverRespone.Message = "GetImageSuccess";
+                                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                                    serverRespone.Result = byteImage;
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        return new ServerRespone { IsSuccess = false, Message = "GetImageFailed", HttpStatusCode = HttpStatusCode.InternalServerError, Result = new byte[0] };
-                    }
-                }
-                else
-                    return new ServerRespone { IsSuccess = true, Message = "NoImage", HttpStatusCode = HttpStatusCode.OK, Result = new byte[0] };
 
+                }
             }
-            else
-                return new ServerRespone { IsSuccess = true, Message = "NoImage", HttpStatusCode = HttpStatusCode.OK, Result = new byte[0] };
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: GetImage Staff Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
     }
 }

@@ -84,8 +84,8 @@ namespace MobileAppLab.ApiServices
             try
             {
                 var staffRequest = new AdminStaffRequest();
-                staffRequest.ID = entity.ID;
-                staffRequest.UserName = entity.UserName;
+                staffRequest.ID = entity.StaffID;
+                staffRequest.UserName = entity.StaffName;
                 staffRequest.Address = entity.Address;
                 staffRequest.PhoneNumber = entity.PhoneNumber;
                 staffRequest.Email = entity.Email;
@@ -150,7 +150,7 @@ namespace MobileAppLab.ApiServices
                 foreach (var staff in listStaff)
                 {
                     staff.PositionName = ListPosition[staff.PartID];
-                    var res = await this.GetProfilePicture(staff.ID);
+                    var res = await this.GetProfilePicture(staff.StaffID);
                     if (res.IsSuccess)
                     {
                         if (res.Message != "NoImage")
@@ -197,7 +197,7 @@ namespace MobileAppLab.ApiServices
                 respone.EnsureSuccessStatusCode();
                 ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
                 var staff = JsonConvert.DeserializeObject<AdminStaff>(serverRespone.Result.ToString());
-                var profilePic = await this.GetProfilePicture(staff.ID);
+                var profilePic = await this.GetProfilePicture(staff.StaffID);
 
                 if (profilePic.IsSuccess && profilePic.Message != "NoImage")
                 {
@@ -223,8 +223,8 @@ namespace MobileAppLab.ApiServices
             try
             {
                 var staffRequest = new AdminStaffRequest();
-                staffRequest.ID = entity.ID;
-                staffRequest.UserName = entity.UserName;
+                staffRequest.ID = entity.StaffID;
+                staffRequest.UserName = entity.StaffName;
                 staffRequest.Address = entity.Address;
                 staffRequest.PhoneNumber = entity.PhoneNumber;
                 staffRequest.Email = entity.Email;

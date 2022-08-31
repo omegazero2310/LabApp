@@ -27,9 +27,9 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Key]
-        [Column(TypeName = "int")]
+        [Column(TypeName = "int", Order =0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int StaffID { get; set; }
 
         /// <summary>
         /// Tên nhân viên
@@ -43,8 +43,8 @@ namespace CommonClass.Models
         /// </Modified>
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         [Required(AllowEmptyStrings = false)]
-        [Column(TypeName = "nvarchar(50)")]
-        public string UserName { get; set; }
+        [Column(TypeName = "nvarchar(50)",Order =1)]
+        public string StaffName { get; set; }
 
         /// <summary>
         /// Giới tính của nhân viên
@@ -57,6 +57,7 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Required]
+        [Column(Order =2)]
         public GenderOptions Gender { get; set; }
 
         /// <summary>
@@ -71,6 +72,7 @@ namespace CommonClass.Models
         /// </Modified>
         [RegularExpression("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
         [Required]
+        [Column(Order =3)]
         public string Email { get; set; }
 
         /// <summary>
@@ -85,6 +87,7 @@ namespace CommonClass.Models
         /// </Modified>
         [Phone]
         [Required]
+        [Column(Order = 4)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -98,20 +101,9 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [Required]
+        [Column(Order = 5)]
         public string Address { get; set; }
 
-        /// <summary>
-        /// Phòng ban của nhân viên
-        /// </summary>
-        /// <value>
-        /// Phòng ban hiện tại
-        /// </value>
-        /// <Modified>
-        /// Name Date Comments
-        /// annv3 18/08/2022 created
-        /// </Modified>
-        [DefaultValue("")]
-        public string DepartmentName { get; set; }
 
         /// <summary>
         /// ID hình ảnh của nhân viên trên API
@@ -123,7 +115,7 @@ namespace CommonClass.Models
         /// Name Date Comments
         /// annv3 18/08/2022 created
         /// </Modified>
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(50)", Order =6)]
         public string ProfileImage { get; set; }
 
         /// <summary>
@@ -137,18 +129,23 @@ namespace CommonClass.Models
         /// annv3 18/08/2022 created
         /// </Modified>
         [DefaultValue(1)]
+        [Column(Order =7)]
         public int PartID { get; set; }
         [ForeignKey("PartID")]
         [JsonIgnore]
         public virtual AdminParts Parts { get; set; }
 
         [Required]
+        [Column(Order = 8)]
         public DateTime DateCreated { get; set; }
         [Required]
+        [Column(Order = 9)]
         public DateTime DateModified { get; set; }
         [Required]
+        [Column(Order = 10)]
         public string UserCreated { get; set; }
         [Required]
+        [Column(Order = 11)]
         public string UserModified { get; set; }
 
 

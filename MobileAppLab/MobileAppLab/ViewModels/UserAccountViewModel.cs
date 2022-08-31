@@ -100,7 +100,7 @@ namespace MobileAppLab.ViewModels
                 var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
                 //load dữ liệu
                 var userInfo = await this._adminStaffService.GetByID(token.Id);
-                this.UserName = userInfo?.UserName ?? "PlaceHolder Name";
+                this.UserName = userInfo?.StaffName ?? "PlaceHolder Name";
                 this.PhoneNumber = userInfo?.PhoneNumber ?? "PlaceHolder PhoneNumber";
                 if (userInfo.ProfilePicture != null)
                 {
@@ -170,17 +170,17 @@ namespace MobileAppLab.ViewModels
             string jsonToken = await SecureStorage.GetAsync("JWT");
             var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
             //tải ảnh lên api
-            var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
-            try
-            {
-                byte[] imageImg = File.ReadAllBytes(photoPath);
-                ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
-                this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(imageImg);
-            }
-            catch (Exception)
-            {
-                this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
-            }
+            //var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
+            //try
+            //{
+            //    byte[] imageImg = File.ReadAllBytes(photoPath);
+            //    ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
+            //    this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(imageImg);
+            //}
+            //catch (Exception)
+            //{
+            //    this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+            //}
         }
 
         private async void ExecuteCommandLogout()

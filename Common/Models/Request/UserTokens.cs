@@ -21,7 +21,7 @@ namespace CommonClass.Models.Request
             get;
             set;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public TimeSpan Validaty
         {
             get;

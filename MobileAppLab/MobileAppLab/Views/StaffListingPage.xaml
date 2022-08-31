@@ -241,7 +241,7 @@
                                                                     FontAttributes="Bold"
                                                                     FontSize="Small"
                                                                     HorizontalOptions="StartAndExpand"
-                                                                    Text="{Binding UserName}"
+                                                                    Text="{Binding StaffName}"
                                                                     VerticalOptions="StartAndExpand" />
                                                                     <Label
                                                                     Grid.Row="1"

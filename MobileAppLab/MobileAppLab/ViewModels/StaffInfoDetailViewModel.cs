@@ -127,8 +127,8 @@ namespace MobileAppLab.ViewModels
             if (adminStaff != null)
             {
                 listParts.TryGetValue(adminStaff.PartID, out var part);
-                this.ID = adminStaff.ID;
-                this.UserName = adminStaff.UserName;
+                this.ID = adminStaff.StaffID;
+                this.UserName = adminStaff.StaffName;
                 this.Address = adminStaff.Address;
                 this.PhoneNumber = adminStaff.PhoneNumber;
                 this.PositionName = part;

@@ -4,8 +4,7 @@ using System.Reflection;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
 using WebApiLab.Services.BusinessLayer;
-using WebApiLab.Services.DataAccessLayer;
-using WebApiLab.Services.Interfaces;
+using WebApiLab.Services.UnitOfWork;
 
 namespace WebApiLab
 {
@@ -51,14 +50,11 @@ namespace WebApiLab
             builder.Services.AddDbContext<LabDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase"))
             );
-            builder.Services.AddScoped<IAdminParts<AdminParts>, AdminPartDAL>();
-            builder.Services.AddScoped<IAdminPartService, AdminPartService>();
+            builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddTransient<AdminUsersService>();
+            builder.Services.AddTransient<AdminStaffsService>();
+            builder.Services.AddTransient<AdminPartService>();
 
-            builder.Services.AddScoped<IAdminStaffs<AdminStaff>, AdminStaffDAL>();
-            builder.Services.AddScoped<IAdminStaffsService, AdminStaffsService>();
-
-            builder.Services.AddScoped<IAdminUsers<AdminUser>, AdminUserDAL>();
-            builder.Services.AddScoped<IAdminUsersService, AdminUsersService>();
 
             var app = builder.Build();
 

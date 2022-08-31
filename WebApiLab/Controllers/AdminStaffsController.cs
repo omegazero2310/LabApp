@@ -22,10 +22,10 @@ namespace WebApiLab.Controllers
     public class AdminStaffsController : ControllerBase
     {
 
-        private IAdminStaffsService _adminStaffsService;
+        private AdminStaffsService _adminStaffsService;
         private readonly ILogger<AdminUsersController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminStaffsController(IAdminStaffsService usersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
+        public AdminStaffsController(AdminStaffsService usersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
         {
             this._logger = logger;
             this._adminStaffsService = usersService;
@@ -157,13 +157,12 @@ namespace WebApiLab.Controllers
             try
             {
                 var staff = new AdminStaff();
-                staff.ID = value.ID;
-                staff.UserName = value.UserName;
+                staff.StaffID = value.ID;
+                staff.StaffName = value.UserName;
                 staff.Gender = value.Gender;
                 staff.Email = value.Email;
                 staff.PhoneNumber = value.PhoneNumber;
                 staff.Address = value.Address;
-                staff.DepartmentName = "";
                 staff.ProfileImage = value.ProfileImage ?? "";
                 staff.PartID = value.PartID;
                 var result = await this._adminStaffsService.Create(staff);
@@ -192,13 +191,12 @@ namespace WebApiLab.Controllers
             try
             {
                 var staff = new AdminStaff();
-                staff.ID = value.ID;
-                staff.UserName = value.UserName;
+                staff.StaffID = value.ID;
+                staff.StaffName = value.UserName;
                 staff.Gender = value.Gender;
                 staff.Email = value.Email;
                 staff.PhoneNumber = value.PhoneNumber;
                 staff.Address = value.Address;
-                staff.DepartmentName = "";
                 staff.ProfileImage = value.ProfileImage ?? "";
                 staff.PartID = value.PartID;
                 var result = await this._adminStaffsService.Update(staff);

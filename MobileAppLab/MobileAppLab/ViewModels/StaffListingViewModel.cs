@@ -248,7 +248,7 @@ namespace MobileAppLab.ViewModels
                             switch (this.SelectedFilterOption)
                             {
                                 case FilterOptions.UserName:
-                                    filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
+                                    filtered = listStaff.Where(x => x.StaffName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
                                     break;
                                 case FilterOptions.Position:
                                     filtered = listStaff.Where(x => x.PositionName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
@@ -260,7 +260,7 @@ namespace MobileAppLab.ViewModels
                                     filtered = listStaff.Where(x => x.PhoneNumber.Contains(parameter.ToString()));
                                     break;
                                 default:
-                                    filtered = listStaff.Where(x => x.UserName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
+                                    filtered = listStaff.Where(x => x.StaffName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
                                     break;
                             }
                             this.Staffs.Clear();
@@ -311,7 +311,7 @@ namespace MobileAppLab.ViewModels
                 return;
             NavigationParameters pairs = new NavigationParameters();
             pairs.Add("Type", AppResource.Label_Staff_View);
-            pairs.Add("Value", parameter.ID);
+            pairs.Add("Value", parameter.StaffID);
             await this.NavigationService.NavigateAsync("StaffDetailInfoPage", pairs);
         }
         private async void ExecuteCommandNewStaff()
@@ -327,18 +327,18 @@ namespace MobileAppLab.ViewModels
                 return;
             NavigationParameters pairs = new NavigationParameters();
             pairs.Add("Type", AppResource.Label_Staff_Update);
-            pairs.Add("Value", parameter.ID);
+            pairs.Add("Value", parameter.StaffID);
             await this.NavigationService.NavigateAsync("StaffEditPopupPage", pairs);
         }
         private async void ExecuteCommandSwipeDelete(AdminStaff parameter)
         {
             if (parameter == null)
                 return;
-            if (await this._dialogService.DisplayAlertAsync(AppResource.MSG_CONFIRM_DELETE_TITLE, string.Format(AppResource.MSG_CONFIRM_DELETE,parameter.ID, parameter.UserName), AppResource.Label_Delete, "Cancel"))
+            if (await this._dialogService.DisplayAlertAsync(AppResource.MSG_CONFIRM_DELETE_TITLE, string.Format(AppResource.MSG_CONFIRM_DELETE,parameter.StaffID, parameter.StaffName), AppResource.Label_Delete, "Cancel"))
             {
                 try
                 {
-                    await this._adminStaffService.Delete(parameter.ID);
+                    await this._adminStaffService.Delete(parameter.StaffID);
                     this.Staffs.Remove(parameter);
                 }
                 catch (Exception ex)

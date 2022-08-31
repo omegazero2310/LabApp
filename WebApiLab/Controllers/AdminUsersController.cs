@@ -23,12 +23,10 @@ namespace WebApiLab.Controllers
     [ApiController]
     public class AdminUsersController : ControllerBase
     {
-        private IAdminUsersService _adminUsersService;
-        private JwtSettings _jwtSettings;
+        private AdminUsersService _adminUsersService;
         private ILogger<AdminUsersController> _logger;
-        public AdminUsersController(JwtSettings jwtSettings, IAdminUsersService adminUsersService, ILogger<AdminUsersController> logger)
+        public AdminUsersController(AdminUsersService adminUsersService, ILogger<AdminUsersController> logger)
         {
-            this._jwtSettings = jwtSettings;
             this._logger = logger;
             this._adminUsersService = adminUsersService;
         }

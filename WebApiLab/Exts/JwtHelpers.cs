@@ -12,7 +12,6 @@ namespace WebApiLab.Exts
             IEnumerable<Claim> claims = new Claim[] {
                 new Claim("Id", userAccounts.Id.ToString()),
                     new Claim(ClaimTypes.Name, userAccounts.UserName),
-                    new Claim(ClaimTypes.Email, userAccounts.EmailId),
                     new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
                     new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddDays(1).ToString("MMM ddd dd yyyy HH:mm:ss tt"))
             };

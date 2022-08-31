@@ -5,8 +5,7 @@ using Newtonsoft.Json;
 using System.Net;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
-using WebApiLab.Services.DataAccessLayer;
-using WebApiLab.Services.Interfaces;
+using WebApiLab.Services.UnitOfWork;
 
 namespace WebApiLab.Services.BusinessLayer
 {
@@ -16,102 +15,123 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public class AdminUsersService : IAdminUsersService
+    public class AdminUsersService
     {
-        private IAdminUsers<AdminUser> _adminUsers;
-        private IAdminStaffs<AdminStaff> _adminStaff;
+        private readonly IUnitOfWork _unitOfWork;
         private JwtSettings _jwtSettings;
         private ILogger<AdminUsersService> _logger;
-        public AdminUsersService(IAdminStaffs<AdminStaff> adminStaffsDAL, IAdminUsers<AdminUser> adminUsers, JwtSettings jwtSettings, ILogger<AdminUsersService> logger)
+        public AdminUsersService(IUnitOfWork unitOfWork, JwtSettings jwtSettings, ILogger<AdminUsersService> logger)
         {
-            _adminUsers = adminUsers;
-            _adminStaff = adminStaffsDAL;
+            _unitOfWork = unitOfWork;
             this._jwtSettings = jwtSettings;
             _logger = logger;
         }
         public async Task<ServerRespone> Create(CreateAccountRequest data)
         {
-            var account = await this._adminUsers.Get(data.UserID);
-            if (account == null)
+            ServerRespone serverRespone = new ServerRespone();
+            try
             {
-
-                AdminStaff newStaff = new AdminStaff();
-                newStaff.UserName = data.UserName;
-                newStaff.Address = data.Address;
-                newStaff.Email = data.Email;
-                newStaff.PartID = 1;
-                newStaff.PhoneNumber = data.PhoneNumber;
-                newStaff.Gender = data.Gender;
-                var salt = PasswordHelper.CreateSalt();
-                var hashedPassword = PasswordHelper.GenerateHash(data.Password, salt);
-                AdminUser newUser = new AdminUser { Staff = newStaff };
-                newUser.UserID = data.UserID;
-                newUser.HashedPassword = hashedPassword;
-                newUser.Salt = salt;
-                newUser.AccountStatus = CommonClass.Enums.AccountStatusOptions.Normal;
-                newUser.IsResetPassword = false;
-                newUser.DateModified = DateTime.Now;
-                await this._adminStaff.AddAsync(newStaff, "System");
-                newUser.ID = newStaff.ID;
-                await this._adminUsers.AddAsync(newUser);
-                return new ServerRespone { IsSuccess = true, Message = "Created", HttpStatusCode = HttpStatusCode.OK, Result = null };
+                var account = this._unitOfWork.AdminUserRepository.Find(user => user.UserName == data.UserName);
+                if (account.Count() == 0)
+                {
+                    var salt = PasswordHelper.CreateSalt();
+                    var hashedPassword = PasswordHelper.GenerateHash(data.Password, salt);
+                    AdminUser newUser = new AdminUser();
+                    newUser.Id = Guid.NewGuid();
+                    newUser.UserName = data.UserName;
+                    newUser.HashedPassword = hashedPassword;
+                    newUser.Salt = salt;
+                    newUser.AccountStatus = CommonClass.Enums.AccountStatusOptions.Normal;
+                    newUser.IsResetPassword = false;
+                    newUser.DateModified = DateTime.Now;
+                    newUser.DisplayName = data.Name;
+                    newUser.PhoneNumber = data.PhoneNumber;
+                    newUser.UserCreated = "CreateRequestAPI";
+                    newUser.UserModified = "CreateRequestAPI";
+                    this._unitOfWork.AdminUserRepository.Add(newUser, "RegisterSystem");
+                    _unitOfWork.Save();
+                    serverRespone.IsSuccess = true;
+                    serverRespone.Message = "Created";
+                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                }
+                else
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = "Existed";
+                    serverRespone.HttpStatusCode = HttpStatusCode.Forbidden;
+                }
             }
-            else
-                return new ServerRespone { IsSuccess = false, Message = "Existed", HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "CreateNewUserError";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
         public async Task<ServerRespone> CheckLogin(string userName, string password)
         {
-            var token = new UserTokens();
-            var user = await this._adminUsers.Get(userName);
-            if (user == null)
+            ServerRespone serverRespone = new ServerRespone();
+            try
             {
-                return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.NOT_EXIST, HttpStatusCode = HttpStatusCode.NotFound, Result = null };
-            }
-            else
-            {
-                bool checkPassword = PasswordHelper.AreEqual(password, user.HashedPassword, user.Salt);
-                if (checkPassword)
+                var token = new UserTokens();
+                var user = this._unitOfWork.AdminUserRepository.GetById(userName);
+                if (user == null)
                 {
-                    if (user.AccountStatus == CommonClass.Enums.AccountStatusOptions.Suppended)
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = UserLoginErrorCode.NOT_EXIST;
+                    serverRespone.HttpStatusCode = HttpStatusCode.NotFound;
+                }
+                else
+                {
+                    bool checkPassword = PasswordHelper.AreEqual(password, user.HashedPassword, user.Salt);
+                    if (checkPassword)
                     {
-                        return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.SUPPENDED, HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
-                    }
-                    else if (user.AccountStatus == CommonClass.Enums.AccountStatusOptions.Banned)
-                    {
-                        return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.BANNED, HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
-                    }
-                    else
-                    {
-                        var adminUser = await this._adminUsers.Get(userName);
-                        var userInfo = await this._adminStaff.Get(adminUser?.ID ?? -1);
-                        if (userInfo != null)
+                        if (user.AccountStatus == CommonClass.Enums.AccountStatusOptions.Suppended)
                         {
-                            token = JwtHelpers.GenTokenkey(new UserTokens()
-                            {
-                                EmailId = userInfo.Email,
-                                GuidId = Guid.NewGuid(),
-                                UserName = userName,
-                                Id = userInfo.ID
-                            }, _jwtSettings);
+                            serverRespone.IsSuccess = false;
+                            serverRespone.Message = UserLoginErrorCode.SUPPENDED;
+                            serverRespone.HttpStatusCode = HttpStatusCode.Forbidden;
+                        }
+                        else if (user.AccountStatus == CommonClass.Enums.AccountStatusOptions.Banned)
+                        {
+                            serverRespone.IsSuccess = false;
+                            serverRespone.Message = UserLoginErrorCode.BANNED;
+                            serverRespone.HttpStatusCode = HttpStatusCode.Forbidden;
                         }
                         else
                         {
                             token = JwtHelpers.GenTokenkey(new UserTokens()
                             {
-                                EmailId = "",
+                                Id = user.Id,
                                 GuidId = Guid.NewGuid(),
                                 UserName = userName,
                             }, _jwtSettings);
+                            serverRespone.IsSuccess = true;
+                            serverRespone.Message = "GetTokenSuccess";
+                            serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                            serverRespone.Result = token;
                         }
-                        return new ServerRespone { IsSuccess = true, Message = "GetSuccess", HttpStatusCode = HttpStatusCode.OK, Result = token };
-
+                    }
+                    else
+                    {
+                        serverRespone.IsSuccess = false;
+                        serverRespone.Message = UserLoginErrorCode.WRONG_USER_NAME_PASSWORD;
+                        serverRespone.HttpStatusCode = HttpStatusCode.Forbidden;
                     }
                 }
-                else
-                {
-                    return new ServerRespone { IsSuccess = false, Message = UserLoginErrorCode.WRONG_USER_NAME_PASSWORD, HttpStatusCode = HttpStatusCode.Forbidden, Result = null };
-                }
             }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "GetTokenError";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
         }
 
     }

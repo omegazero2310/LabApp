@@ -12,8 +12,8 @@ using WebApiLab.DatabaseContext;
 namespace WebApiLab.Migrations
 {
     [DbContext(typeof(LabDbContext))]
-    [Migration("20220826072903_AddSeedAdminParts")]
-    partial class AddSeedAdminParts
+    [Migration("20220831043656_AddColumnType")]
+    partial class AddColumnType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,8 +58,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 1,
-                            DateCreated = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7328),
-                            DateModified = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7339),
+                            DateCreated = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5397),
+                            DateModified = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5411),
                             PartName = "Nhân viên",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -67,8 +67,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 2,
-                            DateCreated = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7340),
-                            DateModified = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7341),
+                            DateCreated = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5415),
+                            DateModified = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5416),
                             PartName = "Trưởng phòng",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -76,8 +76,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 3,
-                            DateCreated = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7342),
-                            DateModified = new DateTime(2022, 8, 26, 14, 29, 3, 503, DateTimeKind.Local).AddTicks(7342),
+                            DateCreated = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5416),
+                            DateModified = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5417),
                             PartName = "Giám đốc",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -86,58 +86,64 @@ namespace WebApiLab.Migrations
 
             modelBuilder.Entity("CommonClass.Models.AdminStaff", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("StaffID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffID"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(5);
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(8);
 
                     b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DepartmentName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(9);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(3);
 
                     b.Property<int>("Gender")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
 
                     b.Property<int>("PartID")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(7);
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PositionID")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(4);
 
                     b.Property<string>("ProfileImage")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(6);
+
+                    b.Property<string>("StaffName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(1);
 
                     b.Property<string>("UserCreated")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(10);
 
                     b.Property<string>("UserModified")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(11);
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("ID");
+                    b.HasKey("StaffID");
 
                     b.HasIndex("PartID");
 
@@ -146,43 +152,67 @@ namespace WebApiLab.Migrations
 
             modelBuilder.Entity("CommonClass.Models.AdminUser", b =>
                 {
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(1);
 
-                    b.Property<int>("AccountStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("AccountStatus")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)")
+                        .HasColumnOrder(9);
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(5);
 
                     b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(6);
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(12);
 
                     b.Property<string>("HashedPassword")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnOrder(2);
 
-                    b.Property<int?>("ID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(0);
 
                     b.Property<bool>("IsResetPassword")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnOrder(4);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(15)")
+                        .HasColumnOrder(11);
+
+                    b.Property<string>("ProfilePictureName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(10);
 
                     b.Property<string>("Salt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnOrder(3);
 
                     b.Property<string>("UserCreated")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(7);
 
                     b.Property<string>("UserModified")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(8);
 
-                    b.HasKey("UserID");
-
-                    b.HasIndex("ID");
+                    b.HasKey("UserName");
 
                     b.ToTable("Admin.Users");
                 });
@@ -196,15 +226,6 @@ namespace WebApiLab.Migrations
                         .IsRequired();
 
                     b.Navigation("Parts");
-                });
-
-            modelBuilder.Entity("CommonClass.Models.AdminUser", b =>
-                {
-                    b.HasOne("CommonClass.Models.AdminStaff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("ID");
-
-                    b.Navigation("Staff");
                 });
 #pragma warning restore 612, 618
         }

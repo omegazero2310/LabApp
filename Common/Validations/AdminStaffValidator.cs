@@ -20,7 +20,7 @@ namespace CommonClass.Validations
         private const string SPECIALCHARACTERS = @"'/\%*‘;$£&#^@|?+=<>\""";
         public AdminStaffValidator()
         {
-            RuleFor(user => user.UserName).Custom((value, context) =>
+            RuleFor(user => user.StaffName).Custom((value, context) =>
             {
                 if (string.IsNullOrEmpty(value))
                     context.AddFailure("MSG_USER_NAME_NOT_EMPTY");

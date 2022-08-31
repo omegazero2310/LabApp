@@ -273,8 +273,8 @@ namespace MobileAppLab.ViewModels
             }
             if (adminStaff != null)
             {
-                this.ID = adminStaff.ID;
-                this.UserName = adminStaff.UserName;
+                this.ID = adminStaff.StaffID;
+                this.UserName = adminStaff.StaffName;
                 this.Address = adminStaff.Address;
                 this.PhoneNumber = adminStaff.PhoneNumber;
                 this.SelectedStaffPosition = this.StaffPositions.Where(part => part.PartID == adminStaff.PartID).FirstOrDefault();
@@ -292,8 +292,8 @@ namespace MobileAppLab.ViewModels
 
                 AdminStaff adminStaff = new AdminStaff();
                 if (this.IsEditMode && this.ID.HasValue)
-                    adminStaff.ID = this.ID.Value;
-                adminStaff.UserName = this.UserName;
+                    adminStaff.StaffID = this.ID.Value;
+                adminStaff.StaffName = this.UserName;
                 adminStaff.Address = this.Address;
                 adminStaff.PhoneNumber = this.PhoneNumber;
                 if (this.SelectedStaffPosition == null)

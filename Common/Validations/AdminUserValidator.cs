@@ -15,7 +15,7 @@ namespace CommonClass.Validations
     {
         public AdminUserValidator()
         {
-            RuleFor(user => user.UserID).NotEmpty().MaximumLength(50);
+            RuleFor(user => user.UserName).NotEmpty().MaximumLength(50);
             RuleFor(user => user.HashedPassword).NotEmpty();
             RuleFor(user => user.Salt).NotEmpty();
             RuleFor(user => user.AccountStatus).IsInEnum();

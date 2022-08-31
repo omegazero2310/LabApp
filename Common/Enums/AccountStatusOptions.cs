@@ -10,13 +10,21 @@
     public enum AccountStatusOptions
     {
         /// <summary>
+        /// Tài khoản chưa kích hoạt
+        /// </summary>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
+        Inactive,
+        /// <summary>
         /// bình thường, tài khoản không bị hạn chế
         /// </summary>
         /// <Modified>
         /// Name Date Comments
         /// annv3 29/08/2022 created
         /// </Modified>
-        Normal = 0,
+        Normal,
         /// <summary>
         /// tài khoản bị tạm khóa, không thể đăng nhập tạm thời
         /// </summary>
@@ -24,7 +32,7 @@
         /// Name Date Comments
         /// annv3 29/08/2022 created
         /// </Modified>
-        Suppended = 1,
+        Suppended,
         /// <summary>
         /// tài khoản bị cấm, không thể đăng nhập vĩnh viễn
         /// </summary>
@@ -32,6 +40,6 @@
         /// Name Date Comments
         /// annv3 29/08/2022 created
         /// </Modified>
-        Banned = 2,
+        Banned,
     }
 }
