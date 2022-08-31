@@ -174,7 +174,7 @@ namespace WebApiLab.Services.BusinessLayer
                         _unitOfWork.Save();
                         serverRespone.IsSuccess = true;
                         serverRespone.Message = "ImageUploaded";
-                        serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+                        serverRespone.HttpStatusCode = HttpStatusCode.OK;
                     }
                 }
             }
