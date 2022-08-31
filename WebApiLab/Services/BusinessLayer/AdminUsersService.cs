@@ -46,9 +46,7 @@ namespace WebApiLab.Services.BusinessLayer
                     newUser.DateModified = DateTime.Now;
                     newUser.DisplayName = data.Name;
                     newUser.PhoneNumber = data.PhoneNumber;
-                    newUser.UserCreated = "CreateRequestAPI";
-                    newUser.UserModified = "CreateRequestAPI";
-                    this._unitOfWork.AdminUserRepository.Add(newUser, "RegisterSystem");
+                    this._unitOfWork.AdminUserRepository.Add(newUser);
                     _unitOfWork.Save();
                     serverRespone.IsSuccess = true;
                     serverRespone.Message = "Created";
@@ -128,6 +126,114 @@ namespace WebApiLab.Services.BusinessLayer
                 this._logger.LogError(ex, this.GetType().Name);
                 serverRespone.IsSuccess = false;
                 serverRespone.Message = "GetTokenError";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+
+        }
+
+        public async Task<ServerRespone> UploadUserPicture(string userName, string rootPath, IFormFile file)
+        {
+            ServerRespone serverRespone = new ServerRespone();
+            serverRespone.IsSuccess = true;
+            serverRespone.Message = "NoChange";
+            serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+            try
+            {
+                string folderPath = Path.Combine(rootPath, rootPath);
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+                if (file.Length > 0)
+                {
+                    var user = _unitOfWork.AdminUserRepository.GetById(userName);
+                    if (user != null)
+                    {
+                        if (string.IsNullOrEmpty(user.ProfilePictureName))
+                        {
+                            string randomImageName = Path.GetRandomFileName() + ".png";
+                            string fileSavePath = Path.Combine(folderPath, randomImageName);
+                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            user.ProfilePictureName = randomImageName;
+                            _unitOfWork.AdminUserRepository.Update(user);
+                        }
+                        else
+                        {
+                            System.IO.File.Delete(Path.Combine(folderPath, user.ProfilePictureName));
+                            string randomImageName = Path.GetRandomFileName() + ".png";
+                            string fileSavePath = Path.Combine(folderPath, randomImageName);
+                            using (var stream = new FileStream(fileSavePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            user.ProfilePictureName = randomImageName;
+                            _unitOfWork.AdminUserRepository.Update(user);
+                        }
+                        _unitOfWork.Save();
+                        serverRespone.IsSuccess = true;
+                        serverRespone.Message = "ImageUploaded";
+                        serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: UpdateProfilePicture User Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
+        }
+
+        public async Task<ServerRespone> GetUserPicture(string userName, string rootPath)
+        {
+            ServerRespone serverRespone = new ServerRespone();
+            serverRespone.IsSuccess = true;
+            serverRespone.Message = "NoImage";
+            serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+            serverRespone.Result = new byte[0];
+            try
+            {
+                string folderPath = Path.Combine(rootPath, rootPath);
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+                var user = _unitOfWork.AdminUserRepository.GetById(userName);
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(user.ProfilePictureName))
+                    {
+                        var imgPath = Path.Combine(folderPath, user.ProfilePictureName);
+                        try
+                        {
+                            using (FileStream fileStream = new FileStream(imgPath, FileMode.Open))
+                            {
+                                using (var memoryStream = new MemoryStream())
+                                {
+                                    fileStream.CopyTo(memoryStream);
+                                    byte[] byteImage = memoryStream.ToArray();
+                                    serverRespone.IsSuccess = true;
+                                    serverRespone.Message = "GetImageSuccess";
+                                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                                    serverRespone.Result = byteImage;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: GetImage User Failed";
                 serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
             }
             return serverRespone;

@@ -7,7 +7,7 @@ namespace WebApiLab.Services.UnitOfWork
 {
     public class AdminUserRepository : GenericRepository<AdminUser>, IAdminUserRepository
     {
-        public AdminUserRepository(LabDbContext context, ILogger<AdminUserRepository> logger) : base(context, logger)
+        public AdminUserRepository(LabDbContext context, ILogger logger) : base(context, logger)
         {
         }
         public override AdminUser GetById(object id)
@@ -19,5 +19,6 @@ namespace WebApiLab.Services.UnitOfWork
             var user = this.Context.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
             return user;
         }
+
     }
 }

@@ -7,10 +7,10 @@ namespace WebApiLab.Services.UnitOfWork
         T GetById(object id);
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
-        bool Add(T entity, string userUpdate ="");
-        bool AddRange(IEnumerable<T> entities, string userUpdate = "");
+        bool Add(T entity);
+        bool AddRange(IEnumerable<T> entities);
         bool Remove(T entity);
         bool RemoveRange(IEnumerable<T> entities);
-        bool Update (T entity, string userUpdate = "");
+        bool Update (T entity);
     }
 }

@@ -5,7 +5,7 @@ namespace WebApiLab.Services.UnitOfWork
 {
     public class AdminStaffRepository : GenericRepository<AdminStaff>, IAdminStaffRepository
     {
-        public AdminStaffRepository(LabDbContext context, ILogger<AdminStaffRepository> logger) : base(context, logger)
+        public AdminStaffRepository(LabDbContext context, ILogger logger) : base(context, logger)
         {
         }
 
@@ -29,7 +29,7 @@ namespace WebApiLab.Services.UnitOfWork
             return Task.FromResult(this.Context.AdminStaffs.Any(staff => staff.PhoneNumber == phoneNumber && staff.StaffID != id));
         }
 
-        public Task<bool> UpdateProfilePicture(object key, string pictureName, string userUpdate = "")
+        public Task<bool> UpdateProfilePicture(object key, string pictureName)
         {
             var staff = this.Context.AdminStaffs.Where(data => data.StaffID == (int)key).FirstOrDefault();
             if (staff != null)

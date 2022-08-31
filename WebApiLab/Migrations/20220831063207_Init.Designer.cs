@@ -12,8 +12,8 @@ using WebApiLab.DatabaseContext;
 namespace WebApiLab.Migrations
 {
     [DbContext(typeof(LabDbContext))]
-    [Migration("20220831043656_AddColumnType")]
-    partial class AddColumnType
+    [Migration("20220831063207_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,8 +58,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 1,
-                            DateCreated = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5397),
-                            DateModified = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5411),
+                            DateCreated = new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4122),
+                            DateModified = new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4132),
                             PartName = "Nhân viên",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -67,8 +67,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 2,
-                            DateCreated = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5415),
-                            DateModified = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5416),
+                            DateCreated = new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4134),
+                            DateModified = new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4134),
                             PartName = "Trưởng phòng",
                             UserCreated = "Seed",
                             UserModified = "Seed"
@@ -76,8 +76,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 3,
-                            DateCreated = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5416),
-                            DateModified = new DateTime(2022, 8, 31, 11, 36, 56, 428, DateTimeKind.Local).AddTicks(5417),
+                            DateCreated = new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4135),
+                            DateModified = new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4135),
                             PartName = "Giám đốc",
                             UserCreated = "Seed",
                             UserModified = "Seed"

@@ -13,7 +13,7 @@ namespace CommonClass.Models
     /// annv3 18/08/2022 created
     /// </Modified>
     [Table("Admin.Users")]
-    public class AdminUser
+    public class AdminUser : IBaseEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order =0)]

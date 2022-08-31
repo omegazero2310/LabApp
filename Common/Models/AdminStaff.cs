@@ -14,7 +14,7 @@ namespace CommonClass.Models
     /// annv3 18/08/2022 created
     /// </Modified>
     [Table("Admin.Staffs")]
-    public class AdminStaff
+    public class AdminStaff : IBaseEntity
     {
         /// <summary>
         /// ID đăng nhập hệ thống

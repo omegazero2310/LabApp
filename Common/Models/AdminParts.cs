@@ -14,7 +14,7 @@ namespace CommonClass.Models
     /// annv3 29/08/2022 created
     /// </Modified>
     [Table("Admin.Parts")]
-    public class AdminParts
+    public class AdminParts: IBaseEntity
     {
         [Key]
         [Column(TypeName = "int")]

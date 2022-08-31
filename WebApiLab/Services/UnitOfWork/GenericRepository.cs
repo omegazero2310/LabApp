@@ -6,13 +6,13 @@ namespace WebApiLab.Services.UnitOfWork
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly LabDbContext Context;
-        protected readonly ILogger<GenericRepository<T>> _logger;
-        public GenericRepository(LabDbContext context, ILogger<GenericRepository<T>> logger)
+        protected readonly ILogger _logger;
+        public GenericRepository(LabDbContext context, ILogger logger)
         {
             this.Context = context;
             this._logger = logger;
         }
-        public virtual bool Add(T entity, string user="")
+        public virtual bool Add(T entity)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace WebApiLab.Services.UnitOfWork
             }
                  
         }
-        public virtual bool AddRange(IEnumerable<T> entities, string user = "")
+        public virtual bool AddRange(IEnumerable<T> entities)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace WebApiLab.Services.UnitOfWork
             
         }
 
-        public virtual bool Update(T entity, string userUpdate = "")
+        public virtual bool Update(T entity)
         { 
             try
             {

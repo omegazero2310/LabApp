@@ -16,12 +16,10 @@ namespace WebApiLab.Services.BusinessLayer
     public class AdminPartService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private string _userName;
         private ILogger<AdminPartService> _logger;
         public AdminPartService(IUnitOfWork unitOfWork, IHttpContextAccessor currentContext, ILogger<AdminPartService> logger)
         {
             this._unitOfWork = unitOfWork;
-            _userName = currentContext.HttpContext.User.Identity.Name ?? "Unknows";
             _logger = logger;
         }
         public async Task<ServerRespone> Create(AdminParts data)
@@ -29,7 +27,7 @@ namespace WebApiLab.Services.BusinessLayer
             ServerRespone serverRespone = new ServerRespone();
             try
             {
-                if (this._unitOfWork.AdminPartRepository.Add(data, _userName))
+                if (this._unitOfWork.AdminPartRepository.Add(data))
                 {
                     this._unitOfWork.Save();
                     serverRespone.IsSuccess = true;
@@ -132,7 +130,7 @@ namespace WebApiLab.Services.BusinessLayer
             ServerRespone serverRespone = new ServerRespone();
             try
             {
-                if (this._unitOfWork.AdminPartRepository.Update(data, _userName))
+                if (this._unitOfWork.AdminPartRepository.Update(data))
                 {
                     this._unitOfWork.Save();
                     serverRespone.IsSuccess = true;

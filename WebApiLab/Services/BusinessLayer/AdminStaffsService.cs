@@ -60,7 +60,7 @@ namespace WebApiLab.Services.BusinessLayer
                     serverRespone.Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
                     serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
                 }
-                if (_unitOfWork.AdminStaffRepository.Add(data, _userName))
+                if (_unitOfWork.AdminStaffRepository.Add(data))
                 {
                     serverRespone.IsSuccess = true;
                     serverRespone.Message = "Created";
@@ -176,7 +176,7 @@ namespace WebApiLab.Services.BusinessLayer
                     serverRespone.Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
                     serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
                 }
-                if (_unitOfWork.AdminStaffRepository.Update(data, _userName))
+                if (_unitOfWork.AdminStaffRepository.Update(data))
                 {
                     _unitOfWork.Save();
                     serverRespone.IsSuccess = true;
@@ -225,7 +225,7 @@ namespace WebApiLab.Services.BusinessLayer
                                 await file.CopyToAsync(stream);
                             }
                             user.ProfileImage = randomImageName;
-                            await _unitOfWork.AdminStaffRepository.UpdateProfilePicture(id, randomImageName, _userName);
+                            await _unitOfWork.AdminStaffRepository.UpdateProfilePicture(id, randomImageName);
                         }
                         else
                         {
@@ -237,7 +237,7 @@ namespace WebApiLab.Services.BusinessLayer
                                 await file.CopyToAsync(stream);
                             }
                             user.ProfileImage = randomImageName;
-                            await _unitOfWork.AdminStaffRepository.UpdateProfilePicture(id, randomImageName, _userName);
+                            await _unitOfWork.AdminStaffRepository.UpdateProfilePicture(id, randomImageName);
                         }
                         _unitOfWork.Save();
                         serverRespone.IsSuccess = true;

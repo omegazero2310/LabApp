@@ -5,7 +5,7 @@ namespace WebApiLab.Services.UnitOfWork
 {
     public class AdminPartRepository : GenericRepository<AdminParts>, IAdminPartRepository
     {
-        public AdminPartRepository(LabDbContext context, ILogger<AdminPartRepository> logger) : base(context, logger)
+        public AdminPartRepository(LabDbContext context, ILogger logger) : base(context, logger)
         {
         }
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApiLab.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,8 +41,8 @@ namespace WebApiLab.Migrations
                     UserModified = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AccountStatus = table.Column<string>(type: "varchar(10)", nullable: false),
                     ProfilePictureName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "varchar(15)", nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,17 +81,17 @@ namespace WebApiLab.Migrations
             migrationBuilder.InsertData(
                 table: "Admin.Parts",
                 columns: new[] { "PartID", "DateCreated", "DateModified", "PartName", "UserCreated", "UserModified" },
-                values: new object[] { 1, new DateTime(2022, 8, 31, 11, 35, 11, 856, DateTimeKind.Local).AddTicks(9347), new DateTime(2022, 8, 31, 11, 35, 11, 856, DateTimeKind.Local).AddTicks(9356), "Nhân viên", "Seed", "Seed" });
+                values: new object[] { 1, new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4122), new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4132), "Nhân viên", "Seed", "Seed" });
 
             migrationBuilder.InsertData(
                 table: "Admin.Parts",
                 columns: new[] { "PartID", "DateCreated", "DateModified", "PartName", "UserCreated", "UserModified" },
-                values: new object[] { 2, new DateTime(2022, 8, 31, 11, 35, 11, 856, DateTimeKind.Local).AddTicks(9357), new DateTime(2022, 8, 31, 11, 35, 11, 856, DateTimeKind.Local).AddTicks(9358), "Trưởng phòng", "Seed", "Seed" });
+                values: new object[] { 2, new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4134), new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4134), "Trưởng phòng", "Seed", "Seed" });
 
             migrationBuilder.InsertData(
                 table: "Admin.Parts",
                 columns: new[] { "PartID", "DateCreated", "DateModified", "PartName", "UserCreated", "UserModified" },
-                values: new object[] { 3, new DateTime(2022, 8, 31, 11, 35, 11, 856, DateTimeKind.Local).AddTicks(9359), new DateTime(2022, 8, 31, 11, 35, 11, 856, DateTimeKind.Local).AddTicks(9359), "Giám đốc", "Seed", "Seed" });
+                values: new object[] { 3, new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4135), new DateTime(2022, 8, 31, 13, 32, 7, 522, DateTimeKind.Local).AddTicks(4135), "Giám đốc", "Seed", "Seed" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admin.Staffs_PartID",
