@@ -25,10 +25,10 @@ namespace WebApiLab.Controllers
     [ApiController]
     public class AdminUsersController : ControllerBase
     {
-        private AdminUsersService _adminUsersService;
+        private IAdminUsersService _adminUsersService;
         private ILogger<AdminUsersController> _logger;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public AdminUsersController(AdminUsersService adminUsersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
+        public AdminUsersController(IAdminUsersService adminUsersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
         {
             this._logger = logger;
             this._adminUsersService = adminUsersService;

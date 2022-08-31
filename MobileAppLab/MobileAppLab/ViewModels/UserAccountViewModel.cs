@@ -99,22 +99,31 @@ namespace MobileAppLab.ViewModels
                 string jsonToken = SecureStorage.GetAsync("JWT").Result;
                 var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
                 //load dữ liệu
-                var userInfo = await this._adminUserService.GetByID(token.Id);
+                var userInfo = await this._adminUserService.GetByID(token.UserName, token.Token);
                 this.UserName = userInfo?.DisplayName ?? "PlaceHolder Name";
                 this.PhoneNumber = userInfo?.PhoneNumber ?? "PlaceHolder PhoneNumber";
-                if (userInfo.ProfilePictureName != null)
+                var userImage = await this._adminUserService.GetUserPicture(token.UserName, token.Token);
+                if (userImage.IsSuccess)
                 {
-                    try
+                    if(userImage.Message.Equals("GetImageSuccess"))
                     {
-                        ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
-                        this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(userInfo.ProfileImg);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex);
-                        this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
-                    }
+                        try
+                        {
+                            ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
+                            this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(Convert.FromBase64String(userImage.Result.ToString()));
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex);
+                            this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+                        }
+                    }    
+                    
                 }
+                else
+                {
+                    this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+                }    
 
             }
 
@@ -170,7 +179,7 @@ namespace MobileAppLab.ViewModels
             string jsonToken = await SecureStorage.GetAsync("JWT");
             var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
             //tải ảnh lên api
-            var result = this._adminUserService.UploadUserPicture(token.UserName, photoPath);
+            var result = this._adminUserService.UploadUserPicture(token.UserName, photoPath, token.Token);
             try
             {
                 byte[] imageImg = File.ReadAllBytes(photoPath);

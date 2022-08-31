@@ -5,13 +5,8 @@ using System.Threading.Tasks;
 
 namespace MobileAppLab.ApiServices
 {
-    public interface IAdminPartServices
+    public interface IAdminPartServices : IService<AdminParts>
     {
-        Task<ServerRespone> CreateNew(AdminParts entity);
-        Task<ServerRespone> Delete(object key);
-        Task<IEnumerable<AdminParts>> GetAll(int skip = 0, int take = 0, bool isforceRefresh = false);
         Task<IReadOnlyDictionary<int, string>> GetAllAsDictionary();
-        Task<AdminParts> GetByID(object key);
-        Task<ServerRespone> Update(AdminParts entity);
     }
 }

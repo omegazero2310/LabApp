@@ -16,7 +16,7 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public class AdminUsersService
+    public class AdminUsersService : IAdminUsersService
     {
         private readonly IUnitOfWork _unitOfWork;
         private JwtSettings _jwtSettings;
@@ -240,16 +240,38 @@ namespace WebApiLab.Services.BusinessLayer
             return serverRespone;
 
         }
-        public async Task<ServerRespone> GetUserInfo(string userName)
+        public async Task<ServerRespone> GetUserInfo(string userName, string rootPath = "")
         {
             ServerRespone serverRespone = new ServerRespone();
+            UserInfo userInfo = new UserInfo();
             try
             {
                 var value = _unitOfWork.AdminUserRepository.GetById(userName);
+                userInfo.DisplayName = value.DisplayName;
+                userInfo.PhoneNumber = value.PhoneNumber;
+                userInfo.Image = new byte[0];
+                if (rootPath.Length == 0)
+                    rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                if (!string.IsNullOrEmpty(value.ProfilePictureName))
+                {
+                    var imgPath = Path.Combine(rootPath, value.ProfilePictureName);
+                    {
+                        using (FileStream fileStream = new FileStream(imgPath, FileMode.Open))
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                fileStream.CopyTo(memoryStream);
+                                byte[] byteImage = memoryStream.ToArray();
+                                userInfo.Image = byteImage;
+                            }
+                        }
+                    }
+
+                }
                 serverRespone.IsSuccess = true;
                 serverRespone.Message = "GetSuccess";
                 serverRespone.HttpStatusCode = HttpStatusCode.OK;
-                serverRespone.Result = value;
+                serverRespone.Result = userInfo;
             }
             catch (Exception ex)
             {

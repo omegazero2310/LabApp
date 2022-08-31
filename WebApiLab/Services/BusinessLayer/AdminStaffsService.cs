@@ -19,7 +19,7 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 18/08/2022 created
     /// </Modified>
-    public class AdminStaffsService
+    public class AdminStaffsService : IAdminStaffsService
     {
         private IUnitOfWork _unitOfWork;
         private AdminStaffValidator _validationRules;

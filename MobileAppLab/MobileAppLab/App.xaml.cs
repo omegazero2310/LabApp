@@ -31,6 +31,7 @@ namespace MobileAppLab
             containerRegistry.Register<IAdminPartServices, AdminPartServices>();
             containerRegistry.Register<IAdminStaffServices, AdminStaffServices>();
             containerRegistry.Register<IAdminUserServices, AdminUserServices>();
+            //containerRegistry.Register<IAdminUserInfoServices, AdminUserInfoServices>();
 
 
             containerRegistry.RegisterForNavigation<NavigationPage>();

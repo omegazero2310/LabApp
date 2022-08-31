@@ -22,10 +22,10 @@ namespace WebApiLab.Controllers
     public class AdminStaffsController : ControllerBase
     {
 
-        private AdminStaffsService _adminStaffsService;
+        private IAdminStaffsService _adminStaffsService;
         private readonly ILogger<AdminUsersController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminStaffsController(AdminStaffsService usersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
+        public AdminStaffsController(IAdminStaffsService usersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
         {
             this._logger = logger;
             this._adminStaffsService = usersService;

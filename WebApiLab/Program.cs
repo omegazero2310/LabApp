@@ -52,9 +52,9 @@ namespace WebApiLab
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase"))
             );
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddTransient<AdminUsersService>();
-            builder.Services.AddTransient<AdminStaffsService>();
-            builder.Services.AddTransient<AdminPartService>();
+            builder.Services.AddTransient<IAdminUsersService, AdminUsersService>();
+            builder.Services.AddTransient<IAdminStaffsService,AdminStaffsService>();
+            builder.Services.AddTransient<IAdminPartService, AdminPartService>();
 
 
             var app = builder.Build();

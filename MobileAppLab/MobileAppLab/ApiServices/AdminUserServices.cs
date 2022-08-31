@@ -23,7 +23,7 @@ namespace MobileAppLab.ApiServices
     /// </Modified>
     /// <seealso cref="MobileAppLab.ApiServices.BaseApiService" />
     /// <seealso cref="MobileAppLab.ApiServices.IService&lt;CommonClass.Models.AdminUser&gt;" />
-    public class AdminUserServices : BaseApiService, IService<AdminUser>, IAdminUserServices
+    public class AdminUserServices : BaseApiService, IAdminUserServices
     {
         public AdminUserServices(HttpClient httpClient) : base(httpClient, "AdminUsers")
         {
@@ -83,13 +83,13 @@ namespace MobileAppLab.ApiServices
             Barrel.Current.EmptyAll();
             SecureStorage.Remove("JWT");
         }
-        public async Task<ServerRespone> GetUserPicture(string userName)
+        public async Task<ServerRespone> GetUserPicture(string userName, string token)
         {
             try
             {
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/GetProfilePicture?userName={userName}");
                 //Get Token from SecureStorage
-                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var respone = await HttpClient.SendAsync(message);
                 return JsonConvert.DeserializeObject<ServerRespone>(await respone.Content.ReadAsStringAsync());
             }
@@ -99,13 +99,13 @@ namespace MobileAppLab.ApiServices
                 return new ServerRespone() { IsSuccess = false, Result = ex };
             }
         }
-        public async Task<ServerRespone> UploadUserPicture(string userName, string filePath)
+        public async Task<ServerRespone> UploadUserPicture(string userName, string filePath, string token)
         {
             try
             {
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, this.BaseUrl + $"/UploadProfilePicture?userName={userName}");
                 //Get Token from SecureStorage
-                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 using (var multipartFormContent = new MultipartFormDataContent())
                 {
@@ -143,7 +143,7 @@ namespace MobileAppLab.ApiServices
             throw new NotImplementedException();
         }
 
-        public async Task<AdminUser> GetByID(object key)
+        public async Task<AdminUser> GetByID(object key, string token)
         {
             try
             {
@@ -163,12 +163,12 @@ namespace MobileAppLab.ApiServices
 
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.BaseUrl + $"/Get?userName={key}");
                 //Get Token from SecureStorage
-                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserToken.Token);
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var respone = await HttpClient.SendAsync(message);
                 respone.EnsureSuccessStatusCode();
                 ServerRespone serverRespone = JsonConvert.DeserializeObject<ServerRespone>(respone.Content.ReadAsStringAsync().Result);
                 var user = JsonConvert.DeserializeObject<AdminUser>(serverRespone.Result.ToString());
-                var profilePic = await this.GetUserPicture(user.UserName);
+                var profilePic = await this.GetUserPicture(user.UserName, token);
 
                 if (profilePic.IsSuccess && profilePic.Message != "NoImage")
                 {
@@ -190,6 +190,11 @@ namespace MobileAppLab.ApiServices
         }
 
         public Task<ServerRespone> Update(AdminUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AdminUser> GetByID(object key)
         {
             throw new NotImplementedException();
         }

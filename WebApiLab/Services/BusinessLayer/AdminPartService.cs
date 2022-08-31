@@ -13,7 +13,7 @@ namespace WebApiLab.Services.BusinessLayer
     /// Name Date Comments
     /// annv3 29/08/2022 created
     /// </Modified>
-    public class AdminPartService
+    public class AdminPartService : IAdminPartService
     {
         private readonly IUnitOfWork _unitOfWork;
         private ILogger<AdminPartService> _logger;

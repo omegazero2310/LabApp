@@ -23,9 +23,9 @@ namespace WebApiLab.Controllers
     public class AdminPartsController : ControllerBase
     {
         private readonly IServiceProvider _configuration;
-        private AdminPartService _adminPartService;
+        private IAdminPartService _adminPartService;
         private readonly ILogger<AdminPartsController> _logger;
-        public AdminPartsController(IServiceProvider configuration, ILogger<AdminPartsController> logger, AdminPartService adminPartService)
+        public AdminPartsController(IServiceProvider configuration, ILogger<AdminPartsController> logger, IAdminPartService adminPartService)
         {
             this._configuration = configuration;
             this._logger = logger;        

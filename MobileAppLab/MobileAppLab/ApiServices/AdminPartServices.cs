@@ -23,7 +23,7 @@ namespace MobileAppLab.ApiServices
     /// </Modified>
     /// <seealso cref="MobileAppLab.ApiServices.BaseApiService" />
     /// <seealso cref="MobileAppLab.ApiServices.IService&lt;CommonClass.Models.AdminParts&gt;" />
-    public class AdminPartServices : BaseApiService, IService<AdminParts>, IAdminPartServices
+    public class AdminPartServices : BaseApiService, IAdminPartServices
     {
         public AdminPartServices(HttpClient httpClient) : base(httpClient, "AdminParts", true)
         {
