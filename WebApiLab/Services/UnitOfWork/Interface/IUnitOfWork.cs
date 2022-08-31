@@ -1,4 +1,4 @@
-﻿namespace WebApiLab.Services.UnitOfWork
+﻿namespace WebApiLab.Services.UnitOfWork.Interface
 {
     public interface IUnitOfWork : IDisposable
     {

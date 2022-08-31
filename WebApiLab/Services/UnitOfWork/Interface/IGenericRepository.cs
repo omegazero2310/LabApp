@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace WebApiLab.Services.UnitOfWork
+namespace WebApiLab.Services.UnitOfWork.Interface
 {
     public interface IGenericRepository<T> where T : class
     {
@@ -11,6 +11,6 @@ namespace WebApiLab.Services.UnitOfWork
         bool AddRange(IEnumerable<T> entities);
         bool Remove(T entity);
         bool RemoveRange(IEnumerable<T> entities);
-        bool Update (T entity);
+        bool Update(T entity);
     }
 }

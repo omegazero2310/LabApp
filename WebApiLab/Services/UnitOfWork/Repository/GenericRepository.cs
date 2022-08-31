@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
 using WebApiLab.DatabaseContext;
+using WebApiLab.Services.UnitOfWork.Interface;
 
-namespace WebApiLab.Services.UnitOfWork
+namespace WebApiLab.Services.UnitOfWork.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -9,8 +10,8 @@ namespace WebApiLab.Services.UnitOfWork
         protected readonly ILogger _logger;
         public GenericRepository(LabDbContext context, ILogger logger)
         {
-            this.Context = context;
-            this._logger = logger;
+            Context = context;
+            _logger = logger;
         }
         public virtual bool Add(T entity)
         {
@@ -21,10 +22,10 @@ namespace WebApiLab.Services.UnitOfWork
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, this.GetType().Name);
+                _logger.LogError(ex, GetType().Name);
                 return false;
             }
-                 
+
         }
         public virtual bool AddRange(IEnumerable<T> entities)
         {
@@ -35,10 +36,10 @@ namespace WebApiLab.Services.UnitOfWork
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, this.GetType().Name);
+                _logger.LogError(ex, GetType().Name);
                 return false;
             }
-            
+
         }
         public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression)
         {
@@ -61,10 +62,10 @@ namespace WebApiLab.Services.UnitOfWork
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, this.GetType().Name);
+                _logger.LogError(ex, GetType().Name);
                 return false;
             }
-            
+
         }
         public virtual bool RemoveRange(IEnumerable<T> entities)
         {
@@ -75,14 +76,14 @@ namespace WebApiLab.Services.UnitOfWork
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, this.GetType().Name);
+                _logger.LogError(ex, GetType().Name);
                 return false;
             }
-            
+
         }
 
         public virtual bool Update(T entity)
-        { 
+        {
             try
             {
                 Context.Set<T>().Update(entity);
@@ -90,7 +91,7 @@ namespace WebApiLab.Services.UnitOfWork
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, this.GetType().Name);
+                _logger.LogError(ex, GetType().Name);
                 return false;
             }
         }

@@ -1,6 +1,6 @@
 ﻿using CommonClass.Models;
 
-namespace WebApiLab.Services.UnitOfWork
+namespace WebApiLab.Services.UnitOfWork.Interface
 {
     public interface IAdminPartRepository : IGenericRepository<AdminParts>
     {

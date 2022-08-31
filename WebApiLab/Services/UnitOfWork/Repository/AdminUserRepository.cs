@@ -2,8 +2,9 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WebApiLab.DatabaseContext;
+using WebApiLab.Services.UnitOfWork.Interface;
 
-namespace WebApiLab.Services.UnitOfWork
+namespace WebApiLab.Services.UnitOfWork.Repository
 {
     public class AdminUserRepository : GenericRepository<AdminUser>, IAdminUserRepository
     {
@@ -16,7 +17,7 @@ namespace WebApiLab.Services.UnitOfWork
             string query = @"SELECT TOP (1) *
                           FROM [LabDB].[dbo].[Admin.Users]
                           where UserName COLLATE SQL_Latin1_General_CP1_CS_AS = @ID";
-            var user = this.Context.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
+            var user = Context.AdminUsers.FromSqlRaw(query, userName).FirstOrDefault();
             return user;
         }
 

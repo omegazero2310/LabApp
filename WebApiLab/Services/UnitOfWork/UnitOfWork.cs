@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiLab.DatabaseContext;
 using CommonClass.Models;
+using WebApiLab.Services.UnitOfWork.Interface;
 
 namespace WebApiLab.Services.UnitOfWork
 {

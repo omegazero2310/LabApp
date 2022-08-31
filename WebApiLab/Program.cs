@@ -5,6 +5,7 @@ using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
 using WebApiLab.Services.BusinessLayer;
 using WebApiLab.Services.UnitOfWork;
+using WebApiLab.Services.UnitOfWork.Interface;
 
 namespace WebApiLab
 {

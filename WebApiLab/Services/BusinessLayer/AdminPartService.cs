@@ -2,7 +2,7 @@
 using CommonClass.Models.Request;
 using Microsoft.AspNetCore.Http;
 using System.Net;
-using WebApiLab.Services.UnitOfWork;
+using WebApiLab.Services.UnitOfWork.Interface;
 
 namespace WebApiLab.Services.BusinessLayer
 {

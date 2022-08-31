@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using System.Net;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Exts;
-using WebApiLab.Services.UnitOfWork;
+using WebApiLab.Services.UnitOfWork.Interface;
 
 namespace WebApiLab.Services.BusinessLayer
 {
