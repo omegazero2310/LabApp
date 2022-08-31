@@ -38,6 +38,14 @@ namespace WebApiLab.Services.UnitOfWork
         {
             _context.Dispose();
         }
+        /// <summary>
+        /// Lưu lại dữ liệu các bảng, có lưu lại thông tin người tạo, người sửa, ngày tạo và ngày sửa
+        /// </summary>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         public int Save()
         {
             var now = DateTime.UtcNow;

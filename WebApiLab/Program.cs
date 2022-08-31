@@ -51,6 +51,7 @@ namespace WebApiLab
             builder.Services.AddDbContext<LabDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase"))
             );
+
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<IAdminUsersService, AdminUsersService>();
             builder.Services.AddTransient<IAdminStaffsService,AdminStaffsService>();

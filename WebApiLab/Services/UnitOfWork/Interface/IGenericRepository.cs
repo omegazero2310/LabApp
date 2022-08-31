@@ -2,6 +2,14 @@
 
 namespace WebApiLab.Services.UnitOfWork.Interface
 {
+    /// <summary>
+    /// Interface Repository chung cho các bảng
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 31/08/2022 created
+    /// </Modified>
     public interface IGenericRepository<T> where T : class
     {
         T GetById(object id);

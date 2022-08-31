@@ -4,6 +4,15 @@ using WebApiLab.Services.UnitOfWork.Interface;
 
 namespace WebApiLab.Services.UnitOfWork.Repository
 {
+    /// <summary>
+    /// Lớp chứa các tao tác dữ liệu trên bảng AdminStaff
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 31/08/2022 created
+    /// </Modified>
+    /// <seealso cref="WebApiLab.Services.UnitOfWork.Repository.GenericRepository&lt;CommonClass.Models.AdminStaff&gt;" />
+    /// <seealso cref="WebApiLab.Services.UnitOfWork.Interface.IAdminStaffRepository" />
     public class AdminStaffRepository : GenericRepository<AdminStaff>, IAdminStaffRepository
     {
         public AdminStaffRepository(LabDbContext context, ILogger logger) : base(context, logger)

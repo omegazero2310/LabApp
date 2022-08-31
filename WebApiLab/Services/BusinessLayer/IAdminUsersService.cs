@@ -2,6 +2,13 @@
 
 namespace WebApiLab.Services.BusinessLayer
 {
+    /// <summary>
+    /// Interface bảng AdminUser
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 31/08/2022 created
+    /// </Modified>
     public interface IAdminUsersService
     {
         Task<ServerRespone> CheckLogin(string userName, string password);

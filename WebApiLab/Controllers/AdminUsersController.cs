@@ -85,6 +85,17 @@ namespace WebApiLab.Controllers
                 return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
+        /// <summary>
+        /// Tải lên ảnh đại diện của tài khoản
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
+        /// <response code="200">Đã tải lên thành công</response>
         [HttpPost]
         [ActionName("UploadProfilePicture")]
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
@@ -104,6 +115,17 @@ namespace WebApiLab.Controllers
                 return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
+        /// <summary>
+        /// Lấy ảnh đại diện của tài khoản
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
+        /// <response code="200">Đã lấy thành công</response>
+        /// <response code="204">User không có ảnh</response>
         [HttpGet]
         [ActionName("GetProfilePicture")]
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
@@ -125,6 +147,16 @@ namespace WebApiLab.Controllers
             }
 
         }
+        /// <summary>
+        /// Lấy thông tin của tài khoản
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
+        /// <response code="200">Đã lấy thành công</response>
         [HttpGet]
         [ActionName("Get")]
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]

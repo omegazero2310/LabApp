@@ -6,6 +6,15 @@ using WebApiLab.Services.UnitOfWork.Interface;
 
 namespace WebApiLab.Services.UnitOfWork.Repository
 {
+    /// <summary>
+    /// Lớp chứa các tao tác dữ liệu trên bảng AdminUser
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 31/08/2022 created
+    /// </Modified>
+    /// <seealso cref="WebApiLab.Services.UnitOfWork.Repository.GenericRepository&lt;CommonClass.Models.AdminUser&gt;" />
+    /// <seealso cref="WebApiLab.Services.UnitOfWork.Interface.IAdminUserRepository" />
     public class AdminUserRepository : GenericRepository<AdminUser>, IAdminUserRepository
     {
         public AdminUserRepository(LabDbContext context, ILogger logger) : base(context, logger)

@@ -3,6 +3,13 @@ using CommonClass.Models.Request;
 
 namespace WebApiLab.Services.BusinessLayer
 {
+    /// <summary>
+    /// Interface bảng AdminStaff
+    /// </summary>
+    /// <Modified>
+    /// Name Date Comments
+    /// annv3 31/08/2022 created
+    /// </Modified>
     public interface IAdminStaffsService
     {
         Task<ServerRespone> Create(AdminStaff data);

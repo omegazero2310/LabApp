@@ -135,24 +135,81 @@ namespace CommonClass.Models
         [JsonIgnore]
         public virtual AdminParts Parts { get; set; }
 
+        /// <summary>
+        /// ngày tạo
+        /// </summary>
+        /// <value>
+        /// The date created.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(Order = 8)]
         public DateTime DateCreated { get; set; }
+        /// <summary>
+        /// Ngày chỉnh sửa
+        /// </summary>
+        /// <value>
+        /// The date modified.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(Order = 9)]
         public DateTime DateModified { get; set; }
+        /// <summary>
+        /// Người tạo
+        /// </summary>
+        /// <value>
+        /// The user created.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(Order = 10)]
         public string UserCreated { get; set; }
+        /// <summary>
+        /// Người chỉnh sửa
+        /// </summary>
+        /// <value>
+        /// The user modified.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(Order = 11)]
         public string UserModified { get; set; }
 
-
+        /// <summary>
+        /// dữ liệu hình ảnh của nhân viên ( không map với database)
+        /// </summary>
+        /// <value>
+        /// The profile picture.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [NotMapped]
         public byte[] ProfilePicture { get; set; }
-        [NotMapped]
-        public DateTime CurrentTime { get; set; } = DateTime.Now;
+        /// <summary>
+        /// Tên chức danh của nhân viên (không map với database)
+        /// </summary>
+        /// <value>
+        /// The name of the position.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [NotMapped]
         public string PositionName { get; set; }
     }

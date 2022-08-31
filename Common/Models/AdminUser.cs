@@ -15,6 +15,16 @@ namespace CommonClass.Models
     [Table("Admin.Users")]
     public class AdminUser : IBaseEntity
     {
+        /// <summary>
+        /// GUID của tài khoản
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order =0)]
         [Required]
@@ -77,7 +87,16 @@ namespace CommonClass.Models
         [Column(Order = 4)]
         public bool IsResetPassword { get; set; }
 
-        
+        /// <summary>
+        /// ngày tạo tài khoản
+        /// </summary>
+        /// <value>
+        /// The date created.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(Order = 5)]
         public DateTime DateCreated { get; set; }
@@ -97,19 +116,59 @@ namespace CommonClass.Models
         [Required]
         [Column(Order = 7)]
         public string UserCreated { get; set; }
+        /// <summary>
+        /// người chỉnh sửa tài khoản
+        /// </summary>
+        /// <value>
+        /// The user modified.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(Order = 8)]
         public string UserModified { get; set; }
 
+        /// <summary>
+        /// trạng thái của tài khoản
+        /// </summary>
+        /// <value>
+        /// The account status.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Required]
         [Column(TypeName ="varchar(10)",Order = 9)]
         [DefaultValue(AccountStatusOptions.Normal)]
         public AccountStatusOptions AccountStatus { get; set; }
         [Column(Order = 10)]
         public string ProfilePictureName { get; set; }
+        /// <summary>
+        /// Số điện thoại đăng kí với tài khoản
+        /// </summary>
+        /// <value>
+        /// The phone number.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Column(TypeName = "varchar(15)",Order = 11)]
         [Required]
         public string PhoneNumber { get; set; }
+        /// <summary>
+        /// Tên ảnh đại diện
+        /// </summary>
+        /// <value>
+        /// The display name.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 31/08/2022 created
+        /// </Modified>
         [Column(TypeName = "nvarchar(50)", Order = 12)]
         [Required]
         public string DisplayName { get; set; }
