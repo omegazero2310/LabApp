@@ -1,3 +1,4 @@
+using MobileAppLab.ApiServices;
 using MobileAppLab.ViewModels;
 using MobileAppLab.Views;
 using Prism;
@@ -27,7 +28,10 @@ namespace MobileAppLab
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
-            
+            containerRegistry.Register<IAdminPartServices, AdminPartServices>();
+            containerRegistry.Register<IAdminStaffServices, AdminStaffServices>();
+            containerRegistry.Register<IAdminUserServices, AdminUserServices>();
+
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();

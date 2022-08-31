@@ -33,8 +33,8 @@ namespace MobileAppLab.ViewModels
     public class StaffListingViewModel : ViewModelBase, IActiveAware
     {
         #region Service      
-        private AdminStaffServices _adminStaffService;
-        private AdminPartServices _adminPartService;
+        private IAdminStaffServices _adminStaffService;
+        private IAdminPartServices _adminPartService;
         private IPageDialogService _dialogService;
         private IDialogService _dialog;
         #endregion
@@ -176,10 +176,10 @@ namespace MobileAppLab.ViewModels
 
         #endregion
 
-        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, HttpClient httpClient) : base(navigationService)
+        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, IAdminStaffServices adminStaffServices, IAdminPartServices adminPartServices) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffServices(httpClient);
-            this._adminPartService = new AdminPartServices(httpClient);
+            this._adminStaffService = adminStaffServices;
+            this._adminPartService = adminPartServices;
             this._dialogService = pageDialogService;
             this._dialog = dialogService;
         }

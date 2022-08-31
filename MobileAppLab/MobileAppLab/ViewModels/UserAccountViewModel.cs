@@ -30,7 +30,7 @@ namespace MobileAppLab.ViewModels
     public class UserAccountViewModel : ViewModelBase, IActiveAware
     {
         #region Services
-        private AdminStaffServices _adminStaffService;
+        private IAdminUserServices _adminUserService;
         private IPageDialogService _pageDialogService;
         #endregion
 
@@ -76,9 +76,9 @@ namespace MobileAppLab.ViewModels
 
 
         #region Contructor
-        public UserAccountViewModel(INavigationService navigationService, HttpClient httpClient, IPageDialogService pageDialog) : base(navigationService)
+        public UserAccountViewModel(INavigationService navigationService, IAdminUserServices adminUserServices, IPageDialogService pageDialog) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffServices(httpClient);
+            this._adminUserService = adminUserServices;
             this._pageDialogService = pageDialog;
         }
         #endregion
@@ -99,15 +99,15 @@ namespace MobileAppLab.ViewModels
                 string jsonToken = SecureStorage.GetAsync("JWT").Result;
                 var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
                 //load dữ liệu
-                var userInfo = await this._adminStaffService.GetByID(token.Id);
-                this.UserName = userInfo?.StaffName ?? "PlaceHolder Name";
+                var userInfo = await this._adminUserService.GetByID(token.Id);
+                this.UserName = userInfo?.DisplayName ?? "PlaceHolder Name";
                 this.PhoneNumber = userInfo?.PhoneNumber ?? "PlaceHolder PhoneNumber";
-                if (userInfo.ProfilePicture != null)
+                if (userInfo.ProfilePictureName != null)
                 {
                     try
                     {
                         ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
-                        this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(userInfo.ProfilePicture);
+                        this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(userInfo.ProfileImg);
                     }
                     catch (Exception ex)
                     {
@@ -170,17 +170,17 @@ namespace MobileAppLab.ViewModels
             string jsonToken = await SecureStorage.GetAsync("JWT");
             var token = JsonConvert.DeserializeObject<UserTokens>(jsonToken);
             //tải ảnh lên api
-            //var result = this._adminStaffService.UploadProfilePicture(token.Id, photoPath);
-            //try
-            //{
-            //    byte[] imageImg = File.ReadAllBytes(photoPath);
-            //    ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
-            //    this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(imageImg);
-            //}
-            //catch (Exception)
-            //{
-            //    this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
-            //}
+            var result = this._adminUserService.UploadUserPicture(token.UserName, photoPath);
+            try
+            {
+                byte[] imageImg = File.ReadAllBytes(photoPath);
+                ByteArrayToImageSourceConverter byteArrayToImageSourceConverter = new ByteArrayToImageSourceConverter();
+                this.ProfilePicture = byteArrayToImageSourceConverter.ConvertFrom(imageImg);
+            }
+            catch (Exception)
+            {
+                this.ProfilePicture = ImageSource.FromResource("MobileAppLab.AssetImages.icon_default_profile_pic.png");
+            }
         }
 
         private async void ExecuteCommandLogout()

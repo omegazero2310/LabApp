@@ -25,8 +25,8 @@ namespace MobileAppLab.ViewModels
     public class StaffInfoDetailViewModel : ViewModelBase
     {
         #region Service
-        private AdminStaffServices _adminStaffService;
-        private AdminPartServices _adminPartService;
+        private IAdminStaffServices _adminStaffService;
+        private IAdminPartServices _adminPartService;
         public event Action<IDialogParameters> RequestClose;
         #endregion
 
@@ -96,10 +96,10 @@ namespace MobileAppLab.ViewModels
 
 
         #region Contructor
-        public StaffInfoDetailViewModel(INavigationService navigationService, HttpClient httpClient) : base(navigationService)
+        public StaffInfoDetailViewModel(INavigationService navigationService, IAdminStaffServices adminStaffServices, IAdminPartServices adminPartServices) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffServices(httpClient);
-            this._adminPartService = new AdminPartServices(httpClient);
+            this._adminStaffService = adminStaffServices;
+            this._adminPartService = adminPartServices;
         }
         #endregion
 

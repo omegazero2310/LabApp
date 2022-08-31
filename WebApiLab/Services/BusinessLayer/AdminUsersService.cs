@@ -1,6 +1,7 @@
 ﻿using CommonClass.ErrorCodes;
 using CommonClass.Models;
 using CommonClass.Models.Request;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System.Net;
 using WebApiLab.DatabaseContext;
@@ -238,6 +239,26 @@ namespace WebApiLab.Services.BusinessLayer
             }
             return serverRespone;
 
+        }
+        public async Task<ServerRespone> GetUserInfo(string userName)
+        {
+            ServerRespone serverRespone = new ServerRespone();
+            try
+            {
+                var value = _unitOfWork.AdminUserRepository.GetById(userName);
+                serverRespone.IsSuccess = true;
+                serverRespone.Message = "GetSuccess";
+                serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                serverRespone.Result = value;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, this.GetType().Name);
+                serverRespone.IsSuccess = false;
+                serverRespone.Message = "ServerError: Get User Failed";
+                serverRespone.HttpStatusCode = HttpStatusCode.InternalServerError;
+            }
+            return serverRespone;
         }
 
     }

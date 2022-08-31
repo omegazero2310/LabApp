@@ -107,7 +107,7 @@ namespace WebApiLab.Controllers
         [HttpGet]
         [ActionName("GetProfilePicture")]
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ServerRespone> GetPicture([FromQuery] string id)
+        public async Task<ServerRespone> GetPicture([FromQuery] string userName)
         {
             try
             {
@@ -115,12 +115,30 @@ namespace WebApiLab.Controllers
                 {
                     _hostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 }
-                var data = await this._adminUsersService.GetUserPicture(id, _hostEnvironment.WebRootPath);
+                var data = await this._adminUsersService.GetUserPicture(userName, _hostEnvironment.WebRootPath);
                 return data;
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "Server error: Failed to get Profile Picture");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
+            }
+
+        }
+        [HttpGet]
+        [ActionName("Get")]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ServerRespone> GetInfo([FromQuery] string userName)
+        {
+            try
+            {
+                
+                var data = await this._adminUsersService.GetUserInfo(userName);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Failed to get UserInfo");
                 return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
 

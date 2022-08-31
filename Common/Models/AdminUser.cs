@@ -113,5 +113,8 @@ namespace CommonClass.Models
         [Column(TypeName = "nvarchar(50)", Order = 12)]
         [Required]
         public string DisplayName { get; set; }
+
+        [NotMapped]
+        public byte[] ProfileImg { get; set; }
     }
 }

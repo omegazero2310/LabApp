@@ -25,7 +25,7 @@ namespace MobileAppLab.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         #region các services   
-        private AdminUserServices _adminUserServices;
+        private IAdminUserServices _adminUserServices;
         private IPageDialogService _pageDialogService;
         #endregion
 
@@ -142,13 +142,13 @@ namespace MobileAppLab.ViewModels
 
 
         #region Contructor và Destructor
-        public LoginViewModel(INavigationService navigationService, IPageDialogService pageDialog, HttpClient httpClient)
+        public LoginViewModel(INavigationService navigationService, IPageDialogService pageDialog, IAdminUserServices adminUserServices)
             : base(navigationService)
         {
             this._pageDialogService = pageDialog;
             Title = "Main Page Login";
             this.AppVersion = this.GetType().Assembly.GetName().Version.ToString();
-            this._adminUserServices = new AdminUserServices(httpClient);
+            this._adminUserServices = adminUserServices;
         }
         #endregion
 

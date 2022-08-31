@@ -35,8 +35,8 @@ namespace MobileAppLab.ViewModels
     public class StaffEditViewModel : ViewModelBase
     {
         #region các Service
-        private AdminStaffServices _adminStaffService;
-        private AdminPartServices _adminPartService;
+        private IAdminStaffServices _adminStaffService;
+        private IAdminPartServices _adminPartService;
         private IPageDialogService _pageDialog;
         #endregion
 
@@ -217,10 +217,10 @@ namespace MobileAppLab.ViewModels
 
 
         #region Contructor
-        public StaffEditViewModel(INavigationService navigationService, HttpClient httpClient, IPageDialogService pageDialogService) : base(navigationService)
+        public StaffEditViewModel(INavigationService navigationService, IAdminPartServices adminPartServices, IAdminStaffServices adminStaffServices, IPageDialogService pageDialogService) : base(navigationService)
         {
-            this._adminStaffService = new AdminStaffServices(httpClient);
-            _adminPartService = new AdminPartServices(httpClient);
+            this._adminStaffService = adminStaffServices;
+            _adminPartService = adminPartServices;
             this._pageDialog = pageDialogService;
         }
         #endregion
