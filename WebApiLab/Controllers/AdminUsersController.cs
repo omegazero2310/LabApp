@@ -1,6 +1,8 @@
 ﻿using CommonClass.ErrorCodes;
 using CommonClass.Models;
 using CommonClass.Models.Request;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WebApiLab.Exts;
@@ -25,10 +27,12 @@ namespace WebApiLab.Controllers
     {
         private AdminUsersService _adminUsersService;
         private ILogger<AdminUsersController> _logger;
-        public AdminUsersController(AdminUsersService adminUsersService, ILogger<AdminUsersController> logger)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public AdminUsersController(AdminUsersService adminUsersService, ILogger<AdminUsersController> logger, IWebHostEnvironment webHostEnvironment)
         {
             this._logger = logger;
             this._adminUsersService = adminUsersService;
+            this._hostEnvironment = webHostEnvironment;
         }
         /// <summary>
         /// Đăng nhập vào hệ thống
@@ -81,5 +85,46 @@ namespace WebApiLab.Controllers
                 return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
             }
         }
+        [HttpPost]
+        [ActionName("UploadProfilePicture")]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ServerRespone> UploadPicture([FromQuery] string userName, IFormFile file)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(_hostEnvironment.WebRootPath))
+                {
+                    _hostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                }
+                return await this._adminUsersService.UploadUserPicture(userName, _hostEnvironment.WebRootPath, file);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Failed to get Profile Picture");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
+            }
+        }
+        [HttpGet]
+        [ActionName("GetProfilePicture")]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ServerRespone> GetPicture([FromQuery] string id)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(_hostEnvironment.WebRootPath))
+                {
+                    _hostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                }
+                var data = await this._adminUsersService.GetUserPicture(id, _hostEnvironment.WebRootPath);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Server error: Failed to get Profile Picture");
+                return new ServerRespone { HttpStatusCode = System.Net.HttpStatusCode.InternalServerError, IsSuccess = false, Result = ex, Message = "ServerError" };
+            }
+
+        }
+
     }
 }
