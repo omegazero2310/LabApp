@@ -9,7 +9,13 @@ namespace WebApiLab.Services.UnitOfWork.Repository
         public AdminStaffRepository(LabDbContext context, ILogger logger) : base(context, logger)
         {
         }
-
+        public override bool Update(AdminStaff entity)
+        {
+            if (Context.AdminStaffs.Any(staff => staff.StaffID == entity.StaffID))
+                return base.Update(entity);
+            else
+                return false;
+        }
         public Task<bool> IsDuplicateEmail(string email)
         {
             return Task.FromResult(Context.AdminStaffs.Any(staff => staff.Email == email));

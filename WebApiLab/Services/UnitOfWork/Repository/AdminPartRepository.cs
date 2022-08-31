@@ -9,5 +9,10 @@ namespace WebApiLab.Services.UnitOfWork.Repository
         public AdminPartRepository(LabDbContext context, ILogger logger) : base(context, logger)
         {
         }
+
+        public Task<bool> IsExistPartID(int partID)
+        {
+            return Task.FromResult(this.Context.AdminParts.Any(part => part.PartID == partID));
+        }
     }
 }

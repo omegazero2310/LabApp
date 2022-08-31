@@ -170,13 +170,19 @@ namespace WebApiLab.Services.BusinessLayer
                     serverRespone.Message = AdminStaffErrorCode.DUPLICATE_EMAIL;
                     serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
                 }
-                if (await _unitOfWork.AdminStaffRepository.IsDuplicatePhoneNumber(data.PhoneNumber, data.StaffID))
+                else if (await _unitOfWork.AdminStaffRepository.IsDuplicatePhoneNumber(data.PhoneNumber, data.StaffID))
                 {
                     serverRespone.IsSuccess = false;
                     serverRespone.Message = AdminStaffErrorCode.DUPLICATE_PHONE_NUMBER;
                     serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
                 }
-                if (_unitOfWork.AdminStaffRepository.Update(data))
+                else if (!(await _unitOfWork.AdminPartRepository.IsExistPartID(data.PartID)))
+                {
+                    serverRespone.IsSuccess = false;
+                    serverRespone.Message = "MSG_NOT_EXIST_PARTS_ID";
+                    serverRespone.HttpStatusCode = HttpStatusCode.BadRequest;
+                }
+                else if (_unitOfWork.AdminStaffRepository.Update(data))
                 {
                     _unitOfWork.Save();
                     serverRespone.IsSuccess = true;
@@ -188,7 +194,7 @@ namespace WebApiLab.Services.BusinessLayer
                     serverRespone.IsSuccess = true;
                     serverRespone.Message = "NoChange";
                     serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
-                }    
+                }
             }
             catch (Exception ex)
             {
