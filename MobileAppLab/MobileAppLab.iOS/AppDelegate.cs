@@ -3,6 +3,7 @@ using Prism;
 using Prism.Ioc;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.XForms.iOS.Core;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 
@@ -27,6 +28,7 @@ namespace MobileAppLab.iOS
             global::Xamarin.Forms.Forms.Init();
             SfAvatarViewRenderer.Init();
             SfListViewRenderer.Init();
+            SfTextInputLayoutRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
             return base.FinishedLaunching(app, options);
         }
