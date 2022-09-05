@@ -176,7 +176,9 @@ namespace MobileAppLab.ViewModels
 
         #endregion
 
-        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, IAdminStaffServices adminStaffServices, IAdminPartServices adminPartServices) : base(navigationService)
+        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService,
+            IAdminStaffServices adminStaffServices, IAdminPartServices adminPartServices)
+            : base(navigationService)
         {
             this._adminStaffService = adminStaffServices;
             this._adminPartService = adminPartServices;
@@ -221,6 +223,7 @@ namespace MobileAppLab.ViewModels
         }
         private void RaiseIsActiveChanged()
         {
+            //nếu tab được chọn. load lại list
             if (this.IsActive)
             {
                 this.IsRefreshing = true;
@@ -235,6 +238,7 @@ namespace MobileAppLab.ViewModels
         {
             try
             {
+                //delay 500ms mỗi khi nhập từ tìm kiếm, hạn chế bị nháy list khi tìm kiếm
                 Interlocked.Exchange(ref this.throttleCts, new CancellationTokenSource()).Cancel();
                 await Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token)
                     .ContinueWith(async (obj) =>
