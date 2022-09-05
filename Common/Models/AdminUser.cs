@@ -172,8 +172,24 @@ namespace CommonClass.Models
         [Column(TypeName = "nvarchar(50)", Order = 12)]
         [Required]
         public string DisplayName { get; set; }
+        
+        /// <summary>
+        /// Đánh dấu ẩn hiện dòng
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 05/09/2022 created
+        /// </Modified>
+        [Column(Order = 13)]
+        [DefaultValue(true)]
+        public bool IsActive { get; set; }
 
         [NotMapped]
         public byte[] ProfileImg { get; set; }
+
+        
     }
 }

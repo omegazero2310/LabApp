@@ -61,12 +61,22 @@ namespace WebApiLab.Services.UnitOfWork
                             entity.DateModified = now;
                             entity.UserModified = this._currentUser;
                             entity.UserCreated = this._currentUser;
+                            entity.IsActive = true;
                             break;
                         case EntityState.Modified:
                             _context.Entry(entity).Property(x => x.UserCreated).IsModified = false;
                             _context.Entry(entity).Property(x => x.DateCreated).IsModified = false;
                             entity.DateModified = now;
                             entity.UserModified = this._currentUser;
+                            break;
+                        case EntityState.Deleted:
+                            _context.Entry(entity).Property(x => x.UserCreated).IsModified = false;
+                            _context.Entry(entity).Property(x => x.DateCreated).IsModified = false;
+                            _context.Entry(entity).Property(x => x.IsActive).IsModified = true;
+                            changedEntity.State = EntityState.Modified;
+                            entity.DateModified = now;
+                            entity.UserModified = this._currentUser;
+                            entity.IsActive = false;
                             break;
                     }
                 }

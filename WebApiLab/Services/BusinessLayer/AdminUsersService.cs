@@ -32,7 +32,7 @@ namespace WebApiLab.Services.BusinessLayer
             ServerRespone serverRespone = new ServerRespone();
             try
             {
-                var account = this._unitOfWork.AdminUserRepository.Find(user => user.UserName == data.UserName);
+                var account = this._unitOfWork.AdminUserRepository.Find(user => user.UserName == data.UserName && user.IsActive);
                 if (account.Count() == 0)
                 {
                     var salt = PasswordHelper.CreateSalt();

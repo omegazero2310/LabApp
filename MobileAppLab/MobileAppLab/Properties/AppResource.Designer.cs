@@ -484,6 +484,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Network Connection.
+        /// </summary>
+        public static string MSG_DISCONNECTED {
+            get {
+                return ResourceManager.GetString("MSG_DISCONNECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email cannot be empty.
         /// </summary>
         public static string MSG_EMAIL_NOT_EMPTY {

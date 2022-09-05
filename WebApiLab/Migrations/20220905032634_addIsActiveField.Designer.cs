@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiLab.DatabaseContext;
 
@@ -11,9 +12,10 @@ using WebApiLab.DatabaseContext;
 namespace WebApiLab.Migrations
 {
     [DbContext(typeof(LabDbContext))]
-    partial class LabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220905032634_addIsActiveField")]
+    partial class addIsActiveField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,8 +68,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 1,
-                            DateCreated = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9630),
-                            DateModified = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9641),
+                            DateCreated = new DateTime(2022, 9, 5, 10, 26, 34, 601, DateTimeKind.Local).AddTicks(8511),
+                            DateModified = new DateTime(2022, 9, 5, 10, 26, 34, 601, DateTimeKind.Local).AddTicks(8520),
                             IsActive = false,
                             PartName = "Nhân viên",
                             UserCreated = "Seed",
@@ -76,8 +78,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 2,
-                            DateCreated = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9643),
-                            DateModified = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9644),
+                            DateCreated = new DateTime(2022, 9, 5, 10, 26, 34, 601, DateTimeKind.Local).AddTicks(8528),
+                            DateModified = new DateTime(2022, 9, 5, 10, 26, 34, 601, DateTimeKind.Local).AddTicks(8528),
                             IsActive = false,
                             PartName = "Trưởng phòng",
                             UserCreated = "Seed",
@@ -86,8 +88,8 @@ namespace WebApiLab.Migrations
                         new
                         {
                             PartID = 3,
-                            DateCreated = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9645),
-                            DateModified = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9645),
+                            DateCreated = new DateTime(2022, 9, 5, 10, 26, 34, 601, DateTimeKind.Local).AddTicks(8529),
+                            DateModified = new DateTime(2022, 9, 5, 10, 26, 34, 601, DateTimeKind.Local).AddTicks(8529),
                             IsActive = false,
                             PartName = "Giám đốc",
                             UserCreated = "Seed",
@@ -234,25 +236,6 @@ namespace WebApiLab.Migrations
                     b.HasKey("UserName");
 
                     b.ToTable("Admin.Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserName = "Admin",
-                            AccountStatus = "Normal",
-                            DateCreated = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9750),
-                            DateModified = new DateTime(2022, 9, 5, 10, 32, 29, 529, DateTimeKind.Local).AddTicks(9751),
-                            DisplayName = "Administrator",
-                            HashedPassword = "j3oEIiMWevilRp5y5/mzfETFHoGnBgrj23oQuiTNtRM=",
-                            Id = new Guid("fdb4a328-d81a-428c-8be7-214248a39c94"),
-                            IsActive = true,
-                            IsResetPassword = false,
-                            PhoneNumber = "09781231234",
-                            ProfilePictureName = "",
-                            Salt = "kPg2GW/IblRkqFtMPrhmbw==",
-                            UserCreated = "SeedSystem",
-                            UserModified = "SeedSystem"
-                        });
                 });
 
             modelBuilder.Entity("CommonClass.Models.AdminStaff", b =>
