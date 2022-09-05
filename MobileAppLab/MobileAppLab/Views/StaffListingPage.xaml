@@ -6,11 +6,18 @@
     xmlns:custom="clr-namespace:MobileAppLab.CustomControl"
     xmlns:helper="clr-namespace:MobileAppLab.Utilities"
     xmlns:local="clr-namespace:MobileAppLab.ViewModels"
+    xmlns:localbehavior="clr-namespace:MobileAppLab.Utilities.ViewActions"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     NavigationPage.HasBackButton="True"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="True">
+
+    <ContentPage.Behaviors>
+        <localbehavior:SyncFusionFilterBehavior/>
+    </ContentPage.Behaviors>
     <ContentPage.Content>
+        
         <StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
@@ -84,18 +91,10 @@
                                     <ColumnDefinition Width="7*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <custom:NoBorderEntry Grid.Column="0" x:Name="srcBar" Placeholder="{Binding FilterPrefix}" HeightRequest="50" Margin="10,0,0,0">
-                                    <custom:NoBorderEntry.Behaviors>
-                                        <xct:EventToCommandBehavior
-                                            Command="{Binding CommandSearch}"
-                                            CommandParameter="{Binding Text, Source={x:Reference srcBar}}"
-                                            EventName="TextChanged" />
-                                    </custom:NoBorderEntry.Behaviors>
-                                </custom:NoBorderEntry>
+                                <custom:NoBorderEntry Grid.Column="0" x:Name="srcBar" Placeholder="{Binding FilterPrefix}" HeightRequest="50" Margin="10,0,0,0"/>
                                 <ImageButton Grid.Column="1"
                                     Aspect="AspectFill"
                                     BackgroundColor="#0B94F3"
-                                    Command="{Binding CommandSelectFilter}"
                                     HorizontalOptions="CenterAndExpand"
                                     Scale="1.5"
                                     Margin="0,0,-10,0"
@@ -115,14 +114,16 @@
                         <!--#endregion-->
                         <!--#region Danh sách nhân viên-->
                         <RefreshView Command="{Binding CommandLoadData}" IsRefreshing="{Binding IsRefreshing}">
-                            <CollectionView
+                            <sync:SfListView
                                 x:Name="ItemsListView"
                                 ItemsSource="{Binding Staffs}"
-                                SelectionMode="None">
-                                <CollectionView.ItemTemplate>
+                                SelectionMode="None"
+                                ItemSize="100"
+                                AutoFitMode="DynamicHeight">
+                                <sync:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout Orientation="Vertical">
-                                            <SwipeView SwipeStarted="SwipeView_SwipeStarted" SwipeEnded="SwipeView_SwipeEnded">
+                                            <SwipeView SwipeStarted="SwipeView_SwipeStarted" SwipeEnded="SwipeView_SwipeEnded" x:Name="SwipeRow">
                                                 <SwipeView.RightItems>
                                                     <SwipeItemView>
                                                         <!--#region lệnh quẹt phải của dòng-->
@@ -226,9 +227,9 @@
                                                                 <!--#region thông tin chi tiết-->
                                                                 <Grid Grid.Column="1">
                                                                     <Grid.RowDefinitions>
-                                                                        <RowDefinition />
-                                                                        <RowDefinition />
-                                                                        <RowDefinition />
+                                                                        <RowDefinition Height="*"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                        <RowDefinition Height="*"/>
                                                                     </Grid.RowDefinitions>
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="2.7*" />
@@ -242,21 +243,21 @@
                                                                     FontSize="Small"
                                                                     HorizontalOptions="StartAndExpand"
                                                                     Text="{Binding StaffName}"
-                                                                    VerticalOptions="StartAndExpand" />
+                                                                    VerticalOptions="Center" />
                                                                     <Label
                                                                     Grid.Row="1"
                                                                     Grid.Column="0"
                                                                     FontSize="Small"
                                                                     HorizontalOptions="StartAndExpand"
                                                                     Text="{Binding PositionName}"
-                                                                    VerticalOptions="StartAndExpand" />
+                                                                    VerticalOptions="Center" />
                                                                     <Label
                                                                     Grid.Row="2"
                                                                     Grid.Column="0"
                                                                     FontSize="Small"
                                                                     HorizontalOptions="StartAndExpand"
                                                                     Text="{Binding Email}"
-                                                                    VerticalOptions="StartAndExpand" />
+                                                                    VerticalOptions="Center" />
 
                                                                     <Label
                                                                     Grid.Row="2"
@@ -287,8 +288,8 @@
                                         </StackLayout>
                                         
                                     </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
+                                </sync:SfListView.ItemTemplate>
+                            </sync:SfListView>
                         </RefreshView>
                         <!--#endregion-->
                     </StackLayout>

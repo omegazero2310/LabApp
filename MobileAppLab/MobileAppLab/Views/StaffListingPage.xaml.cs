@@ -25,7 +25,7 @@ namespace MobileAppLab.Views
         {
             InitializeComponent();
         }
-        private async void SwipeView_SwipeStarted(object sender, SwipeStartedEventArgs e)
+        private void SwipeView_SwipeStarted(object sender, SwipeStartedEventArgs e)
         {
             try
             {
@@ -40,10 +40,10 @@ namespace MobileAppLab.Views
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
 
-        private async void SwipeView_SwipeEnded(object sender, SwipeEndedEventArgs e)
+        private void SwipeView_SwipeEnded(object sender, SwipeEndedEventArgs e)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace MobileAppLab.Views
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
     }
 }

@@ -62,25 +62,6 @@ namespace MobileAppLab.ViewModels
             get { return _isActive; }
             set { SetProperty(ref _isActive, value, RaiseIsActiveChanged); }
         }
-        private readonly static IReadOnlyDictionary<FilterOptions, string> _listFilterOptionsResource = new Dictionary<FilterOptions, string>
-        {
-            {FilterOptions.UserName, LocalizationResourceManager.Instance[nameof(AppResource.Label_StaffName)]},
-            {FilterOptions.Position, LocalizationResourceManager.Instance[nameof(AppResource.Label_Position)]},
-            {FilterOptions.Email, LocalizationResourceManager.Instance[nameof(AppResource.Label_Email)]},
-            {FilterOptions.PhoneNumber, LocalizationResourceManager.Instance[nameof(AppResource.Label_PhoneNumber)]}
-        };
-        private FilterOptions _selectedFilterOption;
-        public FilterOptions SelectedFilterOption
-        {
-            get { return _selectedFilterOption; }
-            set { SetProperty(ref _selectedFilterOption, value, OnSelectFilterOptionChanged); }
-        }
-        private string _filterPrefix;
-        public string FilterPrefix
-        {
-            get { return _filterPrefix; }
-            set { SetProperty(ref _filterPrefix, value); }
-        }
 
         #endregion
 
@@ -141,38 +122,6 @@ namespace MobileAppLab.ViewModels
         public DelegateCommand CommandNewStaff =>
             _commandNewStaff ?? (_commandNewStaff = new DelegateCommand(ExecuteCommandNewStaff));
 
-        /// <summary>
-        /// lệnh quay về màn hình chính (home)
-        /// </summary>
-        /// <Modified>
-        /// Name Date Comments
-        /// annv3 25/08/2022 created
-        /// </Modified>
-        private DelegateCommand _commandBackToHome;
-        public DelegateCommand CommandBackToHome =>
-            _commandBackToHome ?? (_commandBackToHome = new DelegateCommand(ExecuteCommandBackToHome));
-
-        /// <summary>
-        /// lệnh tìm kiếm khi nhập vào control searchbar
-        /// </summary>
-        /// <Modified>
-        /// Name Date Comments
-        /// annv3 25/08/2022 created
-        /// </Modified>
-        private DelegateCommand<object> _commandSearch;
-        public DelegateCommand<object> CommandSearch =>
-            _commandSearch ?? (_commandSearch = new DelegateCommand<object>(ExecuteCommandSearch));
-        /// <summary>
-        /// Chọn kiểu tìm kiếm
-        /// </summary>
-        /// <Modified>
-        /// Name Date Comments
-        /// annv3 25/08/2022 created
-        /// </Modified>
-        private DelegateCommand _commandSelectFilter;
-        public DelegateCommand CommandSelectFilter =>
-            _commandSelectFilter ?? (_commandSelectFilter = new DelegateCommand(ExecuteCommandSelectFilter));
-
 
         #endregion
 
@@ -200,7 +149,7 @@ namespace MobileAppLab.ViewModels
                 this.IsRefreshing = true;
                 this.Staffs.Clear();
                 var listStaff = await this._adminStaffService.GetAll(isForceRefresh: true);
-                foreach (var user in listStaff)
+                foreach (var user in listStaff.OrderBy(staff => staff.StaffName))
                 {
                     this.Staffs.Add(user);
                 }
@@ -227,84 +176,10 @@ namespace MobileAppLab.ViewModels
             if (this.IsActive)
             {
                 this.IsRefreshing = true;
-                this.SelectedFilterOption = FilterOptions.UserName;
-                this.FilterPrefix = LocalizationResourceManager.Instance[nameof(AppResource.PlaceHolder_SearchBar)];
             }
 
         }
         #region các method của command
-        private CancellationTokenSource throttleCts = new CancellationTokenSource();
-        private async void ExecuteCommandSearch(object parameter)
-        {
-            try
-            {
-                //delay 500ms mỗi khi nhập từ tìm kiếm, hạn chế bị nháy list khi tìm kiếm
-                Interlocked.Exchange(ref this.throttleCts, new CancellationTokenSource()).Cancel();
-                await Task.Delay(TimeSpan.FromMilliseconds(500), this.throttleCts.Token)
-                    .ContinueWith(async (obj) =>
-                    {
-                        if (string.IsNullOrEmpty(parameter?.ToString() ?? ""))
-                            this.IsRefreshing = true;
-                        else
-                        {
-                            var listStaff = await this._adminStaffService.GetAll();
-                            IEnumerable<AdminStaff> filtered = listStaff;
-                            switch (this.SelectedFilterOption)
-                            {
-                                case FilterOptions.UserName:
-                                    filtered = listStaff.Where(x => x.StaffName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
-                                    break;
-                                case FilterOptions.Position:
-                                    filtered = listStaff.Where(x => x.PositionName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
-                                    break;
-                                case FilterOptions.Email:
-                                    filtered = listStaff.Where(x => x.Email.Contains(parameter.ToString()));
-                                    break;
-                                case FilterOptions.PhoneNumber:
-                                    filtered = listStaff.Where(x => x.PhoneNumber.Contains(parameter.ToString()));
-                                    break;
-                                default:
-                                    filtered = listStaff.Where(x => x.StaffName.IndexOf(parameter.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0);
-                                    break;
-                            }
-                            this.Staffs.Clear();
-                            foreach (var user in filtered)
-                            {
-                                this.Staffs.Add(user);
-                            }
-                        }
-                    },
-                    CancellationToken.None,
-                    TaskContinuationOptions.OnlyOnRanToCompletion,
-                    TaskScheduler.FromCurrentSynchronizationContext());
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            
-        }
-        private async void ExecuteCommandSelectFilter()
-        {
-            IActionSheetButton filterByUserName = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_StaffName)],
-                () => this.SelectedFilterOption = FilterOptions.UserName);
-            IActionSheetButton filterByPosition = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_Position)],
-                () => this.SelectedFilterOption = FilterOptions.Position);
-            IActionSheetButton filterByEmail = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_Email)],
-                () => this.SelectedFilterOption = FilterOptions.Email);
-            IActionSheetButton filterByPhoneNumber = ActionSheetButton.CreateButton(LocalizationResourceManager.Instance[nameof(AppResource.Label_PhoneNumber)],
-                () => this.SelectedFilterOption = FilterOptions.PhoneNumber);
-            await this._dialogService.DisplayActionSheetAsync(LocalizationResourceManager.Instance[nameof(AppResource.Select_Filter_Options)],
-                filterByUserName, filterByPosition, filterByEmail, filterByPhoneNumber);
-        }
-        private void OnSelectFilterOptionChanged()
-        {
-            this.FilterPrefix = $"[{_listFilterOptionsResource[this.SelectedFilterOption]}]";
-        }
-        private async void ExecuteCommandBackToHome()
-        {
-            await this.NavigationService.SelectTabAsync("HomePage");
-        }
         private void ExecuteCommandLoadData()
         {
             this.LoadStaffs();
