@@ -39,6 +39,7 @@ namespace MobileAppLab.ViewModels
         private IAdminStaffServices _adminStaffService;
         private IAdminPartServices _adminPartService;
         private IPageDialogService _dialogService;
+        private ICustomSnackBar _customSnackBar;
         private IDialogService _dialog;
         #endregion
 
@@ -128,7 +129,7 @@ namespace MobileAppLab.ViewModels
 
         #endregion
 
-        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService,
+        public StaffListingViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService, ICustomSnackBar customSnackBar,
             IAdminStaffServices adminStaffServices, IAdminPartServices adminPartServices)
             : base(navigationService)
         {
@@ -136,6 +137,7 @@ namespace MobileAppLab.ViewModels
             this._adminPartService = adminPartServices;
             this._dialogService = pageDialogService;
             this._dialog = dialogService;
+            this._customSnackBar = customSnackBar;
         }
         /// <summary>
         /// Tải dữ liệu nhân viên
@@ -222,6 +224,7 @@ namespace MobileAppLab.ViewModels
                 {
                     await this._adminStaffService.Delete(parameter.StaffID);
                     this.Staffs.Remove(parameter);
+                    this._customSnackBar.SnackbarShow(AppResource.MSG_STAFF_DELETED);
                 }
                 catch (Exception ex)
                 {

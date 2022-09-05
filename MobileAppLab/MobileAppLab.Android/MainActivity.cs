@@ -2,6 +2,8 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using MobileAppLab.Utilities;
+using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
 
@@ -16,6 +18,7 @@ namespace MobileAppLab.Droid
             base.OnCreate(savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
             //if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
             //{
@@ -54,6 +57,7 @@ namespace MobileAppLab.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.Register<ICustomSnackBar, CustomSnackBarAndroid>();
         }
     }
 }

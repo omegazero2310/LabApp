@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using MobileAppLab.Utilities;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.ListView.XForms.iOS;
@@ -41,6 +42,7 @@ namespace MobileAppLab.iOS
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.Register<ICustomSnackBar, CustomSnackBarIOS>();
         }
     }
 }
