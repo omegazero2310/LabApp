@@ -92,7 +92,7 @@
                                     <ColumnDefinition Width="7*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <custom:NoBorderEntry Grid.Column="0" x:Name="srcBar" Placeholder="{Binding FilterPrefix}" HeightRequest="50" Margin="10,0,0,0"/>
+                                <custom:NoBorderEntry Grid.Column="0" x:Name="srcBar" Placeholder="{helper:Translate PlaceHolder_SearchBar}" HeightRequest="50" Margin="10,0,0,0"/>
                                 <ImageButton Grid.Column="1"
                                     Aspect="AspectFill"
                                     BackgroundColor="#0B94F3"
