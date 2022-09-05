@@ -9,6 +9,7 @@
     xmlns:localbehavior="clr-namespace:MobileAppLab.Utilities.ViewActions"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:sfavatar="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
     NavigationPage.HasBackButton="True"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="True">
@@ -17,7 +18,7 @@
         <localbehavior:SyncFusionFilterBehavior/>
     </ContentPage.Behaviors>
     <ContentPage.Content>
-        
+
         <StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
@@ -214,14 +215,16 @@
                                                             HeightRequest="60"
                                                             Orientation="Horizontal">
                                                                 <!--#region ảnh đại diện-->
-                                                                <Frame HeightRequest="60" WidthRequest="60" BorderColor="Blue" CornerRadius="100" Padding="0" >
-                                                                    <xct:AvatarView
-                                                                    HorizontalOptions="Center"
-                                                                    Source="{Binding ProfilePicture, Converter={xct:ByteArrayToImageSourceConverter}}"
+                                                                <sfavatar:SfAvatarView
+                                                                    ImageSource="{Binding ProfilePicture, Converter={xct:ByteArrayToImageSourceConverter}}"
                                                                     VerticalOptions="Center"
-                                                                    Size="60">
-                                                                    </xct:AvatarView>
-                                                                </Frame>
+                                                                       HorizontalOptions="Center"   
+                                                                       HeightRequest="60"
+                                                                       CornerRadius="100"
+                                                                       WidthRequest="60"
+                                                                    ContentType="Custom"
+                                                                    BorderColor="Blue">
+                                                                </sfavatar:SfAvatarView>
 
                                                                 <!--#endregion-->
                                                                 <!--#region thông tin chi tiết-->
@@ -286,7 +289,7 @@
                                                Color="LightGray"
                                                Margin ="5, 0, 5, 0"/>
                                         </StackLayout>
-                                        
+
                                     </DataTemplate>
                                 </sync:SfListView.ItemTemplate>
                             </sync:SfListView>

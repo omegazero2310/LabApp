@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileAppLab.Views.UserAccountPage"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:sfavatar="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
              xmlns:helper="clr-namespace:MobileAppLab.Utilities"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False">
@@ -35,17 +36,23 @@
                                 <RowDefinition Height="100"/>
                             </Grid.RowDefinitions>
 
-                            <xct:AvatarView Grid.Column="0" Padding="0" Source="{Binding ProfilePicture}" 
+                            <sfavatar:SfAvatarView 
+                                        Grid.Column="0" Padding="0" 
+                                        ImageSource="{Binding ProfilePicture}" 
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
-                                       Size="100">
-                                <xct:AvatarView.GestureRecognizers>
+                                        CornerRadius="100"
+                                       HeightRequest="100"
+                                       WidthRequest="100" 
+                                       ContentType="Custom" 
+                                        BorderColor="Blue">
+                                <sfavatar:SfAvatarView.GestureRecognizers>
                                     <TapGestureRecognizer
                                             NumberOfTapsRequired="1"
                                             Command="{Binding CommandName}"
                                             />
-                                </xct:AvatarView.GestureRecognizers>
-                            </xct:AvatarView>
+                                </sfavatar:SfAvatarView.GestureRecognizers>
+                            </sfavatar:SfAvatarView>
 
                             <Grid Grid.Column="1" Padding="0" >
                                 <Grid.RowDefinitions>

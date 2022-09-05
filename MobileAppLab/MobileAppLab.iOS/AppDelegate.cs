@@ -23,8 +23,8 @@ namespace MobileAppLab.iOS
         {
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
+            Syncfusion.XForms.iOS.Core.SfAvatarViewRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
-
             return base.FinishedLaunching(app, options);
         }
     }
