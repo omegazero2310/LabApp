@@ -50,6 +50,24 @@ namespace WebApiLab.DatabaseContext
                 new AdminParts { PartID = 2, PartName = "Trưởng phòng", DateCreated = DateTime.Now, DateModified = DateTime.Now, UserCreated = "Seed", UserModified = "Seed" },
                 new AdminParts { PartID = 3, PartName = "Giám đốc", DateCreated = DateTime.Now, DateModified = DateTime.Now, UserCreated = "Seed", UserModified = "Seed" }
                 );
+            var user = new AdminUser();
+            user.Id = Guid.NewGuid();
+            user.UserName = "Admin";
+            user.HashedPassword = "j3oEIiMWevilRp5y5/mzfETFHoGnBgrj23oQuiTNtRM=";
+            user.Salt = "kPg2GW/IblRkqFtMPrhmbw==";
+            user.IsResetPassword = false;
+            user.IsActive = true;
+            user.AccountStatus = CommonClass.Enums.AccountStatusOptions.Normal;
+            user.DateCreated = DateTime.Now;
+            user.UserCreated = "SeedSystem";
+            user.UserModified = "SeedSystem";
+            user.DateModified = DateTime.Now;
+            user.ProfilePictureName = "";
+            user.PhoneNumber = "09781231234";
+            user.DisplayName = "Administrator";
+            modelBuilder.Entity<AdminUser>().HasData(
+                user
+                );
         }
     }
 }

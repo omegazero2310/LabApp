@@ -258,6 +258,9 @@
   <data name="MSG_CONFIRM_DELETE_TITLE" xml:space="preserve">
     <value>Xác nhận xóa</value>
   </data>
+  <data name="MSG_DISCONNECTED" xml:space="preserve">
+    <value>Mất kết nối mạng</value>
+  </data>
   <data name="MSG_EMAIL_NOT_EMPTY" xml:space="preserve">
     <value>Địa chỉ Email không được để trống</value>
   </data>

@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using CommonClass.Models;
+using System.Linq.Expressions;
 using WebApiLab.DatabaseContext;
 using WebApiLab.Services.UnitOfWork.Interface;
 
@@ -47,11 +48,15 @@ namespace WebApiLab.Services.UnitOfWork.Repository
         }
         public virtual IEnumerable<T> GetAll()
         {
-            return Context.Set<T>().ToList();
+            return Context.Set<T>().ToList().Where(row => row is IBaseEntity entity ? entity.IsActive : true);
         }
         public virtual T GetById(object id)
         {
-            return Context.Set<T>().Find(id);
+            var value = Context.Set<T>().Find(id);
+            if (value is IBaseEntity entity)
+                return entity.IsActive ? value : null;
+            else
+                return Context.Set<T>().Find(id);
         }
         public virtual bool Remove(T entity)
         {

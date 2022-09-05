@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,8 +26,9 @@ namespace CommonClass.Models
         /// annv3 31/08/2022 created
         /// </Modified>
         [Key]
-        [Column(TypeName = "int")]
+        [Column(TypeName = "int", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int PartID { get; set; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace CommonClass.Models
         /// annv3 31/08/2022 created
         /// </Modified>
         [Required(AllowEmptyStrings = false)]
+        [Column(TypeName = "nvarchar(50)", Order = 1)]
         public string PartName { get; set; }
 
         /// <summary>
@@ -53,6 +56,7 @@ namespace CommonClass.Models
         /// annv3 31/08/2022 created
         /// </Modified>
         [Required]
+        [Column(Order = 2)]
         public DateTime DateCreated { get; set; }
 
         /// <summary>
@@ -66,6 +70,7 @@ namespace CommonClass.Models
         /// annv3 31/08/2022 created
         /// </Modified>
         [Required]
+        [Column(Order = 3)]
         public DateTime DateModified { get; set; }
 
         /// <summary>
@@ -79,6 +84,7 @@ namespace CommonClass.Models
         /// annv3 31/08/2022 created
         /// </Modified>
         [Required]
+        [Column(Order = 4)]
         public string UserCreated { get; set; }
 
         /// <summary>
@@ -92,6 +98,10 @@ namespace CommonClass.Models
         /// annv3 31/08/2022 created
         /// </Modified>
         [Required]
+        [Column(Order = 5)]
         public string UserModified { get; set; }
+        [Column(Order = 6)]
+        [DefaultValue(true)]
+        public bool IsActive { get; set; }
     }
 }

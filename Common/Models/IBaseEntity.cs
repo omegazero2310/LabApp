@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
@@ -22,5 +23,8 @@ namespace CommonClass.Models
         string UserCreated { get; set; }
         [Required]
         string UserModified { get; set; }
+        [Required]
+        [DefaultValue(true)]
+        bool IsActive { get; set; }
     }
 }

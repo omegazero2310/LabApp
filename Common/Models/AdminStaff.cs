@@ -189,6 +189,20 @@ namespace CommonClass.Models
         public string UserModified { get; set; }
 
         /// <summary>
+        /// Đánh dấu ẩn hiện dòng
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
+        /// </value>
+        /// <Modified>
+        /// Name Date Comments
+        /// annv3 05/09/2022 created
+        /// </Modified>
+        [Column(Order = 12)]
+        [DefaultValue(true)]
+        public bool IsActive { get; set; }
+
+        /// <summary>
         /// dữ liệu hình ảnh của nhân viên ( không map với database)
         /// </summary>
         /// <value>
@@ -212,5 +226,6 @@ namespace CommonClass.Models
         /// </Modified>
         [NotMapped]
         public string PositionName { get; set; }
+        
     }
 }
