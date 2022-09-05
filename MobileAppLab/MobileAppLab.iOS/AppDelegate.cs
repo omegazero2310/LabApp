@@ -1,6 +1,8 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.ListView.XForms.iOS;
+using Syncfusion.XForms.iOS.Core;
 using UIKit;
 
 
@@ -23,7 +25,8 @@ namespace MobileAppLab.iOS
         {
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
-            Syncfusion.XForms.iOS.Core.SfAvatarViewRenderer.Init();
+            SfAvatarViewRenderer.Init();
+            SfListViewRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
             return base.FinishedLaunching(app, options);
         }
