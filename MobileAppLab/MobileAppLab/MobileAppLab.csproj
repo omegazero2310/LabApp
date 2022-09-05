@@ -70,6 +70,7 @@
     <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="20.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="20.2.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="20.2.0.46" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />

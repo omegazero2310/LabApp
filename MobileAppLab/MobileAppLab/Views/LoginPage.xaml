@@ -5,6 +5,7 @@
              NavigationPage.HasNavigationBar="False"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:trg="clr-namespace:MobileAppLab.Utilities.ViewActions"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:helper="clr-namespace:MobileAppLab.Utilities"
              xmlns:behaviors="clr-namespace:MobileAppLab.Utilities.ViewActions"
@@ -65,19 +66,6 @@
                         </Grid.RowDefinitions>
                         <!--#region trường tên đăng nhập-->
                         
-                        <!--<Grid Padding="25,0" Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="20*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.person48.png}" HorizontalOptions="StartAndExpand" Scale="2"/>
-                            <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderUserName}" Text="{Binding UserName}" ReturnType="Next" MaxLength="50">
-                                <Entry.Behaviors>
-                                    <behaviors:SpecialCharactersValidationBehavior />
-                                </Entry.Behaviors>
-                            </Entry>
-
-                        </Grid>-->
 
                         <Grid Padding="25,0" Grid.Row="0">
                             <inputLayout:SfTextInputLayout LeadingViewPosition="Inside">
@@ -95,30 +83,6 @@
 
                         <!--#region trường mật khẩu-->
                         <Grid Padding="25,0" Grid.Row="1">
-                            <!--<Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="20*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Image Grid.Column="0" Source="{xct:ImageResource Id=MobileAppLab.AssetImages.lock48.png}" HorizontalOptions="StartAndExpand" Scale="2"/>
-                            <Entry Grid.Column="1" Placeholder="{helper:Translate Main_Page_PlaceHolderPassword}" Text="{Binding Password}" ReturnType="Done"
-                                IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}" MaxLength="50">
-                                <Entry.Behaviors>
-                                    <behaviors:SpecialCharactersValidationBehavior />
-                                </Entry.Behaviors>
-                            </Entry>
-                            <ImageButton Grid.Column="1" VerticalOptions="Center"
-                                HeightRequest="20"
-                                HorizontalOptions="End"
-                                Source="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}" Scale="1.5">
-                                <ImageButton.Triggers>
-                                    <EventTrigger Event="Clicked">
-                                        <trg:ShowPasswordTriggerAction ShowIcon="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility48.png}"
-                                                              HideIcon="{xct:ImageResource Id=MobileAppLab.AssetImages.visibility_off48.png}"
-                                                              x:Name="ShowPasswordActualTrigger"/>
-                                    </EventTrigger>
-                                </ImageButton.Triggers>
-                            </ImageButton>-->
                             <inputLayout:SfTextInputLayout LeadingViewPosition="Inside" EnablePasswordVisibilityToggle="true">
                                 <Entry Placeholder="{helper:Translate Main_Page_PlaceHolderPassword}" Text="{Binding Password}" ReturnType="Done" MaxLength="50" IsPassword="True">
                                     <Entry.Behaviors>
@@ -197,13 +161,12 @@
 
         <StackLayout x:Name="AI" IsVisible="{Binding IsBusy}"
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
-                AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="Gray" Opacity="0.5">
+                AbsoluteLayout.LayoutFlags="All">
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+            <busyindicator:SfBusyIndicator AnimationType="Globe" Title="Loading..." IsVisible="{Binding IsBusy}"
                                    HorizontalOptions="CenterAndExpand"
-                                    VerticalOptions="CenterAndExpand"
-                    Color="Black"/>
+                                    VerticalOptions="CenterAndExpand" Duration="0.5" ViewBoxHeight="100" 
+                                       ViewBoxWidth="100" Opacity="1"/>
 
         </StackLayout>
     </AbsoluteLayout>
