@@ -1,12 +1,6 @@
 ﻿using CommonClass.Models;
 using Syncfusion.ListView.XForms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
-using SwipeEndedEventArgs = Xamarin.Forms.SwipeEndedEventArgs;
-using SwipeStartedEventArgs = Xamarin.Forms.SwipeStartedEventArgs;
-using SwipeView = Xamarin.Forms.SwipeView;
 
 namespace MobileAppLab.Utilities.ViewActions
 {

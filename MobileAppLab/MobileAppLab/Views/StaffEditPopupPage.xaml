@@ -65,10 +65,26 @@
                         <!--#region Khung các trường nhập liệu-->
                         <StackLayout Grid.Row="1" Padding="10">
                             <Grid Padding="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
+                                
+                                <!--#region trường tên nhân viên-->
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="0"
@@ -101,7 +117,9 @@
                                     Text="{Binding ErrorMessages[StaffName]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
-
+                                <!--#endregion-->
+                                
+                                <!--#region trường địa chỉ-->
                                 <Label
                                     Grid.Row="2"
                                     Grid.Column="0"
@@ -136,7 +154,9 @@
                                     Text="{Binding ErrorMessages[Address]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
+                                <!--#endregion-->
 
+                                <!--#region trường số điện thoại-->
                                 <Label
                                     Grid.Row="4"
                                     Grid.Column="0"
@@ -172,7 +192,9 @@
                                     Text="{Binding ErrorMessages[PhoneNumber]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
-
+                                <!--#endregion-->
+                                
+                                <!--#region trường chức danh-->
                                 <Label
                                     Grid.Row="6"
                                     Grid.Column="0"
@@ -221,7 +243,9 @@
                                     Text="{Binding ErrorMessages[POSITION_ID]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
-
+                                <!--#endregion-->
+                                
+                                <!--#region trường email-->
                                 <Label
                                     Grid.Row="8"
                                     Grid.Column="0"
@@ -252,7 +276,9 @@
                                     Text="{Binding ErrorMessages[Email]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
-
+                                <!--#endregion-->
+                                
+                                <!--#region trường giới tính-->
                                 <Label
                                     Grid.Row="10"
                                     Grid.Column="0"
@@ -299,6 +325,7 @@
                                     Text="{Binding ErrorMessages[GENDER]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
+                                <!--#endregion-->
                             </Grid>
                         </StackLayout>
                         <!--#endregion-->
