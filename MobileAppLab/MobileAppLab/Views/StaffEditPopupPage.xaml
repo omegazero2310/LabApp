@@ -91,9 +91,6 @@
                                     ReturnType="Next"
                                     Text="{Binding UserName}"
                                     VerticalOptions="CenterAndExpand">
-                                    <!--<Entry.Behaviors>
-                                        <behaviors:SpecialCharactersValidationBehavior />
-                                    </Entry.Behaviors>-->
                                 </Entry>
                                 <Label
                                     Grid.Row="1"
@@ -101,7 +98,7 @@
                                     FontAttributes="Bold"
                                     HeightRequest="20"
                                     IsVisible="{Binding IsEditMode}"
-                                    Text="{Binding ErrorMessages[UserName]}"
+                                    Text="{Binding ErrorMessages[StaffName]}"
                                     TextColor="#FF0000"
                                     VerticalOptions="StartAndExpand" />
 

@@ -66,6 +66,7 @@ namespace WebApiLab.Services.UnitOfWork
                         case EntityState.Modified:
                             _context.Entry(entity).Property(x => x.UserCreated).IsModified = false;
                             _context.Entry(entity).Property(x => x.DateCreated).IsModified = false;
+                            _context.Entry(entity).Property(x => x.IsActive).IsModified = false;
                             entity.DateModified = now;
                             entity.UserModified = this._currentUser;
                             break;
