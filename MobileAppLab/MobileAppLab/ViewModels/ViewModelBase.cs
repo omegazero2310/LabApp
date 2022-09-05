@@ -60,14 +60,7 @@ namespace MobileAppLab.ViewModels
         {
             if (IsDisconnected)
             {
-                var toastOptions = new ToastOptions();
-                var messageOptions = new MessageOptions();
-                messageOptions.Message = LocalizationResourceManager.Instance["MSG_DISCONNECTED"];
-                messageOptions.Foreground = Color.White;
-                toastOptions.BackgroundColor = Color.Red;
-                toastOptions.MessageOptions = messageOptions;
-                toastOptions.Duration = TimeSpan.MaxValue;
-                //await Shell.Current?.CurrentPage?.DisplaySnackBarAsync(toastOptions);
+                
             }
 
         }

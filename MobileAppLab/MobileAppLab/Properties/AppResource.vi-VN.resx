@@ -294,6 +294,9 @@
   <data name="MSG_POSITION_NOT_VALID" xml:space="preserve">
     <value>Chọn chức danh hợp lệ</value>
   </data>
+  <data name="MSG_STAFF_DELETED" xml:space="preserve">
+    <value>Đã xóa nhân viên</value>
+  </data>
   <data name="MSG_STAFF_DUPLICATE_EMAIL" xml:space="preserve">
     <value>Địa chỉ email đã tồn tại</value>
   </data>

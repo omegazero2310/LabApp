@@ -294,6 +294,9 @@
   <data name="MSG_POSITION_NOT_VALID" xml:space="preserve">
     <value>Select valid Position</value>
   </data>
+  <data name="MSG_STAFF_DELETED" xml:space="preserve">
+    <value>Staff Deleted</value>
+  </data>
   <data name="MSG_STAFF_DUPLICATE_EMAIL" xml:space="preserve">
     <value>Email Exist</value>
   </data>

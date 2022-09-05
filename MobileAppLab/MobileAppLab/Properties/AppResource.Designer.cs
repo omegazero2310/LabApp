@@ -592,6 +592,15 @@ namespace MobileAppLab.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Staff Deleted.
+        /// </summary>
+        public static string MSG_STAFF_DELETED {
+            get {
+                return ResourceManager.GetString("MSG_STAFF_DELETED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email Exist.
         /// </summary>
         public static string MSG_STAFF_DUPLICATE_EMAIL {
