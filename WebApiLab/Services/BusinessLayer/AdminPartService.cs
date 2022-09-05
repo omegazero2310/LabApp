@@ -57,19 +57,30 @@ namespace WebApiLab.Services.BusinessLayer
             ServerRespone serverRespone = new ServerRespone();
             try
             {
-                if (this._unitOfWork.AdminPartRepository.Remove(new AdminParts { PartID = (int)key }))
+                var part = this._unitOfWork.AdminPartRepository.GetById(key);
+                if (part != null)
                 {
-                    this._unitOfWork.Save();
-                    serverRespone.IsSuccess = true;
-                    serverRespone.Message = "Deleted";
-                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                    if (this._unitOfWork.AdminPartRepository.Remove(part))
+                    {
+                        this._unitOfWork.Save();
+                        serverRespone.IsSuccess = true;
+                        serverRespone.Message = "Deleted";
+                        serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                    }
+                    else
+                    {
+                        serverRespone.IsSuccess = true;
+                        serverRespone.Message = "NoChange";
+                        serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+                    }
                 }
                 else
                 {
                     serverRespone.IsSuccess = true;
                     serverRespone.Message = "NoChange";
                     serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
-                }
+                }    
+                
             }
             catch (Exception ex)
             {

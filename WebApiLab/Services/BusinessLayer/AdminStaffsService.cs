@@ -91,12 +91,22 @@ namespace WebApiLab.Services.BusinessLayer
             ServerRespone serverRespone = new ServerRespone();
             try
             {
-                if (_unitOfWork.AdminStaffRepository.Remove(new AdminStaff { StaffID = (int)key }))
+                var staff = _unitOfWork.AdminStaffRepository.GetById(key);
+                if(staff != null)
                 {
-                    _unitOfWork.Save();
-                    serverRespone.IsSuccess = true;
-                    serverRespone.Message = "Deleted";
-                    serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                    if (_unitOfWork.AdminStaffRepository.Remove(staff))
+                    {
+                        _unitOfWork.Save();
+                        serverRespone.IsSuccess = true;
+                        serverRespone.Message = "Deleted";
+                        serverRespone.HttpStatusCode = HttpStatusCode.OK;
+                    }
+                    else
+                    {
+                        serverRespone.IsSuccess = true;
+                        serverRespone.Message = "NoChange";
+                        serverRespone.HttpStatusCode = HttpStatusCode.NoContent;
+                    }
                 }
                 else
                 {
