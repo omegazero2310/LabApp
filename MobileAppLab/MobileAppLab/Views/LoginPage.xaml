@@ -62,7 +62,7 @@
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <!--#region trường tên đăng nhập-->
                         
