@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using AndroidX.AppCompat.App;
 using MobileAppLab.Utilities;
 using Plugin.CurrentActivity;
 using Prism;

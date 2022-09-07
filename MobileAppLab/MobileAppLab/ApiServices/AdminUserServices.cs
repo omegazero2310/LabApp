@@ -67,7 +67,7 @@ namespace MobileAppLab.ApiServices
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return (false, contentRespone);
+                return (false, ex.Message);
             }
 
         }
